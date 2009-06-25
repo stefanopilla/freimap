@@ -14,6 +14,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -32,6 +35,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,10 +61,11 @@ import org.jdesktop.swingx.painter.Painter;
 /**
  * The application's main frame.
  */
-public class FreimapGSoCView extends FrameView {
+public class FreimapGSoCView extends FrameView implements DataSource{
 
     public FreimapGSoCView(SingleFrameApplication app) {
         super(app);
+
 
         final int maxzoomlevel = 17;
         final int totalmapzoom=17;
@@ -78,8 +83,6 @@ public class FreimapGSoCView extends FrameView {
         DEFAULT_LAT=41.8639;
         DEFAULT_LON=12.5535;
         def = new GeoPosition(DEFAULT_LAT, DEFAULT_LON);
-
-
 
         initComponents();
         initMapComponents();
@@ -137,7 +140,38 @@ public class FreimapGSoCView extends FrameView {
                 }
             }
         });
+     config=new Configurator();
+        sources = new HashMap<String, DataSource>();
+    try {
+      HashMap<String, Object> ds = (HashMap<String, Object>)config.get("datasources");
+      HashMap<String, HashMap<String, Object>> ds2subconfig = new HashMap<String, HashMap<String, Object>>();
+      Iterator<String> i = ds.keySet().iterator();
+      while (i.hasNext()) {
+        String id   = i.next();
+        HashMap<String, Object> subconfig = (HashMap<String, Object>) ds.get(id);
+        @SuppressWarnings("static-access")
+        String claz = config.getS("class", subconfig);
+        Class<DataSource> csource=(Class<DataSource>)Class.forName(claz); //this cast cannot be checked!
+        DataSource source = csource.newInstance();
+        ds2subconfig.put(id, subconfig);
+        sources.put(id, source);
+      }
+      Iterator<String> j = sources.keySet().iterator();
+      while (j.hasNext()) {
+        String id = j.next();
+        DataSource source = sources.get(id);
+        source.init(ds2subconfig.get(id)); //initialize datasource with configuration parameters
+        System.out.println(source.getNodeList());
+        //addWaypoint(source.getNodeByName(id).lat,source.getNodeByName(id).lon);
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      return;
     }
+    
+    }
+
+
 
      //MAP METHODS ##################################
     /**
@@ -278,7 +312,31 @@ public class FreimapGSoCView extends FrameView {
     public JSlider getZoomSlider() {
         return this.zoomSlider;
     }
-//END OF MAP METHODS################################à
+
+    public void addWaypoint(HashMap<String, FreiNode> nodeByName){
+       this.nodeByName=nodeByName;
+       //create a Set of waypoints
+    Set<Waypoint> waypoints = new HashSet<Waypoint>();
+
+    WaypointPainter painter = new WaypointPainter();
+     //crate a WaypointPainter to draw the points
+
+        painter.setWaypoints(waypoints);
+        painter.setRenderer(new WaypointRenderer() {
+
+        public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+        g.setColor(Color.RED);
+        g.drawLine(-5,-5,+5,+5);
+        g.drawLine(-5,+5,+5,-5);
+        return true;
+    }
+});
+
+mainMap.setOverlayPainter(painter);
+    }
+
+
+    //END OF MAP METHODS################################à
 
 
     @Action
@@ -969,4 +1027,61 @@ mainMap.setOverlayPainter(painter);
     private Point2D mapCenter = new Point2D.Double(0,0);
     private GeoPosition mapCenterPosition = new GeoPosition(0,0);
     private boolean zoomChanging = false;
+
+    public static Configurator config;
+  public static HashMap<String, DataSource> sources;
+
+    public HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
+
+    public void init(HashMap<String, Object> configuration) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<FreiNode> getNodeList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Hashtable<String, Float> getNodeAvailability(long time) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public long getFirstUpdateTime() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public long getLastUpdateTime() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public long getLastAvailableTime() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public long getFirstAvailableTime() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public long getClosestUpdateTime(long time) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public FreiNode getNodeByName(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<FreiLink> getLinks(long time) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void addDataSourceListener(DataSourceListener dsl) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void getLinkProfile(FreiLink link, LinkInfo info) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void getLinkCountProfile(FreiNode node, NodeInfo info) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
