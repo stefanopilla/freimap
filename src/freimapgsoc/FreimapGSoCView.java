@@ -7,13 +7,19 @@ package freimapgsoc;
 import ServiceDiscovery.ServiceDiscovery;
 import ServiceDiscovery.ServiceDiscoveryMain;
 import java.awt.AWTException;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Stroke;
 import java.awt.Toolkit;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -43,8 +49,11 @@ import javax.imageio.ImageIO;
 import javax.jmdns.JmDNS;
 import javax.swing.Timer;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.event.MouseInputAdapter;
 import org.jdesktop.swingx.JXMapViewer;
@@ -69,6 +78,7 @@ public class FreimapGSoCView extends FrameView implements DataSource{
 
         final int maxzoomlevel = 17;
         final int totalmapzoom=17;
+
 
        //public TileFactoryInfo(int minimumZoomLevel,int maximumZoomLevel,int totalMapZoom,int tileSize,boolean xr2l,boolean yt2b,String baseURL,String xparam,String yparam,String zparam)(
       TileFactoryInfo info = new TileFactoryInfo(0,maxzoomlevel,totalmapzoom, 256, false, false, "http://tile.openstreetmap.org","x","y","z") {
@@ -156,13 +166,45 @@ public class FreimapGSoCView extends FrameView implements DataSource{
         ds2subconfig.put(id, subconfig);
         sources.put(id, source);
       }
+
       Iterator<String> j = sources.keySet().iterator();
       while (j.hasNext()) {
         String id = j.next();
+          System.out.println("id:"+ id);
         DataSource source = sources.get(id);
         source.init(ds2subconfig.get(id)); //initialize datasource with configuration parameters
-        System.out.println(source.getNodeList());
-        //addWaypoint(source.getNodeByName(id).lat,source.getNodeByName(id).lon);
+        System.out.println("Sources: "+sources.values());
+        System.out.println("NodeList: "+source.getNodeList());
+        System.out.println("LinksList: "+source.getLinks(0));
+        Vector<FreiNode> nodes=new Vector<FreiNode>();
+        Vector<FreiLink> links=new Vector<FreiLink>();
+        links=source.getLinks(0);
+        nodes=source.getNodeList();
+
+        for(int k=0;k<nodes.size(); k++){
+            System.out.println("id: "+nodes.get(k) + "lat: "+ nodes.get(k).lat + " lon: "+ nodes.get(k).lon);
+                addWaypoint(nodes.get(k).lat, nodes.get(k).lon, nodes.get(k));
+        }
+
+
+        for(int k=0;k<links.size(); k++){
+            //addLinks(links);
+            /*
+            System.out.println("to:"+ links.get(k).to);
+            System.out.println("from: "+links.get(k).from);
+            System.out.println("HNA:"+ links.get(k).HNA);
+            System.out.println("udp:"+ links.get(k).udp);
+            System.out.println("udp:"+ links.get(k).tcp);
+            System.out.println("udp:"+ links.get(k).packets);
+            System.out.println("nlq:"+ links.get(k).bytes);
+            System.out.println("etx:"+ links.get(k).etx);
+            System.out.println("lq:"+ links.get(k).lq);
+            System.out.println("nlq:"+ links.get(k).nlq);
+            System.out.println("other:"+ links.get(k).other);
+            System.out.println("icmp:"+ links.get(k).icmp);
+           */
+        }
+
       }
     } catch (Exception ex) {
       ex.printStackTrace();
@@ -170,6 +212,36 @@ public class FreimapGSoCView extends FrameView implements DataSource{
     }
     
     }
+
+public void addLinks(final Vector<FreiLink> links){
+    for (int i=0; i<links.size(); i++){
+        FreiLink selectedLink= links.elementAt(i);
+        System.out.println("selectedLink.from.lat: "+ selectedLink.from.lat + "selectedLink.from.lon: "+ selectedLink.from.lon);
+    System.out.println("selectedLink.to.lat: "+ selectedLink.to.lat + "selectedLink.to.lon"+ selectedLink.to.lon);
+    GeoPosition posFrom=new GeoPosition(selectedLink.from.lat, selectedLink.from.lon);
+    GeoPosition posTo=new GeoPosition(selectedLink.to.lat, selectedLink.to.lon);
+    System.out.println("posFromLat:" +posFrom.getLatitude() + " posFromLon: "+ posFrom.getLongitude());
+        System.out.println("posToLat:" +posTo.getLatitude() + " posToLon: "+ posTo.getLongitude());
+
+    final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
+    final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
+    System.out.println("ptFrom X:" +(int)ptFrom.getX());
+            System.out.println("ptFrom Y:" +(int)ptFrom.getY());
+            System.out.println("ptTo X:" +(int)ptTo.getX());
+            System.out.println("ptTo Y:" +(int)ptTo.getY());
+    painter.setRenderer(new WaypointRenderer() {
+        public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+            
+
+        g.drawLine((int)ptFrom.getX(), (int)ptFrom.getY(), (int)ptTo.getX(), (int)ptTo.getY());
+            return false;
+        }
+    });
+    mainMap.setOverlayPainter(painter);
+    mainMap.repaint();
+    }
+
+}
 
 
 
@@ -293,17 +365,17 @@ public class FreimapGSoCView extends FrameView implements DataSource{
      * returns a reference to the zoom in button
      * @return a jbutton
      */
-    //public JButton getZoomInButton() {
-    //    return this.zoomInButton;
-    //}
+    public JButton getZoomInButton() {
+       return this.zoomIn;
+    }
 
     /**
      * returns a reference to the zoom out button
      * @return a jbutton
      */
-    //public JButton getZoomOutButton() {
-    //    return this.zoomOutButton;
-    //}
+    public JButton getZoomOutButton() {
+        return this.zoomOut;
+    }
 
     /**
      * returns a reference to the zoom slider
@@ -313,28 +385,60 @@ public class FreimapGSoCView extends FrameView implements DataSource{
         return this.zoomSlider;
     }
 
-    public void addWaypoint(HashMap<String, FreiNode> nodeByName){
-       this.nodeByName=nodeByName;
-       //create a Set of waypoints
-    Set<Waypoint> waypoints = new HashSet<Waypoint>();
 
-    WaypointPainter painter = new WaypointPainter();
-     //crate a WaypointPainter to draw the points
 
+    public static void addWaypoint(Double lat, Double lon, FreiNode node) {
+    mainMap.setAddressLocation(new GeoPosition(lat,lon));
+    waypoints.add(new Waypoint(lat,lon));
         painter.setWaypoints(waypoints);
         painter.setRenderer(new WaypointRenderer() {
+            public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
 
-        public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-        g.setColor(Color.RED);
-        g.drawLine(-5,-5,+5,+5);
-        g.drawLine(-5,+5,+5,-5);
+      Toolkit toolkit = Toolkit.getDefaultToolkit();
+      Image i=toolkit.getImage("/home/stefano/NetBeansProjects/FreimapGSoC/src/gfx/wrt.png");
+      g.drawImage(i, 0, 0, null);
+       // g.drawOval(-5, -5, 5, 5);
+        //g.fillOval(-5, -5, 5, 5);
+        //g.drawLine(-5,-5,+5,+5);
+        //g.drawLine(-5,+5,+5,-5);
+
         return true;
     }
 });
 
 mainMap.setOverlayPainter(painter);
+}
+
+    //Get String Latitude from the Map
+
+     private String getLat (GeoPosition pos){
+        Double lat=pos.getLatitude();
+        return lat.toString();
     }
 
+    //Get String Longitude from the Map
+    private String getLon (GeoPosition pos){
+        Double lon=pos.getLatitude();
+        return lon.toString();
+    }
+
+
+    @Action
+    public void goToDefaultPosition() {
+        mainMap.setAddressLocation(def);
+    }
+
+    @Action
+    public void takeScreenShot() throws AWTException, IOException {
+     Toolkit toolkit = Toolkit.getDefaultToolkit();
+     Point p = new Point(mainMap.getLocationOnScreen());
+     Dimension d = new Dimension(mainMap.getSize());
+        Rectangle mapPosition = new Rectangle(p,d);
+         Robot robot = new Robot();
+            BufferedImage image = robot.createScreenCapture(mapPosition);
+                ImageIO.write(image, "jpg", new File("/tmp/screenshot.jpg"));
+                    new InfoPopUp("Screenshot is in /tmp/ directory").setVisible(true);
+    }
 
     //END OF MAP METHODS################################à
 
@@ -360,20 +464,6 @@ mainMap.setOverlayPainter(painter);
 
         mainPanel = new javax.swing.JPanel();
         sxPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         serviceD = new javax.swing.JButton();
         goToDefaultPosition = new javax.swing.JButton();
@@ -390,76 +480,28 @@ mainMap.setOverlayPainter(painter);
         statusMessageLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
         statusAnimationLabel = new javax.swing.JLabel();
+        cBaseLabel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jSeparator2 = new javax.swing.JSeparator();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         mainPanel.setName("mainPanel"); // NOI18N
 
         sxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         sxPanel.setName("sxPanel"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(FreimapGSoCView.class);
-        jLabel1.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jLabel2.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-
-        jLabel3.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
-
-        jLabel4.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-
-        jLabel5.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setName("jLabel5"); // NOI18N
-
-        jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
-        jLabel6.setName("jLabel6"); // NOI18N
-
-        jLabel7.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
-
-        jLabel8.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jLabel9.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
-        jLabel9.setName("jLabel9"); // NOI18N
-
-        jLabel10.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
-        jLabel10.setName("jLabel10"); // NOI18N
-
-        jLabel11.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
-        jLabel11.setName("jLabel11"); // NOI18N
-
-        jLabel12.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
-        jLabel12.setName("jLabel12"); // NOI18N
-
-        jLabel13.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
-        jLabel13.setName("jLabel13"); // NOI18N
-
-        jLabel14.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
-        jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
-        jLabel14.setName("jLabel14"); // NOI18N
-
         jSeparator1.setName("jSeparator1"); // NOI18N
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(FreimapGSoCView.class);
         serviceD.setFont(resourceMap.getFont("goToDefaultPosition.font")); // NOI18N
         serviceD.setText(resourceMap.getString("serviceD.text")); // NOI18N
         serviceD.setName("serviceD"); // NOI18N
@@ -475,20 +517,16 @@ mainMap.setOverlayPainter(painter);
         goToDefaultPosition.setText(resourceMap.getString("goToDefaultPosition.text")); // NOI18N
         goToDefaultPosition.setName("goToDefaultPosition"); // NOI18N
 
-        jLabel15.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
         jLabel15.setName("jLabel15"); // NOI18N
 
-        jLabel16.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
 
-        latitudeValue.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         latitudeValue.setText(resourceMap.getString("latitudeValue.text")); // NOI18N
         latitudeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         latitudeValue.setName("latitudeValue"); // NOI18N
 
-        longitudeValue.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         longitudeValue.setText(resourceMap.getString("longitudeValue.text")); // NOI18N
         longitudeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         longitudeValue.setName("longitudeValue"); // NOI18N
@@ -528,100 +566,57 @@ mainMap.setOverlayPainter(painter);
                 .addContainerGap()
                 .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                        .addGap(185, 185, 185))
+                        .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(serviceD)
+                            .addComponent(goToDefaultPosition))
+                        .addGap(122, 122, 122))
                     .addGroup(sxPanelLayout.createSequentialGroup()
                         .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
-                            .addComponent(latitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                            .addComponent(latitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(longitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16))
-                        .addGap(215, 215, 215))
-                    .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addComponent(zoomOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(zoomIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(239, 239, 239))
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(serviceD)
-                            .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel14))
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(goToDefaultPosition))))
+                            .addComponent(jLabel16)
+                            .addComponent(longitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sxPanelLayout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(sxPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(sxPanelLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(zoomOut, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(zoomIn, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                .addGap(44, 44, 44))
         );
         sxPanelLayout.setVerticalGroup(
             sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sxPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7))
-                    .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(75, 75, 75)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(serviceD)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(goToDefaultPosition)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addGap(193, 193, 193)
+                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(zoomIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(zoomOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(zoomOut)
-                    .addComponent(zoomIn))
-                .addGap(26, 26, 26)
-                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(latitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(longitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(longitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(latitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -667,14 +662,14 @@ mainMap.setOverlayPainter(painter);
         mainMapLayout.setHorizontalGroup(
             mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
-                .addContainerGap(705, Short.MAX_VALUE)
+                .addContainerGap(656, Short.MAX_VALUE)
                 .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         mainMapLayout.setVerticalGroup(
             mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
-                .addContainerGap(512, Short.MAX_VALUE)
+                .addContainerGap(380, Short.MAX_VALUE)
                 .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -698,6 +693,12 @@ mainMap.setOverlayPainter(painter);
         statusAnimationLabel.setText(resourceMap.getString("statusAnimationLabel.text")); // NOI18N
         statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
 
+        cBaseLabel.setBackground(resourceMap.getColor("cBaseLabel.background")); // NOI18N
+        cBaseLabel.setFont(resourceMap.getFont("cBaseLabel.font")); // NOI18N
+        cBaseLabel.setForeground(resourceMap.getColor("cBaseLabel.foreground")); // NOI18N
+        cBaseLabel.setText(resourceMap.getString("cBaseLabel.text")); // NOI18N
+        cBaseLabel.setName("cBaseLabel"); // NOI18N
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -706,13 +707,15 @@ mainMap.setOverlayPainter(painter);
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(sxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(statusAnimationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 789, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 706, Short.MAX_VALUE)
+                        .addComponent(cBaseLabel)
+                        .addGap(18, 18, 18)
                         .addComponent(statusMessageLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -726,12 +729,14 @@ mainMap.setOverlayPainter(painter);
                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(statusAnimationLabel)
                         .addComponent(statusMessageLabel))
-                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cBaseLabel)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sxPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(2085, 2085, 2085))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -740,6 +745,7 @@ mainMap.setOverlayPainter(painter);
         fileMenu.setName("fileMenu"); // NOI18N
 
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
 
@@ -754,12 +760,43 @@ mainMap.setOverlayPainter(painter);
 
         menuBar.add(helpMenu);
 
+        jPopupMenu1.setName("jPopupMenu1"); // NOI18N
+
+        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
+        jMenu1.setName("jMenu1"); // NOI18N
+        jPopupMenu1.add(jMenu1);
+
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jPopupMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        jPopupMenu1.add(jMenuItem2);
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText(resourceMap.getString("jCheckBoxMenuItem1.text")); // NOI18N
+        jCheckBoxMenuItem1.setName("jCheckBoxMenuItem1"); // NOI18N
+        jPopupMenu1.add(jCheckBoxMenuItem1);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        jPopupMenu1.add(jSeparator2);
+
+        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        jPopupMenu1.add(jMenuItem3);
+
         setComponent(mainPanel);
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mainMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMapMousePressed
-     if (evt.isPopupTrigger()) {
+       
+        //switch (evt.getClickCount()) {
+         //case 1: new NodeInfoFlow().setVisible(true); break;
+      
+    //}
+        if (evt.isPopupTrigger()) {
          // contestMenu.show(evt.getComponent(),evt.getX(), evt.getY());
        }        // TODO add your handling code here:
     }//GEN-LAST:event_mainMapMousePressed
@@ -793,7 +830,8 @@ mainMap.setOverlayPainter(painter);
     }//GEN-LAST:event_zoomSliderStateChanged
 
     private void mainMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMapMouseMoved
-     // System.out.println("Event source: " +evt.getSource());
+            mainMap.add(cBaseLabel);
+            
                 Point pt = evt.getPoint();
                 // convert to geoposition
                 GeoPosition gp = mainMap.convertPointToGeoPosition(new Point2D.Double(evt.getX(),evt.getY()));
@@ -801,65 +839,25 @@ mainMap.setOverlayPainter(painter);
                 DecimalFormat fmt = new DecimalFormat("#00.00000");
                 latitudeValue.setText(fmt.format(gp.getLatitude()));
                 longitudeValue.setText(fmt.format(gp.getLongitude()));
-        // TODO add your handling code here:
+
+         //C-BASE LABEL
+           GeoPosition cbgp = new GeoPosition(52.51298, 13.42012);
+        //convert to world bitmap
+        Point2D gp_pt = mainMap.getTileFactory().geoToPixel(cbgp, mainMap.getZoom());
+        //convert to screen
+        Rectangle rect = mainMap.getViewportBounds();
+        Point converted_gp_pt = new Point((int)gp_pt.getX()-rect.x,
+                                          (int)gp_pt.getY()-rect.y);
+        //check if near the mouse
+        if(converted_gp_pt.distance(evt.getPoint()) < 10) {
+            cBaseLabel.setLocation(converted_gp_pt);
+            cBaseLabel.setVisible(true);
+        } else {
+            cBaseLabel.setVisible(false);
+        }
+
     }//GEN-LAST:event_mainMapMouseMoved
 
-
-      //CUSTOM METHODS
-
-public static void addWaypoint(Double lat, Double lon) {
-    //create a Set of waypoints
-    Set<Waypoint> waypoints = new HashSet<Waypoint>();
-    waypoints.add(new Waypoint(lat,lon));
-    WaypointPainter painter = new WaypointPainter();
-     //crate a WaypointPainter to draw the points
-
-        painter.setWaypoints(waypoints);
-        painter.setRenderer(new WaypointRenderer() {
-
-        public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-        g.setColor(Color.RED);
-        g.drawLine(-5,-5,+5,+5);
-        g.drawLine(-5,+5,+5,-5);
-        return true;
-    }
-});
-
-mainMap.setOverlayPainter(painter);
-}
-
-
-  //Get String Latitude from the Map
-
-     private String getLat (GeoPosition pos){
-        Double lat=pos.getLatitude();
-        return lat.toString();
-    }
-
-    //Get String Longitude from the Map
-    private String getLon (GeoPosition pos){
-        Double lon=pos.getLatitude();
-        return lon.toString();
-    }
-
-
-    @Action
-    public void goToDefaultPosition() {
-        mainMap.setAddressLocation(def);
-        addWaypoint(DEFAULT_LAT, DEFAULT_LON);
-    }
-
-    @Action
-    public void takeScreenShot() throws AWTException, IOException {
-     Toolkit toolkit = Toolkit.getDefaultToolkit();
-     Point p = new Point(mainMap.getLocationOnScreen());
-     Dimension d = new Dimension(mainMap.getSize());
-        Rectangle mapPosition = new Rectangle(p,d);
-         Robot robot = new Robot();
-            BufferedImage image = robot.createScreenCapture(mapPosition);
-                ImageIO.write(image, "jpg", new File("/tmp/screenshot.jpg"));
-                    new InfoPopUp("Screenshot is in /tmp/ directory").setVisible(true);
-    }
 
     //MAP COMPONENTS
     public void initMapComponents(){
@@ -969,25 +967,19 @@ mainMap.setOverlayPainter(painter);
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel cBaseLabel;
     public javax.swing.JButton goToDefaultPosition;
-    public javax.swing.JLabel jLabel1;
-    public javax.swing.JLabel jLabel10;
-    public javax.swing.JLabel jLabel11;
-    public javax.swing.JLabel jLabel12;
-    public javax.swing.JLabel jLabel13;
-    public javax.swing.JLabel jLabel14;
+    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
-    public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel3;
-    public javax.swing.JLabel jLabel4;
-    public javax.swing.JLabel jLabel5;
-    public javax.swing.JLabel jLabel6;
-    public javax.swing.JLabel jLabel7;
-    public javax.swing.JLabel jLabel8;
-    public javax.swing.JLabel jLabel9;
+    public javax.swing.JMenu jMenu1;
+    public javax.swing.JMenuItem jMenuItem1;
+    public javax.swing.JMenuItem jMenuItem2;
+    public javax.swing.JMenuItem jMenuItem3;
     public javax.swing.JPanel jPanel1;
+    public javax.swing.JPopupMenu jPopupMenu1;
     public javax.swing.JSeparator jSeparator1;
+    public javax.swing.JSeparator jSeparator2;
     public javax.swing.JLabel latitudeValue;
     public javax.swing.JLabel longitudeValue;
     public static org.jdesktop.swingx.JXMapViewer mainMap;
@@ -999,8 +991,8 @@ mainMap.setOverlayPainter(painter);
     public javax.swing.JLabel statusAnimationLabel;
     public javax.swing.JLabel statusMessageLabel;
     public javax.swing.JPanel sxPanel;
-    public javax.swing.JButton zoomIn;
-    public javax.swing.JButton zoomOut;
+    public static javax.swing.JButton zoomIn;
+    public static javax.swing.JButton zoomOut;
     public javax.swing.JSlider zoomSlider;
     // End of variables declaration//GEN-END:variables
 
@@ -1023,6 +1015,9 @@ mainMap.setOverlayPainter(painter);
     public static boolean zoomSliderVisible = true;
     public static boolean zoomButtonsVisible = true;
     public static final boolean sliderReversed = false;
+    private static WaypointPainter painter = new WaypointPainter();
+    private static Set<Waypoint> waypoints = new HashSet<Waypoint>();
+    private FreiNode uplink = new FreiNode("0.0.0.0/0.0.0.0");
 
     private Point2D mapCenter = new Point2D.Double(0,0);
     private GeoPosition mapCenterPosition = new GeoPosition(0,0);
