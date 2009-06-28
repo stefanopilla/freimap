@@ -170,25 +170,29 @@ public class FreimapGSoCView extends FrameView implements DataSource{
       Iterator<String> j = sources.keySet().iterator();
       while (j.hasNext()) {
         String id = j.next();
-          System.out.println("id:"+ id);
+          //System.out.println("id:"+ id);
         DataSource source = sources.get(id);
         source.init(ds2subconfig.get(id)); //initialize datasource with configuration parameters
-        System.out.println("Sources: "+sources.values());
-        System.out.println("NodeList: "+source.getNodeList());
-        System.out.println("LinksList: "+source.getLinks(0));
-        Vector<FreiNode> nodes=new Vector<FreiNode>();
-        Vector<FreiLink> links=new Vector<FreiLink>();
+        //System.out.println("Sources: "+sources.values());
+        //System.out.println("NodeList: "+source.getNodeList());
+        //System.out.println("LinksList: "+source.getLinks(0));
+
+        nodes=new Vector<FreiNode>();
+        links=new Vector<FreiLink>();
+
+        for(int t=0;t<links.size(); t++){
+           //System.out.println("Links Element("+ t +"):" +links.elementAt(t));
+        }
         links=source.getLinks(0);
         nodes=source.getNodeList();
 
         for(int k=0;k<nodes.size(); k++){
-            System.out.println("id: "+nodes.get(k) + "lat: "+ nodes.get(k).lat + " lon: "+ nodes.get(k).lon);
+           // System.out.println("id: "+nodes.get(k) + "lat: "+ nodes.get(k).lat + " lon: "+ nodes.get(k).lon);
                 addWaypoint(nodes.get(k).lat, nodes.get(k).lon, nodes.get(k));
         }
 
 
-        for(int k=0;k<links.size(); k++){
-            //addLinks(links);
+            drawAll(links,nodes);
             /*
             System.out.println("to:"+ links.get(k).to);
             System.out.println("from: "+links.get(k).from);
@@ -203,7 +207,7 @@ public class FreimapGSoCView extends FrameView implements DataSource{
             System.out.println("other:"+ links.get(k).other);
             System.out.println("icmp:"+ links.get(k).icmp);
            */
-        }
+    
 
       }
     } catch (Exception ex) {
@@ -213,35 +217,99 @@ public class FreimapGSoCView extends FrameView implements DataSource{
     
     }
 
-public void addLinks(final Vector<FreiLink> links){
-    for (int i=0; i<links.size(); i++){
-        FreiLink selectedLink= links.elementAt(i);
-        System.out.println("selectedLink.from.lat: "+ selectedLink.from.lat + "selectedLink.from.lon: "+ selectedLink.from.lon);
-    System.out.println("selectedLink.to.lat: "+ selectedLink.to.lat + "selectedLink.to.lon"+ selectedLink.to.lon);
-    GeoPosition posFrom=new GeoPosition(selectedLink.from.lat, selectedLink.from.lon);
-    GeoPosition posTo=new GeoPosition(selectedLink.to.lat, selectedLink.to.lon);
-    System.out.println("posFromLat:" +posFrom.getLatitude() + " posFromLon: "+ posFrom.getLongitude());
-        System.out.println("posToLat:" +posTo.getLatitude() + " posToLon: "+ posTo.getLongitude());
+    public void drawAll(Vector<FreiLink> links,  Vector<FreiNode> nodes){
+       if(nodes.size()==0){
+          for (int i=0; i<links.size(); i++){
+            FreiLink selectedLink= links.elementAt(i);
+            //System.out.println("selectedLink.from.lat: "+ selectedLink.from.lat + "selectedLink.from.lon: "+ selectedLink.from.lon);
+            //System.out.println("selectedLink.to.lat: "+ selectedLink.to.lat + "selectedLink.to.lon"+ selectedLink.to.lon);
+            GeoPosition posFrom=new GeoPosition(selectedLink.from.lat, selectedLink.from.lon);
+            GeoPosition posTo=new GeoPosition(selectedLink.to.lat, selectedLink.to.lon);
+            //System.out.println("posFromLat:" +posFrom.getLatitude() + " posFromLon: "+ posFrom.getLongitude());
+            //System.out.println("posToLat:" +posTo.getLatitude() + " posToLon: "+ posTo.getLongitude());
 
     final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
     final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
-    System.out.println("ptFrom X:" +(int)ptFrom.getX());
-            System.out.println("ptFrom Y:" +(int)ptFrom.getY());
-            System.out.println("ptTo X:" +(int)ptTo.getX());
-            System.out.println("ptTo Y:" +(int)ptTo.getY());
+            //System.out.println("ptFrom X:" +(int)ptFrom.getX());
+            //System.out.println("ptFrom Y:" +(int)ptFrom.getY());
+            //System.out.println("ptTo X:" +(int)ptTo.getX());
+            //System.out.println("ptTo Y:" +(int)ptTo.getY());
     painter.setRenderer(new WaypointRenderer() {
         public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-            
-
         g.drawLine((int)ptFrom.getX(), (int)ptFrom.getY(), (int)ptTo.getX(), (int)ptTo.getY());
             return false;
         }
     });
-    mainMap.setOverlayPainter(painter);
-    mainMap.repaint();
+           }
+       }else if(links.size()==0){
+           for(int i=0;i<nodes.size(); i++){
+            mainMap.setAddressLocation(new GeoPosition(nodes.get(i).lat,nodes.get(i).lon));
+            waypoints.add(new Waypoint(nodes.get(i).lat,nodes.get(i).lon));
+        painter.setWaypoints(waypoints);
+        painter.setRenderer(new WaypointRenderer() {
+            public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+
+      Toolkit toolkit = Toolkit.getDefaultToolkit();
+      Image i=toolkit.getImage("/home/stefano/NetBeansProjects/FreimapGSoC/src/gfx/wrt.png");
+      g.drawImage(i, 0, 0, null);
+        return true;
     }
 
-}
+});
+           }
+
+       }else{
+           for (int i=0; i<links.size(); i++){
+            FreiLink selectedLink= links.elementAt(i);
+            System.out.println("selectedLink.from.lat: "+ selectedLink.from.lat + "selectedLink.from.lon: "+ selectedLink.from.lon);
+            System.out.println("selectedLink.to.lat: "+ selectedLink.to.lat + "selectedLink.to.lon"+ selectedLink.to.lon);
+            GeoPosition posFrom=new GeoPosition(selectedLink.from.lat, selectedLink.from.lon);
+            GeoPosition posTo=new GeoPosition(selectedLink.to.lat, selectedLink.to.lon);
+            System.out.println("posFromLat:" +posFrom.getLatitude() + " posFromLon: "+ posFrom.getLongitude());
+            System.out.println("posToLat:" +posTo.getLatitude() + " posToLon: "+ posTo.getLongitude());
+
+    final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
+    final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
+            System.out.println("ptFrom X:" +(int)ptFrom.getX());
+            System.out.println("ptFrom Y:" +(int)ptFrom.getY());
+            System.out.println("ptTo X:" +(int)ptTo.getX());
+            System.out.println("ptTo Y:" +(int)ptTo.getY());
+            mainMap.setAddressLocation(posFrom);
+            mainMap.setAddressLocation(posTo);
+
+    painter.setRenderer(new WaypointRenderer() {
+        public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+            Stroke linkStroke = new BasicStroke((float)(Math.min(2,0.00005)), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+            g.setStroke(linkStroke);
+        g.drawLine((int)ptFrom.getX(), (int)ptFrom.getY(), (int)ptTo.getX(), (int)ptTo.getY());
+            return true;
+        }
+    });
+       }
+             for(int i=0;i<nodes.size(); i++){
+            mainMap.setAddressLocation(new GeoPosition(nodes.get(i).lat,nodes.get(i).lon));
+            waypoints.add(new Waypoint(nodes.get(i).lat,nodes.get(i).lon));
+        painter.setWaypoints(waypoints);
+        painter.setRenderer(new WaypointRenderer() {
+            public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+
+      Toolkit toolkit = Toolkit.getDefaultToolkit();
+      Image i=toolkit.getImage("/home/stefano/NetBeansProjects/FreimapGSoC/src/gfx/wrt.png");
+      g.drawImage(i, 0, 0, null);
+      g.drawLine(120, 320, 650, 320);
+        return true;
+    }
+
+});
+
+       }
+
+mainMap.setOverlayPainter(painter);
+mainMap.repaint();
+
+    }
+    }
+    
 
 
 
@@ -259,6 +327,7 @@ public void addLinks(final Vector<FreiLink> links){
             zoomSlider.setValue(zoomSlider.getMaximum()-zoom);
         } else {
             zoomSlider.setValue(zoom);
+            mainMap.repaint();
         }
         zoomChanging = false;
     }
@@ -385,32 +454,11 @@ public void addLinks(final Vector<FreiLink> links){
         return this.zoomSlider;
     }
 
-
-
     public static void addWaypoint(Double lat, Double lon, FreiNode node) {
-    mainMap.setAddressLocation(new GeoPosition(lat,lon));
-    waypoints.add(new Waypoint(lat,lon));
-        painter.setWaypoints(waypoints);
-        painter.setRenderer(new WaypointRenderer() {
-            public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-
-      Toolkit toolkit = Toolkit.getDefaultToolkit();
-      Image i=toolkit.getImage("/home/stefano/NetBeansProjects/FreimapGSoC/src/gfx/wrt.png");
-      g.drawImage(i, 0, 0, null);
-       // g.drawOval(-5, -5, 5, 5);
-        //g.fillOval(-5, -5, 5, 5);
-        //g.drawLine(-5,-5,+5,+5);
-        //g.drawLine(-5,+5,+5,-5);
-
-        return true;
+   
     }
-});
-
-mainMap.setOverlayPainter(painter);
-}
 
     //Get String Latitude from the Map
-
      private String getLat (GeoPosition pos){
         Double lat=pos.getLatitude();
         return lat.toString();
@@ -623,6 +671,7 @@ mainMap.setOverlayPainter(painter);
         jPanel1.setName("jPanel1"); // NOI18N
 
         mainMap.setCenterPosition(def);
+        mainMap.setDoubleBuffered(false);
         mainMap.setFont(resourceMap.getFont("mainMap.font")); // NOI18N
         mainMap.setName("mainMap"); // NOI18N
         mainMap.setRecenterOnClickEnabled(true);
@@ -816,16 +865,19 @@ mainMap.setOverlayPainter(painter);
     }//GEN-LAST:event_serviceDActionPerformed
 
     private void zoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomOutActionPerformed
-    setZoom(mainMap.getZoom()+1);        // TODO add your handling code here:
+    setZoom(mainMap.getZoom()+1);
+    drawAll(links,nodes);// TODO add your handling code here:
     }//GEN-LAST:event_zoomOutActionPerformed
 
     private void zoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomInActionPerformed
-    setZoom(mainMap.getZoom()-1);        // TODO add your handling code here:
+    setZoom(mainMap.getZoom()-1);
+    drawAll(links,nodes);// TODO add your handling code here:
     }//GEN-LAST:event_zoomInActionPerformed
 
     private void zoomSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_zoomSliderStateChanged
      if(!zoomChanging){
             mainMap.setZoom(zoomSlider.getValue());
+            drawAll(links,nodes);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_zoomSliderStateChanged
 
@@ -849,7 +901,7 @@ mainMap.setOverlayPainter(painter);
         Point converted_gp_pt = new Point((int)gp_pt.getX()-rect.x,
                                           (int)gp_pt.getY()-rect.y);
         //check if near the mouse
-        if(converted_gp_pt.distance(evt.getPoint()) < 10) {
+        if(converted_gp_pt.distance(evt.getPoint()) < 10 && mainMap.getZoom()<5) {
             cBaseLabel.setLocation(converted_gp_pt);
             cBaseLabel.setVisible(true);
         } else {
@@ -1025,6 +1077,8 @@ mainMap.setOverlayPainter(painter);
 
     public static Configurator config;
   public static HashMap<String, DataSource> sources;
+  Vector<FreiNode> nodes;
+  Vector<FreiLink> links;
 
     public HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
 

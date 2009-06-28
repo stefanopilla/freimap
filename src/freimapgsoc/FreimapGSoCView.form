@@ -270,6 +270,7 @@
                 <Property name="centerPosition" type="org.jdesktop.swingx.mapviewer.GeoPosition" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="def" type="code"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" resourceKey="mainMap.font"/>
                 <Property name="name" type="java.lang.String" value="mainMap" noResource="true"/>
                 <Property name="recenterOnClickEnabled" type="boolean" value="true"/>
