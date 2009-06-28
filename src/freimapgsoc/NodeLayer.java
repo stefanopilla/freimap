@@ -437,6 +437,7 @@ mainMap.setOverlayPainter(painter);
   public double dist (double x1, double x2, double y1, double y2) {
     return Math.sqrt(sqr(x1-x2)+sqr(y1-y2));
   }
+
   public FreiLink getClosestLink(double lon, double lat) {
     if (links==null) return null;
     double dmin=Double.POSITIVE_INFINITY;

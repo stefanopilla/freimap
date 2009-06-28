@@ -89,7 +89,7 @@ public class MysqlDataSource implements DataSource {
   
   private void updateNodeList() throws SQLException{
     if ((nodeSource == null) && (sNodeSource != null)) {
-      nodeSource=FreimapGSoCApp.sources.get(sNodeSource);
+      nodeSource=FreimapGSoCView.sources.get(sNodeSource);
       if (nodeSource==null) System.err.println("Could not identify NodeSource in MysqlDataSource.");
       sNodeSource = null;
     }

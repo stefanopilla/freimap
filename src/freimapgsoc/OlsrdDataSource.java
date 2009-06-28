@@ -65,7 +65,7 @@ public class OlsrdDataSource implements DataSource {
   public Vector<FreiNode> getNodeList() {
    if ((nodeSource == null) && (sNodeSource != null)) {
       System.out.println("nodeSource in OlsrdDataSource.java:"+ nodeSource);
-     nodeSource=FreimapGSoCApp.sources.get(sNodeSource);
+     nodeSource=FreimapGSoCView.sources.get(sNodeSource);
       sNodeSource = null;
     }
 

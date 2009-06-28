@@ -23,7 +23,6 @@ public class LatLonJsDataSource implements DataSource {
   Vector<FreiLink> links = new Vector<FreiLink>();
   HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
   //NodeLayer nl;
-  JXMapViewer map;
   
   long initTime = System.currentTimeMillis()/1000;
   boolean fetchLinks = true;
@@ -33,7 +32,7 @@ public class LatLonJsDataSource implements DataSource {
     try {
     sServerURL = Configurator.getS("url", configuration);
       fetchLinks = Configurator.getB("fetchlinks", configuration);
-
+      System.out.println("Fetch Status Is: "+fetchLinks);
       System.out.println("fetching data from URL: " + sServerURL);
       if (!fetchLinks) System.out.println("NOT fetching link information.");
       System.out.print("This may take a while ... ");
@@ -70,29 +69,36 @@ public class LatLonJsDataSource implements DataSource {
 
           FreiNode nnode;
           if ((lat<-90d)||(lat>90d)||(lon<-180d)||(lon>180d)) { //obviously bogus. some people do that. 
-            nnode = new FreiNode(ip, fqid);
+            nnode = new FreiNode(ip, fqid);//create a node with Default positions
           } else {
-            nnode = new FreiNode(ip, fqid, lon, lat);
+            nnode = new FreiNode(ip, fqid, lon, lat); //create a node with lat lon coordinates
           }
-          nodes.add(nnode);
-          if (isgateway==1) {
-            nnode.attributes.put("Gateway", "SELF");
+          nodes.add(nnode);//add node to Vector "nodes"
+          if (isgateway==1) { //if node is a Gateway
+            nnode.attributes.put("Gateway", "SELF"); //add attributes ("Gateway", "SELF") or ("Gateway", "OTHER:"+gatewayip) to attributes hash table of freinode
           } else {
             nnode.attributes.put("Gateway", "OTHER: "+gatewayip);
           }
-          nodeByName.put(nnode.id, nnode);
-
+          System.out.println("nnode.id:"+ nnode.id);
+          System.out.println("nnode: "+ nnode);
+          nodeByName.put(nnode.id, nnode); //add node to hashmap of nodebyname <String, Freinode>
+          
+          
         } else
         if ((fetchLinks) && (line.length()>5) && (line.substring(0,5).equals("PLink"))) {
           StringTokenizer st = new StringTokenizer(line.substring(6,line.length()-2), ",", false);
           String src = st.nextToken();
           String dest = st.nextToken();
-         
+         System.out.println("SRC: "+ src);
+         System.out.println("DEST: "+ dest);
 
           double lq  = Double.parseDouble(st.nextToken());
           double nlq  = Double.parseDouble(st.nextToken());
           double etx  = Double.parseDouble(st.nextToken());
 
+          System.out.println("lq: "+ lq);
+          System.out.println("nlq: "+ nlq);
+          System.out.println("etx: "+ etx);
 
 
           src = stripQuotes(src);
@@ -115,6 +121,7 @@ public class LatLonJsDataSource implements DataSource {
       }
     }
 
+   
     System.out.println("finished.");
     //nl=new NodeLayer(this,map);
       
