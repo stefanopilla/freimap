@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Vector;
@@ -41,6 +43,18 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListener, ServiceTypeListener, ListSelectionListener {
 
+    @SuppressWarnings("static-access")
+    public ServiceDiscovery(String ip) {
+        initComponents();  
+        InetAddress address;
+        try {
+            address = InetAddress.getByName(ip);
+            JmDNS.create(address);
+            jmdns.addServiceTypeListener(this);
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
     /** Creates new form ServiceDiscovery */
@@ -49,17 +63,16 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
     }
 
     public ServiceDiscovery(JmDNS jmdns) throws IOException{
-        
+        initComponents();
         this.jmdns=jmdns;
-        initComponents();  
         jmdns.addServiceTypeListener(this);
+        insertProt();
+        insertApp();
+        domainLabel.setText(jmdns.getHostName());
+        interfaceLabel.setText(jmdns.getInterface().toString());
+            }
 
-        
-        
-    }
-
-    //START METHOD DECLARATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+ 
 
     public void createCorrispondenceArray(){
         applpro=new String[100];
@@ -70,18 +83,20 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
                 applpro[k]=new String(prot[s]);
                 applpro[k+1]=new String(application[s]);
 
-            //System.out.println("\napplpro["+k+"]  PROT= "+ applpro[k]);
-            //System.out.println("applpro ["+(k+1)+"] APPL= "+ applpro[k+1]);
+            System.out.println("\napplpro["+k+"]  PROT= "+ applpro[k]);
+            System.out.println("applpro ["+(k+1)+"] APPL= "+ applpro[k+1]);
             k+=2;
         }
     }
     //This Method insert Protocol in typesList ComboBox
+
     public void insertProt(){
         // register some well known types
         prot = new String[] {
             //"All protocols",
            "_http._tcp.local.",
             "_ftp._tcp.local.",
+            "_sftp._tcp.local.",
             "_tftp._tcp.local.",
             "_ssh._tcp.local.",
             "_smb._tcp.local.",
@@ -105,10 +120,12 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
              "_h323._tcp.local.",
              "_sip._udp.local.",
         };
-        for (int i = 0 ; i < prot.length ; i++) {
+
+        for (int i = 0 ; i < prot.length-1 ; i++) {
             typesList.addItem(prot[i]);
           //  System.out.println("Protocol:"+ prot[i]);
              jmdns.registerServiceType(prot[i]);
+             jmdns.addServiceListener(prot[i], this);
              }
     }
 
@@ -118,6 +135,7 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
        application = new String[] {
             "Hypertext Transfer Protocol (HTTP)", //_http._tcp
             "File Transfer Protocol (FTP)",  // _ftp._tcp
+            "Secure File Transfer Protocol (SFTP)",  // _sftp._tcp
             "Trivial File Transfer Protocol (TFTP)",// _tftp._udp
             "Secure Shell (SSH)", //_ssh._tcp
             "Samba Protocol (SMB)", //_smb._tcp.local.
@@ -145,21 +163,27 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
             nameList.addItem(application[i]);
             }
        createCorrispondenceArray();
+       
         }
+
+
 
      //This Method search App name in String[] applpro array from protocol name
     public String searchApp(String prot){
         for(int i=0; i<applpro.length;i+=2){
           if(applpro[i].equals(prot)){
+              System.out.println("App: "+applpro[i+1]);
               return applpro[i+1];
           }
         }
         return "notfound";
     }
+
     //This Method search Protocol name in String[] applpro array from application name
     public String searchProt(String app){
         for(int i=1; i<applpro.length;i+=2){
             if(applpro[i].equals(app)){
+                System.out.println("Prot: "+applpro[i]);
                 return applpro[i-1];
             }
         }
@@ -168,12 +192,13 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
 
     //This Method check if the String prot is in String[] applpro array and RETURN app NAME!
     //Userd Bye combobox change value!
-    public String setCorrispondenceProApp(String prot){
+    public void setCorrispondenceProApp(String prot){
         String app=searchApp(prot);
         if(app.equals("notfound")){
-            app="notfound";
+            jTextAreaInfo.setText("Service Not Found! Error!");
+        }else{
+            nameList.setSelectedItem(app);
         }
-            return app;
     }
 
     //This Method check if the String app is in String[] applpro array and change value in TypeList ComboBox!
@@ -181,8 +206,7 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
     public void setCorrispondenceAppPro(String app){
         String proto=searchProt(app);
         if(proto.equals("notfound")){
-            typesList.insertItemAt("Service Not Found! Error!", typesList.getItemCount());
-            typesList.setSelectedIndex(typesList.getItemCount()-1);
+            jTextAreaInfo.setText("Protocol Type Not Found! Error!");
         }else{
                 typesList.setSelectedItem(proto);
         }
@@ -191,29 +215,29 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
 
     public void serviceTypeAdded(ServiceEvent event) {
         final String type = event.getType();
-        System.out.println("TYPE: " + type);
+        System.out.println("TYPE ADDED: " + type);
         SwingUtilities.invokeLater(new Runnable() {
         public void run() {
-           //if(!isPresent(type))
+           if(!isPresent(type))
                 typesList.addItem(type);
         }
         });
     }
 
-//This Method check if the String app is in String[] applpro array and change value in TypeList ComboBox!
     public void serviceAdded(ServiceEvent event) {
         System.out.println("New Service Added!");
-
         final String name = event.getName();
-        System.out.println("ADD: " + name);
+        System.out.println("SERVICE ADDED: " + name);
         SwingUtilities.invokeLater(new Runnable() {
         public void run() {
+
             insertSorted(services, name);
         }
         });
     }
 
 
+    //************** NOT USED****************//
     public boolean isPresent(String type){
         boolean p=false;
         for(int i=0; i<typesList.getItemCount();i++){
@@ -223,19 +247,7 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
           }
         return p;
     }
-
-    private static void changeIcon( String s){
-          if(s.equals("Working")){
-                statusLabel.setIcon(new ImageIcon("/freimapgsoc/gfx/statusok.png"));
-          }else if(s.equals("Seraching...")){
-              statusLabel.setIcon(new ImageIcon("gfx/statussearching.png"));
-          }else if (s.equals("Deactive")){
-              statusLabel.setIcon(new ImageIcon("gfx/statusnotworking.png"));
-        }
-        
-        
-    }
-
+    
 
    void insertSorted(DefaultListModel model, String value) {
         for (int i = 0, n = model.getSize() ; i < n ; i++) {
@@ -247,77 +259,47 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
         model.addElement(value);
     }
 
-   public void serviceResolved(ServiceEvent event) {
-        String name = event.getName();
-        String type = event.getType();
-        ServiceInfo info = event.getInfo();
-        System.out.println(event);
-        if (name.equals(servicesList.getSelectedValue())) {
-            if (info == null) {
-                this.jTextAreaInfo.setText("service not found");
-            } else {
-
-                StringBuffer buf = new StringBuffer();
-                buf.append(name);
-                buf.append('.');
-                buf.append(type);
-                buf.append('\n');
-                buf.append(info.getServer());
-                buf.append(':');
-                buf.append(info.getPort());
-                buf.append('\n');
-                buf.append(info.getAddress());
-                buf.append(':');
-                buf.append(info.getPort());
-                buf.append('\n');
-                for (Enumeration names = info.getPropertyNames() ; names.hasMoreElements() ; ) {
-                    String prop = (String)names.nextElement();
-                    buf.append(prop);
-                    buf.append('=');
-                    buf.append(info.getPropertyString(prop));
-                    buf.append('\n');
-                }
-                this.jTextAreaInfo.setText(buf.toString());
-            }
+   public void serviceRemoved(ServiceEvent event) {
+        final String name = event.getName();
+        System.out.println("REMOVE: " + name);
+        SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+            services.removeElement(name);
         }
+        });
     }
-    /**
-     * Resolve a service and get all info
-     * name:Stefano Pillatype:_h323._tcp.local.info:service[Stefano Pilla._h323._tcp.local.,/77.87.48.35:1720,\017presence=online\035sta...]
-        Stefano Pilla._h323._tcp.local.
-        Stefano.local.:1720
-        /77.87.48.35:1720
-        status=I'm online using Ekiga
-        presence=online
-        software=ekiga 3.2.0
-     */
 
+    //************** NOT USED****************//
+
+
+  
     //MODIFICARE LA LISTA
     /**
      * List selection changed.
      */
      public void valueChanged(ListSelectionEvent e) {
-       System.out.println(e);
+       //System.out.println(e);
        type = (String)typesList.getSelectedItem().toString();
         if (!e.getValueIsAdjusting()) {
            //I don't need this control but I leave this for future implementation or modification!
-            if (e.getSource() == typesList) {
+          /**  if (e.getSource() == typesList) {
                 jmdns.removeServiceListener(type, this);
                 servicesList.removeAll();
                 jTextAreaInfo.setText("");
                 if (type != null) {
                     jmdns.addServiceListener(type, this);
                 }
-            } else if (e.getSource() == servicesList) {
+            } else */
+            if (e.getSource() == servicesList) {
                 String name = (String)servicesList.getSelectedValue();
                 if (name == null) {
-                    jTextAreaInfo.setText("");
+                    jTextAreaInfo.setText("No Value Selected");
                 } else {
-                    System.out.println(this+" valueChanged() type:"+type+" name:"+name);
+                    System.out.println(this+" valueChanged() type: "+type+" name: "+name);
                     System.out.flush();
                     ServiceInfo service = jmdns.getServiceInfo(type, name);
                     if (service == null) {
-                        jTextAreaInfo.setText("service not found");
+                        jTextAreaInfo.setText("service not found or removed!");
                     } else {
                         
                 StringBuffer buf = new StringBuffer();
@@ -346,31 +328,42 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
             }
             }
         }
-    
+
+     public void searchServices(String protocol){
+     servicesList.removeAll();
+        ServiceInfo[] list=jmdns.list(protocol);
+
+            for(int i=0;i<list.length;i++){
+                System.out.println("ServiceInfo: "+list[i]);
+    }
+    try{
+        String state=null;
+                if (list.length == 0) {
+                    jTextAreaInfo.setText("No Services for this protocol!");
+                } else {
+                    System.out.println("Requested value for" + protocol + "! Found " + list.length + " services");
+                    System.out.flush();
+                    for(int i=0; i<list.length; i++){
+                        services.add(i, list[i].getName());
+                    }
+                }
+    }catch(Exception e){
+        System.out.println(e.getMessage());
+    }
+}
+
 
 
     public String toString() {
         return "RVBROWSER";
     }
-
- public void serviceRemoved(ServiceEvent event) {
-        final String name = event.getName();
-        System.out.println("REMOVE: " + name);
-        SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-            services.removeElement(name);
-            servicesList.repaint();
-        }
-        });
-    }
-
  
  public void removeAll(){
-     changeIcon("Deactive");
-     typesList.removeAllItems();
-     nameList.removeAllItems();
+     servicesList.removeSelectionInterval(0, servicesList.getMaxSelectionIndex());
  }
-/*
+
+ //SEARCH ALL SERVICES
+/**
  public void searchAllServices()  {
  servicesList.removeAll();
  HashMap<ServiceInfo[], String> foundServices= new HashMap<ServiceInfo[], String>();
@@ -400,30 +393,8 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
     }
 }*/
 
-public void searchServices(String protocol){
-    servicesList.removeAll();
-    ServiceInfo[] list=jmdns.list(protocol);
-   // for(int i=0; i<list.length; i++){
-    //    System.out.println(i+":  "+list[i]);
-    //}
-   // System.out.println("ServiceInfo[]:"+list);
-    //System.out.println("protocol: "+ protocol);
-    try{
-        String state=null;
-                if (list.length == 0) {
-                    jTextAreaInfo.setText("No Services for this protocol!");
-                } else {
-                    services.removeAllElements();
-                    System.out.println("Requested value for" + protocol + "! Found " + list.length + " services");
-                    System.out.flush();
-                    for(int i=0; i<list.length; i++){
-                        services.add(i, list[i].getName());
-                    } 
-                }
-    }catch(Exception e){
-        System.out.println(e.getMessage());
-    }
-}
+
+
 
 
     /** This method is called from within the constructor to
@@ -435,7 +406,6 @@ public void searchServices(String protocol){
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        statusLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         servicesList = new JList(services);
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -448,18 +418,17 @@ public void searchServices(String protocol){
         addProtName = new javax.swing.JButton();
         removeAll = new javax.swing.JButton();
         serviceAdded = new javax.swing.JLabel();
+        domainLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        interfaceLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(ServiceDiscovery.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setAlwaysOnTop(true);
         setIconImages(null);
         setName("Form"); // NOI18N
-
-        statusLabel.setIcon(resourceMap.getIcon("statusLabel.icon")); // NOI18N
-        statusLabel.setText(resourceMap.getString("statusLabel.text")); // NOI18N
-        statusLabel.setBorder(null);
-        statusLabel.setName("statusLabel"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -493,11 +462,6 @@ public void searchServices(String protocol){
                 }
             }
         });
-        typesList.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                typesListItemStateChanged(evt);
-            }
-        });
 
         nameList.setFont(resourceMap.getFont("nameList.font")); // NOI18N
         nameList.setName("nameList"); // NOI18N
@@ -515,9 +479,16 @@ public void searchServices(String protocol){
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jButton3.setFont(resourceMap.getFont("removeAll.font")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
+        addProtName.setFont(resourceMap.getFont("removeAll.font")); // NOI18N
         addProtName.setText(resourceMap.getString("addProtName.text")); // NOI18N
         addProtName.setName("addProtName"); // NOI18N
         addProtName.addActionListener(new java.awt.event.ActionListener() {
@@ -529,16 +500,43 @@ public void searchServices(String protocol){
         removeAll.setFont(resourceMap.getFont("removeAll.font")); // NOI18N
         removeAll.setText(resourceMap.getString("removeAll.text")); // NOI18N
         removeAll.setName("removeAll"); // NOI18N
-        removeAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeAllActionPerformed(evt);
-            }
-        });
 
         serviceAdded.setFont(resourceMap.getFont("serviceAdded.font")); // NOI18N
         serviceAdded.setForeground(resourceMap.getColor("serviceAdded.foreground")); // NOI18N
         serviceAdded.setText(resourceMap.getString("serviceAdded.text")); // NOI18N
         serviceAdded.setName("serviceAdded"); // NOI18N
+
+        domainLabel.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        domainLabel.setText(resourceMap.getString("domainLabel.text")); // NOI18N
+        domainLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        domainLabel.setName("domainLabel"); // NOI18N
+
+        jLabel3.setBackground(resourceMap.getColor("jLabel4.background")); // NOI18N
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 1, 10)); // NOI18N
+        jLabel3.setLabelFor(domainLabel);
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setName("jLabel3"); // NOI18N
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        jLabel4.setBackground(resourceMap.getColor("jLabel4.background")); // NOI18N
+        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        jLabel4.setLabelFor(interfaceLabel);
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setName("jLabel4"); // NOI18N
+        jLabel4.setRequestFocusEnabled(false);
+        jLabel4.setVerifyInputWhenFocusTarget(false);
+        jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        interfaceLabel.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        interfaceLabel.setText(resourceMap.getString("interfaceLabel.text")); // NOI18N
+        interfaceLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        interfaceLabel.setName("interfaceLabel"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -546,28 +544,41 @@ public void searchServices(String protocol){
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(typesList, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addComponent(serviceAdded, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(serviceAdded, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(typesList, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameList, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jScrollPane2))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameList, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addProtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, Short.MAX_VALUE)
-                                .addComponent(removeAll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(interfaceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(domainLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                        .addGap(49, 49, 49))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addProtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
+                        .addComponent(removeAll)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -586,29 +597,35 @@ public void searchServices(String protocol){
                             .addComponent(nameList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(serviceAdded)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(serviceAdded))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addProtName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removeAll, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusLabel)
-                .addGap(10, 10, 10))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(domainLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(interfaceLabel))))
+                    .addComponent(removeAll, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void nameListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_nameListItemStateChanged
-       if(evt.getSource()==nameList){
-            servicesList.removeAll();
+       services.removeAllElements();
            try{
                if(nameList.getSelectedItem()==null){
                 new InfoPopUp("Select an Application!").setVisible(true);
@@ -617,41 +634,28 @@ public void searchServices(String protocol){
             //}
                else{
                 setCorrispondenceAppPro(nameList.getSelectedItem().toString());
-                searchServices(nameList.getSelectedItem().toString());
+                searchServices(typesList.getSelectedItem().toString());
+                System.out.println("Selected: "+typesList.getSelectedItem().toString());
             }
            }catch(Exception e){
                System.out.println(e.getMessage());
            }
-       }
     }//GEN-LAST:event_nameListItemStateChanged
 
-
-        private void removeAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllActionPerformed
-                   removeAll();
-        }//GEN-LAST:event_removeAllActionPerformed
-
         private void addProtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProtNameActionPerformed
-            insertProt();
-            insertApp();
+                        // TODO add your handling code here:
         }//GEN-LAST:event_addProtNameActionPerformed
 
-        private void typesListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typesListItemStateChanged
-        if(evt.getSource()==typesList){
-                    servicesList.removeAll();
-            try{
-               if(typesList.getSelectedItem()==null){
-                new InfoPopUp("Select an Application!").setVisible(true);
-            }//else if(typesList.getSelectedItem().equals("All protocols")){
-             //   searchAllServices();
-            //}
-               else{
-                searchServices(typesList.getSelectedItem().toString());
+        private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+            String type=typesList.getSelectedItem().toString();
+            if(!type.equals(null)){
+
+                jmdns.unregisterService(null);
+                new InfoPopUp("Select a Type please!");
             }
-           }catch(Exception e){
-               System.out.println(e.getMessage());
-           }
-       }            // TODO add your handling code here:
-        }//GEN-LAST:event_typesListItemStateChanged
+        }//GEN-LAST:event_jButton3ActionPerformed
+
+
 
     /**
     * @param args the command line arguments
@@ -659,21 +663,31 @@ public void searchServices(String protocol){
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                    String ip="10.0.1.29";
+                    InetAddress add=null;
                 try {
-                    new ServiceDiscovery(JmDNS.create()).setVisible(true);
+                    add = InetAddress.getByName("10.0.1.29");
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    new ServiceDiscovery(JmDNS.create(add)).setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);
                 }
-          
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProtName;
+    private javax.swing.JLabel domainLabel;
+    private javax.swing.JLabel interfaceLabel;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextAreaInfo;
@@ -681,7 +695,6 @@ public void searchServices(String protocol){
     private javax.swing.JButton removeAll;
     private javax.swing.JLabel serviceAdded;
     private javax.swing.JList servicesList;
-    private static javax.swing.JLabel statusLabel;
     private javax.swing.JComboBox typesList;
     // End of variables declaration//GEN-END:variables
 
@@ -691,6 +704,10 @@ public void searchServices(String protocol){
 
     private String[] prot, application;
     private String[] applpro;
+
+    public void serviceResolved(ServiceEvent e) {
+        System.out.println("Service resolved: " + e.getInfo());
+    }
 
 
     /*

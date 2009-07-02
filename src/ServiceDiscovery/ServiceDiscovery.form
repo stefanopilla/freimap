@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" resourceKey="Form.title"/>
     <Property name="alwaysOnTop" type="boolean" value="true"/>
     <Property name="iconImages" type="java.util.List" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -28,36 +28,55 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="statusLabel" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="typesList" min="-2" pref="170" max="-2" attributes="1"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="serviceAdded" min="-2" pref="121" max="-2" attributes="0"/>
-              </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="serviceAdded" min="-2" pref="121" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="typesList" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jScrollPane1" alignment="0" pref="196" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="nameList" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="1">
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="jScrollPane2" max="32767" attributes="1"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="nameList" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="1"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jButton3" alignment="0" max="32767" attributes="1"/>
-                              <Component id="addProtName" alignment="0" pref="168" max="32767" attributes="1"/>
-                              <Component id="removeAll" alignment="0" max="32767" attributes="1"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel4" max="32767" attributes="1"/>
+                          <Component id="jLabel3" alignment="0" min="-2" pref="82" max="-2" attributes="1"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="interfaceLabel" max="32767" attributes="1"/>
+                          <Component id="domainLabel" alignment="0" pref="223" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jButton3" alignment="0" max="32767" attributes="1"/>
+                          <Component id="addProtName" alignment="0" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace pref="256" max="32767" attributes="0"/>
+                      <Component id="removeAll" min="-2" max="-2" attributes="1"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -67,7 +86,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -82,44 +101,41 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="178" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="serviceAdded" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="103" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="addProtName" min="-2" pref="20" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="removeAll" min="-2" pref="20" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane2" pref="178" max="32767" attributes="1"/>
+                  <Component id="jScrollPane1" alignment="0" min="-2" pref="178" max="-2" attributes="1"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="statusLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="serviceAdded" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="addProtName" min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel3" min="-2" pref="15" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="1"/>
+                              <Component id="jLabel4" pref="15" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="domainLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="interfaceLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Component id="removeAll" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="statusLabel">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" resourceKey="statusLabel.icon"/>
-        <Property name="text" type="java.lang.String" resourceKey="statusLabel.text"/>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="statusLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
-      </AuxValues>
-    </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
         <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
@@ -189,9 +205,6 @@
         </Property>
         <Property name="name" type="java.lang.String" value="typesList" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="typesListItemStateChanged"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="typesList.addItemListener(new ItemListener() {&#xa;          public void itemStateChanged(ItemEvent e) {&#xa;               if (e.getStateChange() == ItemEvent.SELECTED) {&#xa;                    // selectedItem is selectioned Item&#xa;                    Object selectedItem = e.getItem();&#xa;               }&#xa;          } &#xa;     });"/>
       </AuxValues>
@@ -224,12 +237,17 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="removeAll.font"/>
         <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
         <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="addProtName">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="removeAll.font"/>
         <Property name="text" type="java.lang.String" resourceKey="addProtName.text"/>
         <Property name="name" type="java.lang.String" value="addProtName" noResource="true"/>
       </Properties>
@@ -243,9 +261,6 @@
         <Property name="text" type="java.lang.String" resourceKey="removeAll.text"/>
         <Property name="name" type="java.lang.String" value="removeAll" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeAllActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="serviceAdded">
       <Properties>
@@ -253,6 +268,72 @@
         <Property name="foreground" type="java.awt.Color" resourceKey="serviceAdded.foreground"/>
         <Property name="text" type="java.lang.String" resourceKey="serviceAdded.text"/>
         <Property name="name" type="java.lang.String" value="serviceAdded" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="domainLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="domainLabel.text"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="domainLabel" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="background" type="java.awt.Color" resourceKey="jLabel4.background"/>
+        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="DejaVu Sans" size="10" style="1"/>
+        </Property>
+        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="domainLabel"/>
+        </Property>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
+        <Property name="verticalAlignment" type="int" value="1"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
+        <Property name="verticalTextPosition" type="int" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="background" type="java.awt.Color" resourceKey="jLabel4.background"/>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
+        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="interfaceLabel"/>
+        </Property>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
+        <Property name="verticalAlignment" type="int" value="1"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
+        <Property name="requestFocusEnabled" type="boolean" value="false"/>
+        <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
+        <Property name="verticalTextPosition" type="int" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="interfaceLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="interfaceLabel.text"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="interfaceLabel" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

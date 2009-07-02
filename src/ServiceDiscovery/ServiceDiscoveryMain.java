@@ -45,9 +45,11 @@ static class SampleListener implements ServiceListener, ServiceTypeListener {
     public static void main(String[] args) throws UnknownHostException, IOException {
        int argc = args.length;
         boolean debug = false;
-        InetAddress intf=null;
+        String ip="10.0.1.29";
+         InetAddress add=null;
+         
         try {
-            intf = InetAddress.getByName("10.0.1.29");
+            add = InetAddress.getByName("127.0.0.1");
         } catch (UnknownHostException ex) {
             Logger.getLogger(ServiceDiscoveryMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,8 +75,8 @@ static class SampleListener implements ServiceListener, ServiceTypeListener {
             intf = InetAddress.getLocalHost();
         }
 */
-        JmDNS jmdns = JmDNS.create(intf);
-        new ServiceDiscovery(jmdns).setVisible(true);
+        
+        new ServiceDiscovery(JmDNS.create(add)).setVisible(true);
 /*
         if ((argc == 0) || ((argc >= 1) && "-browse".equals(args[0]))) {
             new ServiceDiscovery(jmdns);
