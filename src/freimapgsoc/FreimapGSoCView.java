@@ -330,7 +330,7 @@ mainMap.repaint();
             mainMap.repaint();
         }
         zoomChanging = false;
-    }
+    } //OK
 
     /**
      * Indicates if the mini-map is currently visible
@@ -338,7 +338,7 @@ mainMap.repaint();
      */
     public boolean isMiniMapVisible() {
         return miniMapVisible;
-    }
+    }//OK
 
     /**
      * Sets if the mini-map should be visible
@@ -349,7 +349,7 @@ mainMap.repaint();
         this.miniMapVisible = miniMapVisible;
         miniMap.setVisible(miniMapVisible);
         firePropertyChange("miniMapVisible",old,this.isMiniMapVisible());
-    }
+    }//OK
 
     /**
      * Indicates if the zoom slider is currently visible
@@ -357,7 +357,7 @@ mainMap.repaint();
      */
     public boolean isZoomSliderVisible() {
         return zoomSliderVisible;
-    }
+    }//OK
 
     /**
      * Sets if the zoom slider should be visible
@@ -368,7 +368,7 @@ mainMap.repaint();
         this.zoomSliderVisible = zoomSliderVisible;
         zoomSlider.setVisible(zoomSliderVisible);
         firePropertyChange("zoomSliderVisible",old,this.isZoomSliderVisible());
-    }
+    }//OK
 
     /**
      * Indicates if the zoom buttons are visible. This is a bound property
@@ -377,7 +377,7 @@ mainMap.repaint();
      */
     public boolean isZoomButtonsVisible() {
         return zoomButtonsVisible;
-    }
+    }//OK
 
     /**
      * Sets if the zoom buttons should be visible. This ia bound property.
@@ -390,7 +390,7 @@ mainMap.repaint();
         //zoomInButton.setVisible(zoomButtonsVisible);
         //zoomOutButton.setVisible(zoomButtonsVisible);
         firePropertyChange("zoomButtonsVisible",old,this.isZoomButtonsVisible());
-    }
+    }//OK
 
     /**
      * Sets the tile factory for both embedded JXMapViewer components.
@@ -407,12 +407,12 @@ mainMap.repaint();
         miniMap.setCenterPosition(new GeoPosition(0,0));
         zoomSlider.setMinimum(fact.getInfo().getMinimumZoomLevel());
         zoomSlider.setMaximum(fact.getInfo().getMaximumZoomLevel());
-    }
+    }//OK
 
     public void setCenterPosition(GeoPosition pos) {
         mainMap.setCenterPosition(pos);
         miniMap.setCenterPosition(pos);
-    }
+    }//OK
 
     /**
      * Returns a reference to the main embedded JXMapViewer component
@@ -420,7 +420,7 @@ mainMap.repaint();
      */
     public JXMapViewer getMainMap() {
         return this.mainMap;
-    }
+    }//OK
 
     /**
      * Returns a reference to the mini embedded JXMapViewer component
@@ -428,7 +428,7 @@ mainMap.repaint();
      */
     public JXMapViewer getMiniMap() {
         return this.miniMap;
-    }
+    }//OK
 
     /**
      * returns a reference to the zoom in button
@@ -436,7 +436,7 @@ mainMap.repaint();
      */
     public JButton getZoomInButton() {
        return this.zoomIn;
-    }
+    }//OK
 
     /**
      * returns a reference to the zoom out button
@@ -444,7 +444,7 @@ mainMap.repaint();
      */
     public JButton getZoomOutButton() {
         return this.zoomOut;
-    }
+    }//OK
 
     /**
      * returns a reference to the zoom slider
@@ -452,7 +452,7 @@ mainMap.repaint();
      */
     public JSlider getZoomSlider() {
         return this.zoomSlider;
-    }
+    }//OK
 
     public static void addWaypoint(Double lat, Double lon, FreiNode node) {
    
@@ -613,44 +613,43 @@ mainMap.repaint();
             .addGroup(sxPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(serviceD)
-                            .addComponent(goToDefaultPosition))
-                        .addGap(122, 122, 122))
-                    .addGroup(sxPanelLayout.createSequentialGroup()
-                        .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(latitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(longitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sxPanelLayout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jLabel15)
+                    .addComponent(latitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(longitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
             .addGroup(sxPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(sxPanelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(zoomOut, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                .addComponent(zoomOut, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(zoomIn, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                .addComponent(zoomIn, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(44, 44, 44))
+            .addGroup(sxPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(serviceD)
+                .addGap(18, 18, 18)
+                .addComponent(goToDefaultPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sxPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addContainerGap())
         );
         sxPanelLayout.setVerticalGroup(
             sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sxPanelLayout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(serviceD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(goToDefaultPosition)
-                .addGap(193, 193, 193)
+                .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serviceD)
+                    .addComponent(goToDefaultPosition))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(315, 315, 315)
                 .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(zoomIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(zoomOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -664,7 +663,7 @@ mainMap.repaint();
                 .addGroup(sxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(longitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(latitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -711,14 +710,14 @@ mainMap.repaint();
         mainMapLayout.setHorizontalGroup(
             mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
-                .addContainerGap(656, Short.MAX_VALUE)
+                .addContainerGap(644, Short.MAX_VALUE)
                 .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         mainMapLayout.setVerticalGroup(
             mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
-                .addContainerGap(380, Short.MAX_VALUE)
+                .addContainerGap(461, Short.MAX_VALUE)
                 .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -757,7 +756,7 @@ mainMap.repaint();
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(sxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(29, 29, 29)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
@@ -782,9 +781,9 @@ mainMap.repaint();
                         .addComponent(cBaseLabel)
                         .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sxPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sxPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2085, 2085, 2085))
         );
 
@@ -1015,7 +1014,7 @@ mainMap.repaint();
 
         setZoom(14);// HACK joshy: hack, i shouldn't need this here
         this.setCenterPosition(new GeoPosition(0,0));
-    }
+    }//OK
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1056,24 +1055,24 @@ mainMap.repaint();
 
     private JDialog aboutBox;
 
-    private GeoPosition def;
-    private Double DEFAULT_LAT=0.0;
-    private Double DEFAULT_LON=0.0;
-    private TileFactory tf;
+    private GeoPosition def;//OK
+    private Double DEFAULT_LAT=0.0;//OK
+    private Double DEFAULT_LON=0.0;//OK
+    private TileFactory tf; //OK
     private Runtime runtime;
 
     //MainMap and Minimap Variables
-    public static boolean miniMapVisible = true;
-    public static boolean zoomSliderVisible = true;
-    public static boolean zoomButtonsVisible = true;
-    public static final boolean sliderReversed = false;
-    private static WaypointPainter painter = new WaypointPainter();
-    private static Set<Waypoint> waypoints = new HashSet<Waypoint>();
-    private FreiNode uplink = new FreiNode("0.0.0.0/0.0.0.0");
+    public static boolean miniMapVisible = true;//OK
+    public static boolean zoomSliderVisible = true;//OK
+    public static boolean zoomButtonsVisible = true;//OK
+    public static final boolean sliderReversed = false;//OK
+    private static WaypointPainter painter = new WaypointPainter();//OK
+    private static Set<Waypoint> waypoints = new HashSet<Waypoint>();//OK
+    private FreiNode uplink = new FreiNode("0.0.0.0/0.0.0.0");//OK
 
-    private Point2D mapCenter = new Point2D.Double(0,0);
-    private GeoPosition mapCenterPosition = new GeoPosition(0,0);
-    private boolean zoomChanging = false;
+    private Point2D mapCenter = new Point2D.Double(0,0);//OK
+    private GeoPosition mapCenterPosition = new GeoPosition(0,0);//OK
+    private boolean zoomChanging = false;//OK
 
     public static Configurator config;
   public static HashMap<String, DataSource> sources;
