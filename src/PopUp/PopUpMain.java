@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ServiceDiscovery;
+package PopUp;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -22,7 +22,7 @@ import javax.jmdns.ServiceTypeListener;
  *
  * @author stefano
  */
-public class ServiceDiscoveryMain {
+public class PopUpMain {
 static class SampleListener implements ServiceListener, ServiceTypeListener {
         public void serviceAdded(ServiceEvent event) {
             System.out.println("ADD: " + event.getDNS().getServiceInfo(event.getType(), event.getName(), 3*1000));
@@ -51,7 +51,7 @@ static class SampleListener implements ServiceListener, ServiceTypeListener {
         try {
             add = InetAddress.getByName("127.0.0.1");
         } catch (UnknownHostException ex) {
-            Logger.getLogger(ServiceDiscoveryMain.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopUpMain.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -76,7 +76,7 @@ static class SampleListener implements ServiceListener, ServiceTypeListener {
         }
 */
         
-        new ServiceDiscovery(JmDNS.create(add)).setVisible(true);
+        new PopUp(JmDNS.create(add)).setVisible(true);
 /*
         if ((argc == 0) || ((argc >= 1) && "-browse".equals(args[0]))) {
             new ServiceDiscovery(jmdns);

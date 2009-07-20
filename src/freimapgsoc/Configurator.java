@@ -33,8 +33,9 @@ public class Configurator {
   private static HashMap<String, Object> config;
 
   public static final String[] CONFIG_LOCATIONS = new String[]{ 
-    //"./config.yaml",
-//    "./freimap.cfg",
+    "./config.yaml",
+    "/etc/config.yaml",
+"./freimap.cfg",
     "./.freimaprc",
     "/etc/freimap.cfg",
     "~/.freimaprc"

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ServiceDiscovery;
+package PopUp;
 
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceTypeListener;
