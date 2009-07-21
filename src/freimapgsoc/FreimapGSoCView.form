@@ -4,96 +4,110 @@
   <NonVisualComponents>
     <Container class="javax.swing.JPanel" name="mainPanel">
       <Properties>
+        <Property name="doubleBuffered" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="mainPanel" noResource="true"/>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="245" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanel1" alignment="1" min="0" max="32767" attributes="1"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane1" pref="245" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="latitudeValue" min="-2" pref="88" max="-2" attributes="2"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="longitudeValue" min="-2" pref="88" max="-2" attributes="2"/>
+                              </Group>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jSlider1" min="-2" pref="611" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="serviceD" min="-2" max="-2" attributes="1"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="goToDefaultPosition" min="-2" max="-2" attributes="1"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="playLabel" min="-2" pref="36" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="timeLine" min="-2" pref="512" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="stopLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Component id="serviceD" min="-2" max="-2" attributes="1"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="goToDefaultPosition" min="-2" max="-2" attributes="1"/>
+                              </Group>
+                              <Component id="mapPanel" min="-2" pref="943" max="-2" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="dateInfo" pref="233" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="973" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jScrollPane1" alignment="1" max="32767" attributes="1"/>
-                      <Component id="jPanel1" alignment="1" max="32767" attributes="3"/>
-                  </Group>
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="556" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="longitudeValue" alignment="0" min="-2" pref="14" max="-2" attributes="1"/>
+                              <Component id="latitudeValue" alignment="0" min="-2" pref="14" max="-2" attributes="1"/>
+                          </Group>
+                      </Group>
+                      <Component id="mapPanel" min="-2" pref="604" max="-2" attributes="3"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="goToDefaultPosition" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="serviceD" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace pref="35" max="32767" attributes="0"/>
+                          <Component id="dateInfo" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="18" pref="18" max="18" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSlider1" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="timeLine" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="playLabel" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="stopLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="mapPanel">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder/>
               </Border>
             </Property>
-            <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[949, 604]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[949, 604]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="MapPanel" noResource="true"/>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mainMap" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="mainMap" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
           <SubComponents>
             <Container class="org.jdesktop.swingx.JXMapViewer" name="mainMap">
               <Properties>
@@ -105,7 +119,6 @@
                 <Property name="centerPosition" type="org.jdesktop.swingx.mapviewer.GeoPosition" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="def" type="code"/>
                 </Property>
-                <Property name="doubleBuffered" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" resourceKey="mainMap.font"/>
                 <Property name="name" type="java.lang.String" value="mainMap" noResource="true"/>
                 <Property name="recenterOnClickEnabled" type="boolean" value="true"/>
@@ -123,60 +136,46 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="card2"/>
+                </Constraint>
+              </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                  <Component id="zoomOut" min="-2" pref="65" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="zoomIn" min="-2" pref="67" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="latitudeValue" min="-2" pref="88" max="-2" attributes="2"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="longitudeValue" min="-2" pref="88" max="-2" attributes="2"/>
-                              </Group>
+                              <Component id="zoomButtonOut" min="-2" max="-2" attributes="0"/>
+                              <Component id="zoomButtonIn" min="-2" max="-2" attributes="0"/>
+                              <Component id="zoomSlider" alignment="0" min="-2" pref="46" max="-2" attributes="1"/>
                           </Group>
-                          <EmptySpace pref="569" max="32767" attributes="0"/>
+                          <EmptySpace pref="714" max="32767" attributes="0"/>
                           <Component id="miniMap" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="zoomSlider" min="-2" pref="147" max="-2" attributes="1"/>
-                          <EmptySpace pref="738" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace pref="314" max="32767" attributes="0"/>
+                                  <Component id="zoomButtonIn" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="zoomSlider" min="-2" pref="183" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                  <Component id="zoomButtonOut" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="423" max="-2" attributes="0"/>
                                   <Component id="miniMap" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="-2" pref="477" max="-2" attributes="0"/>
-                                  <Component id="zoomSlider" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="zoomIn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="zoomOut" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="longitudeValue" pref="14" max="32767" attributes="1"/>
-                                      <Component id="latitudeValue" alignment="0" pref="14" max="32767" attributes="1"/>
-                                  </Group>
-                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace pref="33" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -184,16 +183,15 @@
               <SubComponents>
                 <Container class="org.jdesktop.swingx.JXMapViewer" name="miniMap">
                   <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-                        <EtchetBorder/>
-                      </Border>
-                    </Property>
                     <Property name="centerPosition" type="org.jdesktop.swingx.mapviewer.GeoPosition" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="def" type="code"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" resourceKey="miniMap.font"/>
+                    <Property name="horizontalWrapped" type="boolean" value="false"/>
                     <Property name="name" type="java.lang.String" value="miniMap" noResource="true"/>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[134, 134]"/>
+                    </Property>
                     <Property name="tileFactory" type="org.jdesktop.swingx.mapviewer.TileFactory" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="tf" type="code"/>
                     </Property>
@@ -206,73 +204,61 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="120" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="128" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="128" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                 </Container>
                 <Component class="javax.swing.JSlider" name="zoomSlider">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="zoomSlider.font"/>
+                    <Property name="majorTickSpacing" type="int" value="1"/>
                     <Property name="maximum" type="int" value="14"/>
+                    <Property name="minorTickSpacing" type="int" value="14"/>
+                    <Property name="orientation" type="int" value="1"/>
+                    <Property name="paintLabels" type="boolean" value="true"/>
+                    <Property name="paintTicks" type="boolean" value="true"/>
+                    <Property name="paintTrack" type="boolean" value="false"/>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                     <Property name="inverted" type="boolean" value="true"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[150, 46]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[150, 46]"/>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="zoomSlider" noResource="true"/>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[150, 46]"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="zoomSliderStateChanged"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="zoomIn">
+                <Component class="javax.swing.JLabel" name="zoomButtonIn">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" resourceKey="zoomIn.font"/>
-                    <Property name="text" type="java.lang.String" resourceKey="zoomIn.text"/>
-                    <Property name="name" type="java.lang.String" value="zoomIn" noResource="true"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="zoomButtonIn.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="zoomButtonIn.text"/>
+                    <Property name="name" type="java.lang.String" value="zoomButtonIn" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zoomInActionPerformed"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="zoomButtonInMouseClicked"/>
                   </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="zoomOut">
+                <Component class="javax.swing.JLabel" name="zoomButtonOut">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" resourceKey="zoomIn.font"/>
-                    <Property name="text" type="java.lang.String" resourceKey="zoomOut.text"/>
-                    <Property name="name" type="java.lang.String" value="zoomOut" noResource="true"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="zoomButtonOut.icon"/>
+                    <Property name="name" type="java.lang.String" value="zoomButtonOut" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zoomOutActionPerformed"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="zoomButtonOutMouseClicked"/>
                   </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JLabel" name="latitudeValue">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="latitudeValue.text"/>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                        <LineBorder/>
-                      </Border>
-                    </Property>
-                    <Property name="name" type="java.lang.String" value="latitudeValue" noResource="true"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="longitudeValue">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="longitudeValue.text"/>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                        <LineBorder/>
-                      </Border>
-                    </Property>
-                    <Property name="name" type="java.lang.String" value="longitudeValue" noResource="true"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -298,30 +284,44 @@
             <Property name="name" type="java.lang.String" value="goToDefaultPosition" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSlider" name="jSlider1">
+        <Component class="javax.swing.JSlider" name="timeLine">
           <Properties>
             <Property name="paintTrack" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="timeLine" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="stopLabel">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel2.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="jLabel2.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="stopLabel.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="stopLabel.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="stopLabel.toolTipText"/>
+            <Property name="verticalAlignment" type="int" value="3"/>
+            <Property name="disabledIcon" type="javax.swing.Icon" resourceKey="stopLabel.disabledIcon"/>
             <Property name="doubleBuffered" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="name" type="java.lang.String" value="stopLabel" noResource="true"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="stopLabelMouseClicked"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="playLabel">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel3.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="jLabel3.toolTipText"/>
-            <Property name="disabledIcon" type="javax.swing.Icon" resourceKey="jLabel3.disabledIcon"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="playLabel.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="playLabel.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="playLabel.toolTipText"/>
+            <Property name="disabledIcon" type="javax.swing.Icon" resourceKey="playLabel.disabledIcon"/>
             <Property name="doubleBuffered" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="name" type="java.lang.String" value="playLabel" noResource="true"/>
+            <Property name="opaque" type="boolean" value="true"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playLabelMouseClicked"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <Properties>
@@ -349,6 +349,46 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="latitudeValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="latitudeValue.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[88, 14]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[88, 14]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="latitudeValue" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="longitudeValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="longitudeValue.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[88, 14]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[88, 14]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="longitudeValue" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="dateInfo">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="dateInfo.text"/>
+            <Property name="name" type="java.lang.String" value="dateInfo" noResource="true"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JMenuBar" name="menuBar">
@@ -455,8 +495,8 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+D"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="goToDefaultPosition" methodName="goToDefaultPosition"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem8.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem8.text"/>
@@ -465,8 +505,8 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+A"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="addNodeOnMap" methodName="addNodeOnMap"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem6.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem6.text"/>
@@ -475,8 +515,8 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+Ctrl+Alt+S"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="takeScreenShot" methodName="takeScreenShot"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem5.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem5.text"/>
@@ -500,8 +540,8 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+F"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="findNode" methodName="findNode"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem7.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem7.text"/>
@@ -510,8 +550,8 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+H"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="goHere" methodName="goHere"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem9.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem9.text"/>
@@ -520,14 +560,17 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="viewMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jMenu3.text"/>
-            <Property name="name" type="java.lang.String" value="jMenu3" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="viewMenu.text"/>
+            <Property name="name" type="java.lang.String" value="viewMenu" noResource="true"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem5">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showNodes" methodName="showNodes"/>
+                </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="jCheckBoxMenuItem5.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jCheckBoxMenuItem5.icon"/>
@@ -544,6 +587,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem7">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showLatLon" methodName="showLatLon"/>
+                </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="jCheckBoxMenuItem7.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jCheckBoxMenuItem7.icon"/>
@@ -561,32 +607,32 @@
                 <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem1" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem2">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="zoomButtons">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+5"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showZoomButton" methodName="showZoomButton"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" resourceKey="jCheckBoxMenuItem2.text"/>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jCheckBoxMenuItem2.icon"/>
-                <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem2" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="zoomButtons.text"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="zoomButtons.icon"/>
+                <Property name="name" type="java.lang.String" value="zoomButtons" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem3">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="zoomSMenu">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+6"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showSlider" methodName="showSlider"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" resourceKey="jCheckBoxMenuItem3.text"/>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jCheckBoxMenuItem3.icon"/>
-                <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem3" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="zoomSMenu.text"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="zoomSMenu.icon"/>
+                <Property name="name" type="java.lang.String" value="zoomSMenu" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem4">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+7"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showMiniMap" methodName="showMiniMap"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="jCheckBoxMenuItem4.text"/>
@@ -652,6 +698,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="1"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-31,0,0,4,-62"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-24,0,0,4,-62"/>
   </AuxValues>
 </Form>

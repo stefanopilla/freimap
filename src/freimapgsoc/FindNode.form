@@ -28,17 +28,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="1">
-                      <Component id="goBackBut" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="findItBut" min="-2" pref="68" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
-                  <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
+                  <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="backButton" min="-2" pref="87" max="-2" attributes="0"/>
+                      <EmptySpace pref="89" max="32767" attributes="0"/>
+                      <Component id="findButton" min="-2" pref="81" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,16 +47,16 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="goBackBut" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="findItBut" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="findButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="backButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,9 +66,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="By Latitude/Longitude">
-              <Property name="titleX" resourceKey="jPanel1.border.title"/>
-            </TitledBorder>
+            <TitledBorder title="By Latitude/Longitude"/>
           </Border>
         </Property>
         <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
@@ -79,62 +77,57 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="latLabel" pref="59" max="32767" attributes="0"/>
-                      <Component id="lonLabel" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lonLabel" max="32767" attributes="1"/>
+                      <Component id="latLabel" alignment="0" min="-2" pref="63" max="-2" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTextField3" min="-2" pref="126" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="latTextField" pref="142" max="32767" attributes="1"/>
+                      <Component id="lonTextField1" alignment="1" pref="142" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="latLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="latTextField" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="latLabel" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lonLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="lonLabel" max="32767" attributes="1"/>
+                      <Component id="lonTextField1" alignment="1" pref="23" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="latTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField1.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField3.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField3" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="latTextField" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="latLabel">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="latLabel.text"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="latLabel" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lonLabel">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="lonLabel.text"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="lonLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="lonTextField1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="lonTextField1" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -143,9 +136,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="By Name">
-              <Property name="titleX" resourceKey="jPanel2.border.title"/>
-            </TitledBorder>
+            <TitledBorder title="By Name"/>
           </Border>
         </Property>
         <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
@@ -154,12 +145,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="nameLabel" min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="nameLabel" pref="71" max="32767" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField5" min="-2" pref="126" max="-2" attributes="0"/>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <Component id="nameTextField" min="-2" pref="138" max="-2" attributes="1"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -167,27 +158,25 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="nameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="nameLabel" alignment="0" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="nameTextField" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTextField5">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField5.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField5" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="nameLabel">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="nameLabel.text"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="nameLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="nameTextField">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="nameTextField" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -196,9 +185,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="By Ip Address">
-              <Property name="titleX" resourceKey="jPanel3.border.title"/>
-            </TitledBorder>
+            <TitledBorder title="By Ip Address"/>
           </Border>
         </Property>
         <Property name="name" type="java.lang.String" value="jPanel3" noResource="true"/>
@@ -207,12 +194,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                  <Component id="ipLabel" min="-2" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField6" min="-2" pref="126" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="ipLabel" pref="71" max="32767" attributes="1"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="ipTextField" min="-2" pref="138" max="-2" attributes="1"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -221,43 +208,43 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ipLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ipTextField" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="ipLabel" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="ipTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField6.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField6" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="ipTextField" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="ipLabel">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="ipLabel.text"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="ipLabel" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="findItBut">
+    <Component class="javax.swing.JButton" name="findButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="findItBut.text"/>
-        <Property name="name" type="java.lang.String" value="findItBut" noResource="true"/>
+        <Property name="icon" type="javax.swing.Icon" resourceKey="findButton.icon"/>
+        <Property name="text" type="java.lang.String" resourceKey="findButton.text"/>
+        <Property name="name" type="java.lang.String" value="findButton" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="goBackBut">
+    <Component class="javax.swing.JButton" name="backButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="goBackBut.text"/>
-        <Property name="name" type="java.lang.String" value="goBackBut" noResource="true"/>
+        <Property name="icon" type="javax.swing.Icon" resourceKey="backButton.icon"/>
+        <Property name="text" type="java.lang.String" resourceKey="backButton.text"/>
+        <Property name="name" type="java.lang.String" value="backButton" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="goBackButMousePressed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

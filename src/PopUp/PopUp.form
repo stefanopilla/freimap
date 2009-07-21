@@ -446,9 +446,9 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jScrollPane4" alignment="0" max="32767" attributes="1"/>
+                      <Component id="jScrollPane4" alignment="0" pref="278" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -488,6 +488,7 @@
           <SubComponents>
             <Component class="javax.swing.JList" name="serviceList">
               <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="serviceList.font"/>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="0"/>
                 </Property>
@@ -515,7 +516,7 @@
           <SubComponents>
             <Component class="javax.swing.JList" name="typeList">
               <Properties>
-                <Property name="font" type="java.awt.Font" resourceKey="typeList.font"/>
+                <Property name="font" type="java.awt.Font" resourceKey="serviceList.font"/>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="0"/>
                 </Property>
@@ -545,6 +546,7 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" resourceKey="serviceList.font"/>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="name" type="java.lang.String" value="info" noResource="true"/>
               </Properties>
@@ -565,7 +567,11 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" resourceKey="sdLog.font"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="autoscrolls" type="boolean" value="true"/>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="sdLog" noResource="true"/>
               </Properties>
             </Component>
@@ -573,19 +579,16 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel2.font"/>
             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel2.font"/>
             <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel2.font"/>
             <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
           </Properties>
         </Component>

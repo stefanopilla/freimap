@@ -37,14 +37,75 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
     @SuppressWarnings("static-access")
     public PopUp(String ip) {
+        System.out.println("Costructor PopUP(String ip)");
         initComponents();
         InetAddress address;
         try {
+            
             address = InetAddress.getByName(ip);
-            JmDNS.create(address);
+            this.jmdns=JmDNS.create(address);
             jmdns.addServiceTypeListener(this);
         } catch (IOException ex) {
             Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // register some well known types
+        String list[] = new String[] {
+            "_http._tcp.local.",
+                    "_ftp._tcp.local.",
+                    "_sftp._tcp.local.",
+                    "_tftp._tcp.local.",
+                    "_ssh._tcp.local.",
+                    "_smb._tcp.local.",
+                    "_printer._tcp.local.",
+                    "_airport._tcp.local.",
+                    "_afpovertcp._tcp.local.",
+                    "_nfs._tcp.local.",
+                    "_webdav._tcp.local.",
+                    "_presence._tcp.local.",
+                    "_eppc._tcp.local.",
+                    "_telnet._tcp.local",
+                    "_raop._tcp.local.",
+                    "_ipp._tcp.local.",
+                    "_pdl-datastream._tcp.local.",
+                    "_riousbprint._tcp.local.",
+                    "_daap._tcp.local",
+                    "_distcc._tcp.local.",
+                    "_xserveraid._tcp.local.",
+                    "_net-assistant._tcp.local.",
+                    "_workstation._tcp.local.",
+                    "_h323._tcp.local.",
+                    "_sip._udp.local."
+        };
+
+        /* APPLICATION NAME FOR ANOTHER IMPLEMENTATION
+        "Hypertext Transfer Protocol (HTTP)", //_http._tcp
+                    "File Transfer Protocol (FTP)", // _ftp._tcp
+                    "Secure File Transfer Protocol (SFTP)", // _sftp._tcp
+                    "Trivial File Transfer Protocol (TFTP)",// _tftp._udp
+                    "Secure Shell (SSH)", //_ssh._tcp
+                    "Samba Protocol (SMB)", //_smb._tcp.local.
+                    "Line Printer Daemon (LPD/LPR)", //_printer._tcp
+                    "Airport Base Station",// _airport._tcp
+                    "AppleTalk Filing Protocol (AFP)", //_afpovertcp._tcp
+                    "Network File System (NFS)", //_nfs._tcp
+                    "WebDAV File System (WEBDAV)", // _webdav._tcp
+                    "iChat Instant Messaging Protocol",// _presence._tcp
+                    "Remote AppleEvents", //_eppc._tcp
+                    "Remote Login (TELNET)",// _telnet._tcp
+                    "Remote Audio Output Protocol (RAOP)",// _raop._tcp
+                    "Internet Printing Protocol (IPP)",// _ipp._tcp
+                    " PDL Data Stream (Port 9100)",// _pdl-datastream._tcp
+                    "Remote I/O USB Printer Protocol",// _riousbprint._tcp
+                    "Digital Audio Access Protocol (DAAP)", //_daap._tcp
+                    "Distributed Compiler (XCODE)", //_distcc._tcp.local.
+                    "Xserver RAID",// _xserveraid._tcp
+                    "Apple Remote Desktop (ARD)", //_net-assistant._tcp
+                    "Workgroup Manager", //_workstation._tcp.local.
+                    "H.323 Telefonie", // _h323._tcp.local.
+                    "Session Initiation Protocol (SIP)",//_sip._udp.local.
+                    */
+        for (int i = 0 ; i < list.length ; i++) {
+            jmdns.registerServiceType(list[i]);
         }
     }
 
@@ -54,7 +115,10 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     }
 
     public PopUp(JmDNS jmdns) throws IOException {
+          System.out.println("Costructor PopUP(jmdns)");
         initComponents();
+       
+
         this.jmdns = jmdns;
         jmdns.addServiceTypeListener(this);
 
@@ -541,6 +605,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        serviceList.setFont(resourceMap.getFont("serviceList.font")); // NOI18N
         serviceList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         serviceList.setToolTipText(resourceMap.getString("serviceList.toolTipText")); // NOI18N
         serviceList.setName("serviceList"); // NOI18N
@@ -549,7 +614,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        typeList.setFont(resourceMap.getFont("typeList.font")); // NOI18N
+        typeList.setFont(resourceMap.getFont("serviceList.font")); // NOI18N
         typeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         typeList.setToolTipText(resourceMap.getString("typeList.toolTipText")); // NOI18N
         typeList.setName("typeList"); // NOI18N
@@ -560,6 +625,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         info.setColumns(20);
         info.setEditable(false);
+        info.setFont(resourceMap.getFont("serviceList.font")); // NOI18N
         info.setRows(5);
         info.setName("info"); // NOI18N
         jScrollPane3.setViewportView(info);
@@ -568,17 +634,18 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         sdLog.setColumns(20);
         sdLog.setEditable(false);
+        sdLog.setFont(resourceMap.getFont("sdLog.font")); // NOI18N
         sdLog.setRows(5);
+        sdLog.setAutoscrolls(true);
+        sdLog.setDoubleBuffered(true);
+        sdLog.setEnabled(false);
         sdLog.setName("sdLog"); // NOI18N
         jScrollPane4.setViewportView(sdLog);
 
-        jLabel1.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jLabel3.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -598,8 +665,8 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane4))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -746,15 +813,13 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             public void run() {
                 InetAddress add = null;
                 try {
-                    add = InetAddress.getByName("localhost"); //logically this is to try...
+                    add = InetAddress.getByName("0.0.0.0"); //logically this is to try...
                 } catch (UnknownHostException ex) {
                     Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                try {
-                    new PopUp(JmDNS.create(add)).setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
+                    new PopUp("0.0.0.0").setVisible(true);
+              
             }
         });
     }

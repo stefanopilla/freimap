@@ -17,7 +17,9 @@ public class FreimapGSoCApp extends SingleFrameApplication {
      */
     @Override protected void startup()  {
         try{
-             show(new FreimapGSoCView(this));
+            
+            show(new FreimapGSoCView(this));
+
         }catch(Exception e){
         System.out.println(e.getCause());
         System.out.println(e.getMessage());
