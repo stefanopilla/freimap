@@ -10,12 +10,20 @@
  */
 package PopUp;
 
+import freimapgsoc.FreiLink;
+import freimapgsoc.FreiNode;
+import freimapgsoc.addServices;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jmdns.JmDNS;
@@ -28,6 +36,7 @@ import javax.swing.JList;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.jdesktop.application.Action;
 
 /**
  *
@@ -39,17 +48,16 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     public PopUp(String ip) {
         System.out.println("Costructor PopUP(String ip)");
         initComponents();
-        InetAddress address;
+        InetAddress address=null;
         try {
-            
-            address = InetAddress.getByName(ip);
-            this.jmdns=JmDNS.create(address);
+            this.jmdns=JmDNS.create(address.getByName(ip));
             jmdns.addServiceTypeListener(this);
         } catch (IOException ex) {
             Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
         }
         // register some well known types
         String list[] = new String[] {
+            "_services._dns-sd._udp.local.",
             "_http._tcp.local.",
                     "_ftp._tcp.local.",
                     "_sftp._tcp.local.",
@@ -63,16 +71,16 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     "_webdav._tcp.local.",
                     "_presence._tcp.local.",
                     "_eppc._tcp.local.",
-                    "_telnet._tcp.local",
+                    "_telnet._tcp.local.",
                     "_raop._tcp.local.",
                     "_ipp._tcp.local.",
                     "_pdl-datastream._tcp.local.",
                     "_riousbprint._tcp.local.",
-                    "_daap._tcp.local",
+                    "_daap._tcp.local.",
                     "_distcc._tcp.local.",
                     "_xserveraid._tcp.local.",
                     "_net-assistant._tcp.local.",
-                    "_workstation._tcp.local.",
+                    //"_workstation._tcp.local.",
                     "_h323._tcp.local.",
                     "_sip._udp.local."
         };
@@ -110,8 +118,15 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     }
 
     /** Creates new form ServiceDiscovery */
-    public PopUp() {
+    public PopUp(FreiNode from, FreiNode to, FreiLink link) {
         initComponents();
+        this.from=from;
+        this.to=to;
+        this.link=link;
+        aboutNodes();
+
+        n1Ip.setText(from.id);
+
     }
 
     public PopUp(JmDNS jmdns) throws IOException {
@@ -181,10 +196,26 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         for (int i = 0 ; i < list.length ; i++) {
             jmdns.registerServiceType(list[i]);
         }
-
-
     }
 
+    public void registerAllServices(Vector<FreiNode> list){
+        HashMap<FreiNode, ServiceInfo> all= new HashMap<FreiNode, ServiceInfo>();
+        //Before Discover All Services for every node.... 
+        //the goal is to have an HashMap in which there are the key=the name of the node and a value = ServiceInfo vector in which there are all services
+        for(int i=0;i<list.size();i++){
+           // ServiceInfo ser=list[i];
+           // all.put(i, serviceinfo);
+        }
+    }
+
+    public void aboutNodes(){
+        n1Ip.setText(from.id);
+        if(from.lat == 0 || from.lat == 0){
+           n1LatLon.setText(from.DEFAULT_LAT +"/"+from.DEFAULT_LON);
+        }
+        n1LatLon.setText(from.lat +"/"+from.lon);
+        //Find a value in the attributes HAshMap and set minLinks and MaxLinks
+    }
 
     /**
      * Add a service.
@@ -241,7 +272,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         String name = event.getName();
         String type = event.getType();
         ServiceInfo info = event.getInfo();
-
+       
         if (name.equals(serviceList.getSelectedValue())) {
             if (info == null) {
                 this.info.setText("service not found");
@@ -304,6 +335,11 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         }
     }
 
+    public void deleteDuplicate(JList list){
+       //IMPLEMENT ME....!
+
+    }
+    
 
 
     /** This method is called from within the constructor to
@@ -318,20 +354,20 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         nodesGroup = new javax.swing.ButtonGroup();
         flowGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        node1Button = new javax.swing.JRadioButton();
+        node2Button = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        n1avail = new javax.swing.JLabel();
+        n1Name = new javax.swing.JLabel();
+        n1LatLon = new javax.swing.JLabel();
+        n1Ip = new javax.swing.JLabel();
+        n1MinLinks = new javax.swing.JLabel();
+        n1MaxLinks = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -356,6 +392,8 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        addServicesButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -370,21 +408,29 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(PopUp.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setAlwaysOnTop(true);
-        setIconImages(null);
         setName("Form"); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel1.border.titleFont"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
-        nodesGroup.add(jRadioButton1);
-        jRadioButton1.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getActionMap(PopUp.class, this);
+        node1Button.setAction(actionMap.get("reloadNode1Data")); // NOI18N
+        nodesGroup.add(node1Button);
+        node1Button.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        node1Button.setSelected(true);
+        node1Button.setText(resourceMap.getString("node1Button.text")); // NOI18N
+        node1Button.setName("node1Button"); // NOI18N
+        node1Button.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                node1ButtonStateChanged(evt);
+            }
+        });
 
-        nodesGroup.add(jRadioButton2);
-        jRadioButton2.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jRadioButton2.setText(resourceMap.getString("jRadioButton2.text")); // NOI18N
-        jRadioButton2.setName("jRadioButton2"); // NOI18N
+        node2Button.setAction(actionMap.get("reloadNode2Data")); // NOI18N
+        nodesGroup.add(node2Button);
+        node2Button.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        node2Button.setText(resourceMap.getString("node2Button.text")); // NOI18N
+        node2Button.setName("node2Button"); // NOI18N
 
         jLabel4.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -413,29 +459,29 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
         jLabel12.setName("jLabel12"); // NOI18N
 
-        jLabel16.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
-        jLabel16.setName("jLabel16"); // NOI18N
+        n1avail.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1avail.setText(resourceMap.getString("n1avail.text")); // NOI18N
+        n1avail.setName("n1avail"); // NOI18N
 
-        jLabel17.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
-        jLabel17.setName("jLabel17"); // NOI18N
+        n1Name.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1Name.setText(resourceMap.getString("n1Name.text")); // NOI18N
+        n1Name.setName("n1Name"); // NOI18N
 
-        jLabel18.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
-        jLabel18.setName("jLabel18"); // NOI18N
+        n1LatLon.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1LatLon.setText(resourceMap.getString("n1LatLon.text")); // NOI18N
+        n1LatLon.setName("n1LatLon"); // NOI18N
 
-        jLabel19.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel19.setText(resourceMap.getString("jLabel19.text")); // NOI18N
-        jLabel19.setName("jLabel19"); // NOI18N
+        n1Ip.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1Ip.setText(resourceMap.getString("n1Ip.text")); // NOI18N
+        n1Ip.setName("n1Ip"); // NOI18N
 
-        jLabel20.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel20.setText(resourceMap.getString("jLabel20.text")); // NOI18N
-        jLabel20.setName("jLabel20"); // NOI18N
+        n1MinLinks.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1MinLinks.setText(resourceMap.getString("n1MinLinks.text")); // NOI18N
+        n1MinLinks.setName("n1MinLinks"); // NOI18N
 
-        jLabel21.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel21.setText(resourceMap.getString("jLabel21.text")); // NOI18N
-        jLabel21.setName("jLabel21"); // NOI18N
+        n1MaxLinks.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1MaxLinks.setText(resourceMap.getString("n1MaxLinks.text")); // NOI18N
+        n1MaxLinks.setName("n1MaxLinks"); // NOI18N
 
         jLabel7.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -494,7 +540,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
+                    .addComponent(node1Button)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -505,13 +551,13 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(n1Ip, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(n1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(n1LatLon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
@@ -519,9 +565,9 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(n1avail, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(n1MaxLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(n1MinLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -550,35 +596,35 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jRadioButton2))
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addComponent(node2Button))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(node1Button)
+                    .addComponent(node2Button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel19))
+                            .addComponent(n1avail)
+                            .addComponent(n1Ip))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel17))
+                            .addComponent(n1MinLinks)
+                            .addComponent(n1Name))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel18)))
+                            .addComponent(n1MaxLinks)
+                            .addComponent(n1LatLon)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -636,7 +682,6 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         sdLog.setEditable(false);
         sdLog.setFont(resourceMap.getFont("sdLog.font")); // NOI18N
         sdLog.setRows(5);
-        sdLog.setAutoscrolls(true);
         sdLog.setDoubleBuffered(true);
         sdLog.setEnabled(false);
         sdLog.setName("sdLog"); // NOI18N
@@ -648,6 +693,15 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         jLabel3.setName("jLabel3"); // NOI18N
 
+        addServicesButton.setAction(actionMap.get("addServices")); // NOI18N
+        addServicesButton.setText(resourceMap.getString("addServicesButton.text")); // NOI18N
+        addServicesButton.setActionCommand(resourceMap.getString("addServicesButton.actionCommand")); // NOI18N
+        addServicesButton.setName("addServicesButton"); // NOI18N
+
+        jButton1.setAction(actionMap.get("reloadServices")); // NOI18N
+        jButton1.setText(resourceMap.getString("reloadServices.text")); // NOI18N
+        jButton1.setName("reloadServices"); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -655,18 +709,25 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(addServicesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(494, 494, 494))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                        .addGap(106, 106, 106))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -676,14 +737,18 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jScrollPane4))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addServicesButton)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel3.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel3.border.titleFont"))); // NOI18N
@@ -783,10 +848,11 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -798,11 +864,16 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addGap(35, 35, 35))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void node1ButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_node1ButtonStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_node1ButtonStateChanged
+
 
     /**
      * @param args the command line arguments
@@ -813,19 +884,48 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             public void run() {
                 InetAddress add = null;
                 try {
-                    add = InetAddress.getByName("0.0.0.0"); //logically this is to try...
+                    add=InetAddress.getByName("10.0.1.29");
+                    System.out.println(add);
+                    //add = InetAddress.getByName("10.0.1.29"); //logically this is to try...
                 } catch (UnknownHostException ex) {
                     Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
                 }
                
-                    new PopUp("0.0.0.0").setVisible(true);
+                    new PopUp("10.0.1.29").setVisible(true);
               
             }
         });
     }
+
+    @Action
+    public void reloadNode1Data() {
+        //Reset View of frame...all to default position!
+        //When Node 1 is selected reload data in jchart, ServiceDiscovery and Labels...
+
+    }
+
+    @Action
+    public void reloadNode2Data() {
+        //Reset View of frame...all to default position!
+        //When Node 2 is selected reload data in jchart, ServiceDiscovery and Labels...
+    }
+
+    @Action
+    public void addServices() {
+        new addServices(types).setVisible(true);
+       // jmdns.registerServiceType(types.lastElement().toString());
+
+    }
+
+    @Action
+    public void reloadServices() {
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addServicesButton;
     private javax.swing.ButtonGroup flowGroup;
     private javax.swing.JTextArea info;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -833,13 +933,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -857,8 +951,6 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
@@ -870,6 +962,14 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel n1Ip;
+    private javax.swing.JLabel n1LatLon;
+    private javax.swing.JLabel n1MaxLinks;
+    private javax.swing.JLabel n1MinLinks;
+    private javax.swing.JLabel n1Name;
+    private javax.swing.JLabel n1avail;
+    private javax.swing.JRadioButton node1Button;
+    private javax.swing.JRadioButton node2Button;
     private javax.swing.ButtonGroup nodesGroup;
     private javax.swing.JTextArea sdLog;
     private javax.swing.JList serviceList;
@@ -879,8 +979,8 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private String type;
     private DefaultListModel services = new DefaultListModel();
     private DefaultListModel types=new DefaultListModel();
-    private String[] prot, application;
-    private String[] applpro;
-
+    private FreiNode from;
+    private FreiNode to;
+    private FreiLink link;
    
    }

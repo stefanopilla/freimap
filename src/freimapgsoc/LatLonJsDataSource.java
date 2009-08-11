@@ -31,7 +31,8 @@ public class LatLonJsDataSource implements DataSource {
     String sServerURL = null;
     try {
     sServerURL = Configurator.getS("url", configuration);
-      fetchLinks = Configurator.getB("fetchlinks", configuration);
+      //fetchLinks = Configurator.getB("fetchlinks", configuration);
+     fetchLinks = true;
       System.out.println("Fetch Status Is: "+fetchLinks);
       System.out.println("fetching data from URL: " + sServerURL);
       if (!fetchLinks) System.out.println("NOT fetching link information.");
@@ -40,6 +41,7 @@ public class LatLonJsDataSource implements DataSource {
       BufferedReader in = new BufferedReader(new InputStreamReader(new URL(sServerURL).openStream()));
       while (true) {
         String line=in.readLine();
+        System.out.println("Line: "+line);
         if (line==null) break;//if there aren't string in a file
         if ((line.length()>4) && (line.substring(0,4).equals("Node"))) {
           StringTokenizer st = new StringTokenizer(line.substring(5,line.length()-2), ",", false);
@@ -79,13 +81,11 @@ public class LatLonJsDataSource implements DataSource {
           } else {
             nnode.attributes.put("Gateway", "OTHER: "+gatewayip);
           }
-          System.out.println("nnode.id:"+ nnode.id);
-          System.out.println("nnode: "+ nnode);
+          //System.out.println("nnode.id:"+ nnode.id);
+          //System.out.println("nnode: "+ nnode);
           nodeByName.put(nnode.id, nnode); //add node to hashmap of nodebyname <String, Freinode>
-          
-          
-        } else
-        if ((fetchLinks) && (line.length()>5) && (line.substring(0,5).equals("PLink"))) {
+
+        } else if ((fetchLinks) && (line.length()>5) && (line.substring(0,5).equals("PLink"))) {
           StringTokenizer st = new StringTokenizer(line.substring(6,line.length()-2), ",", false);
           String src = st.nextToken();
           String dest = st.nextToken();

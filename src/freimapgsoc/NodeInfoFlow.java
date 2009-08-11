@@ -11,12 +11,17 @@
 
 package freimapgsoc;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -32,35 +37,91 @@ public class NodeInfoFlow extends javax.swing.JFrame {
     }
 
 
-      public static void chartExample(String[] args) {
-        //         Create a simple XY chart
-        XYSeries series = new XYSeries("XYGraph");
-        series.add(1, 1);
-        series.add(1, 2);
-        series.add(2, 1);
-        series.add(3, 9);
-        series.add(4, 10);
-        //         Add the series to your data set
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-        //         Generate the graph
-        JFreeChart chart = ChartFactory.createXYLineChart("XY Chart", // Title
-                "x-axis", // x-axis Label
-                "y-axis", // y-axis Label
-                dataset, // Dataset
-                PlotOrientation.VERTICAL, // Plot Orientation
-                true, // Show Legend
-                true, // Use tooltips
-                false // Configure chart to generate URLs?
-            );
-        try {
-            ChartUtilities.saveChartAsJPEG(new File("/tmp/chart.jpg"), chart, 500,
-                300);
-        } catch (IOException e) {
-            System.err.println("Problem occurred creating chart.");
+  public void setLinkCountProfile(LinkedList<LinkCount> lcp) {
+    if (lcp.size()==0) {
+    	minLinks=0;
+	    maxLinks=0;
+      return;
+    }
+
+    XYSeries data = new XYSeries("links");
+    XYSeries avail = new XYSeries("avail");
+    XYSeriesCollection datac = new XYSeriesCollection(data);
+    datac.addSeries(avail);
+    linkCountChart = ChartFactory.createXYLineChart("average incoming link count\r\nincoming link availability", "time", "count",datac, PlotOrientation.VERTICAL, false, false, false);
+    sexupLayout(linkCountChart);
+    long first=lcp.getFirst().time,
+         last =lcp.getLast().time,
+         lastClock = first,
+         count = 0,
+         maxCount = 0;
+    long aggregate = (last-first) / CHART_WIDTH;
+    double sum=0;
+
+/* ok, this ain't effective, we do it just to pre-calculate maxCount */
+    ListIterator<LinkCount> li = lcp.listIterator();
+    while (li.hasNext()) {
+        LinkCount lc = li.next();
+        count++;
+        if (lc.time - lastClock > aggregate) {
+          if (maxCount < count) maxCount = count;
+          lastClock=lc.time;
+          count=0;
         }
     }
 
+    //reset for second iteration
+    count = 0;
+    lastClock = first;
+
+    //iterate again
+    li = lcp.listIterator();
+    while (li.hasNext()) {
+        LinkCount lc = li.next();
+        if (minLinks>lc.count) minLinks=lc.count;
+        if (maxLinks<lc.count) maxLinks=lc.count;
+
+        sum += lc.count;
+        count++;
+
+        if (aggregate==0) aggregate=1000;//dirty hack
+        if (lc.time - lastClock > aggregate) {
+          for (long i = lastClock; i<lc.time - aggregate; i+=aggregate) {
+            data.add(i * 1000, (i==lastClock)?sum/count:Double.NaN);
+            avail.add(i * 1000, (i==lastClock)?((double)count/maxCount):0);
+          }
+
+          count=0; sum=0;
+          lastClock=lc.time;
+    	}
+    }
+
+    status = STATUS_AVAILABLE;
+  }
+
+  private void sexupLayout(JFreeChart chart) {
+    chart.setAntiAlias(true);
+//    chart.setBackgroundPaint(VisorFrame.bgcolor);
+    chart.setBackgroundPaint(Color.black);
+    chart.setBorderVisible(false);
+
+    XYPlot plot=chart.getXYPlot();
+//    plot.setBackgroundPaint(VisorFrame.bgcolor);
+    plot.setBackgroundPaint(Color.black);
+    plot.setDomainAxis(new DateAxis());
+  }
+
+
+public static final int CHART_WIDTH = 100;
+
+  public static final int STATUS_FETCHING  = 0;
+  public static final int STATUS_AVAILABLE = 100;
+  public static final int STATUS_FAILED    = -100;
+
+  //Hashtable<Long,Integer> linkCountProfile;
+  JFreeChart linkCountChart;
+  public int minLinks=Integer.MAX_VALUE, maxLinks=-1;
+  public int status = STATUS_FETCHING;
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -86,7 +147,7 @@ public class NodeInfoFlow extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        chartPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -200,18 +261,18 @@ public class NodeInfoFlow extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel2.setName("jPanel2"); // NOI18N
+        chartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        chartPanel.setName("chartPanel"); // NOI18N
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout chartPanelLayout = new javax.swing.GroupLayout(chartPanel);
+        chartPanel.setLayout(chartPanelLayout);
+        chartPanelLayout.setHorizontalGroup(
+            chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 340, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 228, Short.MAX_VALUE)
+        chartPanelLayout.setVerticalGroup(
+            chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -233,7 +294,7 @@ public class NodeInfoFlow extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -241,7 +302,7 @@ public class NodeInfoFlow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -265,6 +326,7 @@ public class NodeInfoFlow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JPanel chartPanel;
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JLabel jLabel1;
@@ -282,7 +344,6 @@ public class NodeInfoFlow extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
 }

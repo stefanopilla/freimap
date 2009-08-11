@@ -77,8 +77,8 @@ public class FreifunkMapDataSource implements DataSource {
 			Node node = nl.item(i);
 			NamedNodeMap attr = node.getAttributes();
 
-    String klass = getValue(attr.getNamedItem("class"));
-    String coords = getValue(attr.getNamedItem("coords"));
+			String klass = getValue(attr.getNamedItem("class"));
+			String coords = getValue(attr.getNamedItem("coords"));
       String tooltip = getValue(attr.getNamedItem("tooltip"));
       String ip = getValue(attr.getNamedItem("ip"));
       String height = getValue(attr.getNamedItem("height"));
@@ -91,10 +91,10 @@ public class FreifunkMapDataSource implements DataSource {
 
 			// Use ip or coordinates as fqid if tooltip is missing
 			if (tooltip == null) {
-                            if (ip == null) {
+        if (ip == null) {
 				  tooltip = coords;
-                                    } else {
-                                tooltip = ip;
+        } else {
+          tooltip = ip;
         }
       }
 
@@ -153,7 +153,6 @@ public class FreifunkMapDataSource implements DataSource {
     return nodeByName.get(id);
   }
 
-  //Add node in Vector of Freinode
   public void addNode(FreiNode node) {
     nodes.remove(node); //just in case
     nodes.add(node);

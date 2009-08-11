@@ -36,7 +36,7 @@ import javax.swing.*;
 import javax.swing.filechooser.*;
 
 /* ImageFilter.java is used by FileChooserDemo2.java. */
-public class saveFileFilter extends FileFilter {
+public class jsFileFilter extends FileFilter {
 
     //Accept all directories and all gif, jpg, tiff, or png files.
     public boolean accept(File f) {
@@ -46,7 +46,7 @@ public class saveFileFilter extends FileFilter {
 
         String extension = Utils.getExtension(f);
         if (extension != null) {
-            if (extension.equals(Utils.js)||extension.equals(Utils.xml)||extension.equals(Utils.txt))
+            if (extension.equals(Utils.js))
                 {
                     return true;
             } else {
@@ -59,6 +59,6 @@ public class saveFileFilter extends FileFilter {
 
     //The description of this filter
     public String getDescription() {
-        return "File XML (*.xml) TXT (*.txt) JS (*.js)";
+        return "File JS (*.js)";
     }
 }

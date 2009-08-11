@@ -32,13 +32,13 @@ import org.ho.yaml.*;
 public class Configurator {
   private static HashMap<String, Object> config;
 
-  public static final String[] CONFIG_LOCATIONS = new String[]{ 
-    "./config.yaml",
-    "/etc/config.yaml",
-"./freimap.cfg",
-    "./.freimaprc",
-    "/etc/freimap.cfg",
-    "~/.freimaprc"
+  public static final String[] CONFIG_LOCATIONS = new String[]{
+      "/etc/config.yaml",
+    //"/etc/config.yaml",
+//"./freimap.cfg",
+  //  "./.freimaprc",
+   // "/etc/freimap.cfg",
+   // "~/.freimaprc"
   };
 
   @SuppressWarnings("unchecked")
@@ -63,11 +63,14 @@ public class Configurator {
 
   @SuppressWarnings("unchecked")
   public static Object get(String[] keys, HashMap<String, Object> parent) {
-    if (parent==null) parent = config;
-    Object value = parent;
+     
+    if (parent==null)  parent = config;
+
+      Object value = parent;
     for (int i=0; i<keys.length; i++) {
-      try {
-        parent = (HashMap<String, Object>)value;
+      try {   
+          System.out.println("Keys: "+keys[i]);
+          parent = (HashMap<String, Object>)value;
         System.out.println("Parent Configurator.java: "+parent);
       } catch (Exception ex) {
         ex.printStackTrace();
