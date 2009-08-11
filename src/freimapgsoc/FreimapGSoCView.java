@@ -34,6 +34,7 @@ import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
@@ -53,6 +54,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.jmdns.JmDNS;
+import javax.swing.DefaultListModel;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -61,6 +63,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JSlider;
 import javax.swing.event.MouseInputAdapter;
 import org.jdesktop.swingx.JXMapViewer;
@@ -82,10 +85,8 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     public FreimapGSoCView(SingleFrameApplication app) {
         super(app);
 
-
         final int maxzoomlevel = 14;
         final int totalmapzoom = 14;
-
 
         //public TileFactoryInfo(int minimumZoomLevel,int maximumZoomLevel,int totalMapZoom,int tileSize,boolean xr2l,boolean yt2b,String baseURL,String xparam,String yparam,String zparam)(
         TileFactoryInfo info = new TileFactoryInfo(0, maxzoomlevel, totalmapzoom, 256, false, false, "http://tile.openstreetmap.org", "x", "y", "z") {
@@ -110,8 +111,10 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         sources = new HashMap<String, DataSource>();
         try {
             HashMap<String, Object> ds = (HashMap<String, Object>) config.get("datasources");
+            System.out.println(ds);
             HashMap<String, HashMap<String, Object>> ds2subconfig = new HashMap<String, HashMap<String, Object>>();
             Iterator<String> i = ds.keySet().iterator();
+
             while (i.hasNext()) {
                 String id = i.next();
                 HashMap<String, Object> subconfig = (HashMap<String, Object>) ds.get(id);
@@ -126,12 +129,14 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             Iterator<String> j = sources.keySet().iterator();
             while (j.hasNext()) {
                 String id = j.next();
-                //System.out.println("id:"+ id);
+                System.out.println("id:" + id);
                 DataSource source = sources.get(id);
                 source.init(ds2subconfig.get(id)); //initialize datasource with configuration parameters
-                //System.out.println("Sources: "+sources.values());
-                //System.out.println("NodeList: "+source.getNodeList());
-                //System.out.println("LinksList: "+source.getLinks(0));
+                System.out.println("Sources: " + sources.values());
+                System.out.println("NodeList: " + source.getNodeList());
+
+
+                System.out.println("LinksList: " + source.getLinks(0));
 
                 nodes = new Vector<FreiNode>();
                 links = new Vector<FreiLink>();
@@ -140,15 +145,17 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                     //System.out.println("Links Element("+ t +"):" +links.elementAt(t));
                 }
                 links = source.getLinks(0);
+
                 nodes = source.getNodeList();
 
                 for (int k = 0; k < nodes.size(); k++) {
-                    // System.out.println("id: "+nodes.get(k) + "lat: "+ nodes.get(k).lat + " lon: "+ nodes.get(k).lon);
+                    System.out.println("id: " + nodes.get(k) + " lat: " + nodes.get(k).lat + " lon: " + nodes.get(k).lon);
                     addWaypoint(nodes.get(k).lat, nodes.get(k).lon, nodes.get(k));
+                    locatedN.addElement(nodes.get(k));
                 }
 
+                   drawAll(links,nodes);
 
-                drawAll(links, nodes);
                 /*
                 System.out.println("to:"+ links.get(k).to);
                 System.out.println("from: "+links.get(k).from);
@@ -174,115 +181,101 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
     }
 
-    public void drawAll(Vector<FreiLink> links, Vector<FreiNode> nodes) {
-        if (nodes.size() == 0) {
-            for (int i = 0; i < links.size(); i++) {
-                FreiLink selectedLink = links.elementAt(i);
-                //System.out.println("selectedLink.from.lat: "+ selectedLink.from.lat + "selectedLink.from.lon: "+ selectedLink.from.lon);
-                //System.out.println("selectedLink.to.lat: "+ selectedLink.to.lat + "selectedLink.to.lon"+ selectedLink.to.lon);
-                GeoPosition posFrom = new GeoPosition(selectedLink.from.lat, selectedLink.from.lon);
-                GeoPosition posTo = new GeoPosition(selectedLink.to.lat, selectedLink.to.lon);
-                //System.out.println("posFromLat:" +posFrom.getLatitude() + " posFromLon: "+ posFrom.getLongitude());
-                //System.out.println("posToLat:" +posTo.getLatitude() + " posToLon: "+ posTo.getLongitude());
-
-                final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
-                final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
-                //System.out.println("ptFrom X:" +(int)ptFrom.getX());
-                //System.out.println("ptFrom Y:" +(int)ptFrom.getY());
-                //System.out.println("ptTo X:" +(int)ptTo.getX());
-                //System.out.println("ptTo Y:" +(int)ptTo.getY());
-                painter.setRenderer(new WaypointRenderer() {
-
-                    public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-                        g.drawLine((int) ptFrom.getX(), (int) ptFrom.getY(), (int) ptTo.getX(), (int) ptTo.getY());
-                        return false;
-                    }
-                });
-            }
-        } else if (links.size() == 0) {
-            for (int i = 0; i < nodes.size(); i++) {
-                mainMap.setAddressLocation(new GeoPosition(nodes.get(i).lat, nodes.get(i).lon));
-                waypoints.add(new Waypoint(nodes.get(i).lat, nodes.get(i).lon));
-                painter.setWaypoints(waypoints);
-                painter.setRenderer(new WaypointRenderer() {
-
-                    public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-
-                        Toolkit toolkit = Toolkit.getDefaultToolkit();
-                        Image i = toolkit.getImage("/home/stefano/NetBeansProjects/FreimapGSoC/src/gfx/wrt.png");
-                        g.drawImage(i, 0, 0, null);
-                        return true;
-                    }
-                });
-            }
-
-        } else {
-            for (int i = 0; i < links.size(); i++) {
-                FreiLink selectedLink = links.elementAt(i);
-                System.out.println("selectedLink.from.lat: " + selectedLink.from.lat + "selectedLink.from.lon: " + selectedLink.from.lon);
-                System.out.println("selectedLink.to.lat: " + selectedLink.to.lat + "selectedLink.to.lon" + selectedLink.to.lon);
-                GeoPosition posFrom = new GeoPosition(selectedLink.from.lat, selectedLink.from.lon);
-                GeoPosition posTo = new GeoPosition(selectedLink.to.lat, selectedLink.to.lon);
-                System.out.println("posFromLat:" + posFrom.getLatitude() + " posFromLon: " + posFrom.getLongitude());
-                System.out.println("posToLat:" + posTo.getLatitude() + " posToLon: " + posTo.getLongitude());
-
-                final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
-                final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
-                System.out.println("ptFrom X:" + (int) ptFrom.getX());
-                System.out.println("ptFrom Y:" + (int) ptFrom.getY());
-                System.out.println("ptTo X:" + (int) ptTo.getX());
-                System.out.println("ptTo Y:" + (int) ptTo.getY());
-                mainMap.setAddressLocation(posFrom);
-                mainMap.setAddressLocation(posTo);
-
-                painter.setRenderer(new WaypointRenderer() {
-
-                    public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-                        Stroke linkStroke = new BasicStroke((float) (Math.min(2, 0.00005)), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-                        g.setStroke(linkStroke);
-                        g.drawLine((int) ptFrom.getX(), (int) ptFrom.getY(), (int) ptTo.getX(), (int) ptTo.getY());
-                        return true;
-                    }
-                });
-            }
-            for (int i = 0; i < nodes.size(); i++) {
-                mainMap.setAddressLocation(new GeoPosition(nodes.get(i).lat, nodes.get(i).lon));
-                waypoints.add(new Waypoint(nodes.get(i).lat, nodes.get(i).lon));
-                painter.setWaypoints(waypoints);
-                painter.setRenderer(new WaypointRenderer() {
-
-                    public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-
-                        Toolkit toolkit = Toolkit.getDefaultToolkit();
-                        Image i = toolkit.getImage("/home/stefano/NetBeansProjects/FreimapGSoC/src/gfx/wrt.png");
-                        g.drawImage(i, 0, 0, null);
-                        g.drawLine(120, 320, 650, 320);
-                        return true;
-                    }
-                });
-
-            }
-
-            mainMap.setOverlayPainter(painter);
-            mainMap.repaint();
-
-        }
+    public GeoPosition getPosFrom(FreiLink links) {
+        GeoPosition posFrom = new GeoPosition(links.from.lat, links.from.lon);
+        return posFrom;
     }
 
-  
+    public GeoPosition getPosTo(FreiLink links) {
+        GeoPosition posTo = new GeoPosition(links.to.lat, links.to.lon);
+        return posTo;
+    }
+
+    public Point2D mapToPixel(GeoPosition from) {
+        return mainMap.getTileFactory().geoToPixel(from, mainMap.getZoom());
+    }
+
+    public void drawLinks(FreiLink link) {
+
+        System.out.println("selectedLink.from.lat: " + link.from.lat + "selectedLink.from.lon: " + link.from.lon);
+        System.out.println("selectedLink.to.lat: " + link.to.lat + "selectedLink.to.lon" + link.to.lon);
+        final Point2D ptFrom = mapToPixel(getPosFrom(link));
+        final Point2D ptTo = mapToPixel(getPosTo(link));
+        System.out.println("ptFrom X:" + ptFrom.getX());
+        System.out.println("ptFrom Y:" +  ptFrom.getY());
+        System.out.println("ptTo X:" + ptTo.getX());
+        System.out.println("ptTo Y:" +  ptTo.getY());
+        painter.setRenderer(new WaypointRenderer() {
+
+            public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+                g.setPaint(Color.RED);
+                g.draw(new Line2D.Double((double)ptFrom.getX(),(double) ptFrom.getY(),(double) ptTo.getX(),(double) ptTo.getY()));
+                g.draw(new Line2D.Double(ptTo, ptFrom));
+
+
+                return false;
+            }
+        });
+        mainMap.setOverlayPainter(painter);
+
+    }
+
+    public void drawNode(FreiNode node) {
+        mainMap.setAddressLocation(new GeoPosition(node.lat,node.lon));
+        waypoints.add(new Waypoint(node.lat,node.lon));
+        painter.setWaypoints(waypoints);
+        final String noden = node.toString();
+        painter.setRenderer(new WaypointRenderer() {
+
+            public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
+                g.drawOval(3, 3, 3, 3);
+                g.setPaint(Color.RED);
+                //Toolkit toolkit = Toolkit.getDefaultToolkit();
+                //Image i = toolkit.getImage("/Users/stefanopilla/Desktop/FreimapGSoC/src/gfx/wrt.png");
+                //g.drawImage(i, 0, 0, null);
+                return true;
+            }
+        });
+        mainMap.setOverlayPainter(painter);
+    }
+
+    public void drawAll(Vector<FreiLink> links, Vector<FreiNode> nodes) {
+        int i = 0;
+        if (links.size() != 0) {
+            if (nodes.size() == 0) {
+                for (i = 0; i < links.size(); i++) {
+                    drawLinks(links.elementAt(i));
+                }
+            } else { //if node.size()!=0
+                //DRAW ALL
+                for (i = 0; i < nodes.size(); i++) {
+                    drawNode(nodes.elementAt(i));
+                }
+                for (i = 0; i < links.size(); i++) {
+                    drawLinks(links.elementAt(i));
+                }
+            }
+        } else if (nodes.size() != 0) {
+            for (i = 0; i < nodes.size(); i++) {
+                drawNode(nodes.elementAt(i));
+            }
+        } else {
+            new InfoPopUp("There Are no Link to Draw!").setVisible(true);
+        }
+    }
 
     public void printDateTime() {
         Format formatter = new SimpleDateFormat("EEE, dd/MM/yyyy");
         String today = formatter.format(new Date());
-         SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
         Date now = new Date();
         String strTime = sdfTime.format(now);
-    dateInfo.setText(today + " - "+strTime);
+        dateInfo.setText(today + " - " + strTime);
 //        dateInfo.setText("Today : " + today + " - " + strTime);
 
     }
 
-    //MAP METHODS ##################################
+//MAP METHODS ##################################
     /**
      * Set the current zoomlevel for the main map. The minimap will
      * be updated accordingly
@@ -298,6 +291,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             zoomSlider.setValue(zoom);
             mainMap.repaint();
         }
+
         zoomChanging = false;
     } //OK
 
@@ -432,7 +426,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         return lat.toString();
     }
 
-    //Get String Longitude from the Map
+//Get String Longitude from the Map
     private String getLon(GeoPosition pos) {
         Double lon = pos.getLatitude();
         return lon.toString();
@@ -455,14 +449,16 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         new InfoPopUp("Screenshot is in /tmp/ directory").setVisible(true);
     }
 
-    //END OF MAP METHODS################################
+//END OF MAP METHODS################################
     @Action
     public void showAboutBox() {
         if (aboutBox == null) {
             JFrame mainFrame = FreimapGSoCApp.getApplication().getMainFrame();
-            aboutBox = new FreimapGSoCAboutBox(mainFrame);
+            aboutBox =
+                    new FreimapGSoCAboutBox(mainFrame);
             aboutBox.setLocationRelativeTo(mainFrame);
         }
+
         FreimapGSoCApp.getApplication().show(aboutBox);
     }
 
@@ -488,7 +484,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         stopLabel = new javax.swing.JLabel();
         playLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        locatedNodes = new JList(locatedN);
         latitudeValue = new javax.swing.JLabel();
         longitudeValue = new javax.swing.JLabel();
         dateInfo = new javax.swing.JLabel();
@@ -511,13 +507,13 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
-        jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem7 = new javax.swing.JCheckBoxMenuItem();
+        mapNodesMenu = new javax.swing.JCheckBoxMenuItem();
+        linksMenu = new javax.swing.JCheckBoxMenuItem();
+        latLonMenu = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         zoomButtons = new javax.swing.JCheckBoxMenuItem();
         zoomSMenu = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        miniMapMenu = new javax.swing.JCheckBoxMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -551,6 +547,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             }
         });
 
+        miniMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         miniMap.setCenterPosition(def);
         miniMap.setFont(resourceMap.getFont("miniMap.font")); // NOI18N
         miniMap.setHorizontalWrapped(false);
@@ -563,11 +560,11 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         miniMap.setLayout(miniMapLayout);
         miniMapLayout.setHorizontalGroup(
             miniMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 128, Short.MAX_VALUE)
+            .addGap(0, 132, Short.MAX_VALUE)
         );
         miniMapLayout.setVerticalGroup(
             miniMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 128, Short.MAX_VALUE)
+            .addGap(0, 132, Short.MAX_VALUE)
         );
 
         zoomSlider.setFont(resourceMap.getFont("zoomSlider.font")); // NOI18N
@@ -611,31 +608,34 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         mainMap.setLayout(mainMapLayout);
         mainMapLayout.setHorizontalGroup(
             mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainMapLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(zoomButtonOut)
-                    .addComponent(zoomButtonIn)
-                    .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 714, Short.MAX_VALUE)
-                .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                    .addGroup(mainMapLayout.createSequentialGroup()
+                        .addComponent(zoomButtonOut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 738, Short.MAX_VALUE)
+                        .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(mainMapLayout.createSequentialGroup()
+                        .addGroup(mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(zoomButtonIn)
+                            .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(873, Short.MAX_VALUE))))
         );
         mainMapLayout.setVerticalGroup(
             mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainMapLayout.createSequentialGroup()
+                .addContainerGap(322, Short.MAX_VALUE)
                 .addGroup(mainMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainMapLayout.createSequentialGroup()
-                        .addContainerGap(314, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
                         .addComponent(zoomButtonIn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
-                        .addComponent(zoomButtonOut))
-                    .addGroup(mainMapLayout.createSequentialGroup()
-                        .addGap(423, 423, 423)
-                        .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(zoomButtonOut)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMapLayout.createSequentialGroup()
+                        .addComponent(miniMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
         );
 
         mapPanel.add(mainMap, "card2");
@@ -691,13 +691,9 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setName("jList1"); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        locatedNodes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        locatedNodes.setName("locatedNodes"); // NOI18N
+        jScrollPane1.setViewportView(locatedNodes);
 
         latitudeValue.setText(resourceMap.getString("latitudeValue.text")); // NOI18N
         latitudeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -723,7 +719,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addComponent(latitudeValue, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -744,7 +740,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                             .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 943, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(dateInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                        .addComponent(dateInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                         .addGap(973, 973, 973))))
         );
         mainPanelLayout.setVerticalGroup(
@@ -766,14 +762,15 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(goToDefaultPosition)
                             .addComponent(serviceD))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addComponent(dateInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(timeLine, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(playLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(stopLabel))
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(timeLine, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(stopLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(25, 25, 25))))
         );
 
@@ -889,25 +886,26 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         viewMenu.setText(resourceMap.getString("viewMenu.text")); // NOI18N
         viewMenu.setName("viewMenu"); // NOI18N
 
-        jCheckBoxMenuItem5.setAction(actionMap.get("showNodes")); // NOI18N
-        jCheckBoxMenuItem5.setSelected(true);
-        jCheckBoxMenuItem5.setText(resourceMap.getString("jCheckBoxMenuItem5.text")); // NOI18N
-        jCheckBoxMenuItem5.setIcon(resourceMap.getIcon("jCheckBoxMenuItem5.icon")); // NOI18N
-        jCheckBoxMenuItem5.setName("jCheckBoxMenuItem5"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem5);
+        mapNodesMenu.setAction(actionMap.get("showNodes")); // NOI18N
+        mapNodesMenu.setSelected(true);
+        mapNodesMenu.setText(resourceMap.getString("mapNodesMenu.text")); // NOI18N
+        mapNodesMenu.setIcon(resourceMap.getIcon("mapNodesMenu.icon")); // NOI18N
+        mapNodesMenu.setName("mapNodesMenu"); // NOI18N
+        viewMenu.add(mapNodesMenu);
 
-        jCheckBoxMenuItem6.setSelected(true);
-        jCheckBoxMenuItem6.setText(resourceMap.getString("jCheckBoxMenuItem6.text")); // NOI18N
-        jCheckBoxMenuItem6.setIcon(resourceMap.getIcon("jCheckBoxMenuItem6.icon")); // NOI18N
-        jCheckBoxMenuItem6.setName("jCheckBoxMenuItem6"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem6);
+        linksMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
+        linksMenu.setSelected(true);
+        linksMenu.setText(resourceMap.getString("linksMenu.text")); // NOI18N
+        linksMenu.setIcon(resourceMap.getIcon("linksMenu.icon")); // NOI18N
+        linksMenu.setName("linksMenu"); // NOI18N
+        viewMenu.add(linksMenu);
 
-        jCheckBoxMenuItem7.setAction(actionMap.get("showLatLon")); // NOI18N
-        jCheckBoxMenuItem7.setSelected(true);
-        jCheckBoxMenuItem7.setText(resourceMap.getString("jCheckBoxMenuItem7.text")); // NOI18N
-        jCheckBoxMenuItem7.setIcon(resourceMap.getIcon("jCheckBoxMenuItem7.icon")); // NOI18N
-        jCheckBoxMenuItem7.setName("jCheckBoxMenuItem7"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem7);
+        latLonMenu.setAction(actionMap.get("showLatLon")); // NOI18N
+        latLonMenu.setSelected(true);
+        latLonMenu.setText(resourceMap.getString("latLonMenu.text")); // NOI18N
+        latLonMenu.setIcon(resourceMap.getIcon("latLonMenu.icon")); // NOI18N
+        latLonMenu.setName("latLonMenu"); // NOI18N
+        viewMenu.add(latLonMenu);
 
         jCheckBoxMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, java.awt.event.InputEvent.CTRL_MASK));
         jCheckBoxMenuItem1.setSelected(true);
@@ -930,12 +928,12 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         zoomSMenu.setName("zoomSMenu"); // NOI18N
         viewMenu.add(zoomSMenu);
 
-        jCheckBoxMenuItem4.setAction(actionMap.get("showMiniMap")); // NOI18N
-        jCheckBoxMenuItem4.setSelected(true);
-        jCheckBoxMenuItem4.setText(resourceMap.getString("jCheckBoxMenuItem4.text")); // NOI18N
-        jCheckBoxMenuItem4.setIcon(resourceMap.getIcon("jCheckBoxMenuItem4.icon")); // NOI18N
-        jCheckBoxMenuItem4.setName("jCheckBoxMenuItem4"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem4);
+        miniMapMenu.setAction(actionMap.get("showMiniMap")); // NOI18N
+        miniMapMenu.setSelected(true);
+        miniMapMenu.setText(resourceMap.getString("miniMapMenu.text")); // NOI18N
+        miniMapMenu.setIcon(resourceMap.getIcon("miniMapMenu.icon")); // NOI18N
+        miniMapMenu.setName("miniMapMenu"); // NOI18N
+        viewMenu.add(miniMapMenu);
 
         menuBar.add(viewMenu);
 
@@ -973,7 +971,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     private void serviceDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceDActionPerformed
         InetAddress intf = null;
         try {
-            intf = InetAddress.getByName("0.0.0.0");
+            intf = InetAddress.getByName("10.0.1.29");
             try {
                 new PopUp(JmDNS.create(intf)).setVisible(true);
             } catch (IOException ex) {
@@ -987,7 +985,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     private void zoomSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_zoomSliderStateChanged
         if (!zoomChanging) {
             mainMap.setZoom(zoomSlider.getValue());
-            // drawAll(links,nodes);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_zoomSliderStateChanged
 
@@ -1020,6 +1017,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             } else {
                 System.out.println("Open command cancelled by user." + "\n");
             }
+
         }
 
     }//GEN-LAST:event_xmlOpenMenuActionPerformed
@@ -1042,6 +1040,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             } else {
                 System.out.println("Open command cancelled by user." + "\n");
             }
+
         }
     }//GEN-LAST:event_txtOpenMenuActionPerformed
 
@@ -1062,6 +1061,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             } else {
                 System.out.println("Open command cancelled by user." + "\n");
             }
+
         }
     }//GEN-LAST:event_jsOpenMenuActionPerformed
 
@@ -1082,35 +1082,39 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             } else {
                 System.out.println("Save command cancelled by user." + "\n");
             }
+
         }
     }//GEN-LAST:event_saveAsMenuActionPerformed
 
     private void zoomButtonInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zoomButtonInMouseClicked
-        setZoom(mainMap.getZoom() - 1);            // TODO add your handling code here:
+        setZoom(mainMap.getZoom() - 1);
+// TODO add your handling code here:
     }//GEN-LAST:event_zoomButtonInMouseClicked
 
     private void zoomButtonOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zoomButtonOutMouseClicked
-        setZoom(mainMap.getZoom() + 1);        // TODO add your handling code here:
+        setZoom(mainMap.getZoom() + 1);
+
+        // TODO add your handling code here:
     }//GEN-LAST:event_zoomButtonOutMouseClicked
 
     private void playLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playLabelMouseClicked
-    if(playLabel.isEnabled()){
-        playLabel.setEnabled(false);
-       playLabel.setText("Pause");
-    }else{
-        playLabel.setEnabled(true);
-        playLabel.setText("Play");
-    }
+        if (playLabel.isEnabled()) {
+            playLabel.setEnabled(false);
+            playLabel.setText("Pause");
+        } else {
+            playLabel.setEnabled(true);
+            playLabel.setText("Play");
+        }
     }//GEN-LAST:event_playLabelMouseClicked
 
     private void stopLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopLabelMouseClicked
-        if(stopLabel.isEnabled()){
-        stopLabel.setEnabled(false);
-       stopLabel.setText("Stop");
-    }else{
-        stopLabel.setEnabled(true);
-        stopLabel.setText("Rec");
-    }
+        if (stopLabel.isEnabled()) {
+            stopLabel.setEnabled(false);
+            stopLabel.setText("Stop");
+        } else {
+            stopLabel.setEnabled(true);
+            stopLabel.setText("Rec");
+        }
     }//GEN-LAST:event_stopLabelMouseClicked
 
     //MAP COMPONENTS
@@ -1196,11 +1200,12 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 GeoPosition lowerRight = mainMap.getTileFactory().pixelToGeo(lowerRight2D, mainMap.getZoom());
 
                 // convert to Point2Ds on the mini-map
-                upperLeft2D = map.getTileFactory().geoToPixel(upperLeft, map.getZoom());
-                lowerRight2D = map.getTileFactory().geoToPixel(lowerRight, map.getZoom());
-
-
-                g = (Graphics2D) g.create();
+                upperLeft2D =
+                        map.getTileFactory().geoToPixel(upperLeft, map.getZoom());
+                lowerRight2D =
+                        map.getTileFactory().geoToPixel(lowerRight, map.getZoom());
+                g =
+                        (Graphics2D) g.create();
                 Rectangle rect = map.getViewportBounds();
                 //p("rect = " + rect);
                 g.translate(-rect.x, -rect.y);
@@ -1227,11 +1232,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     public javax.swing.JLabel dateInfo;
     public javax.swing.JButton goToDefaultPosition;
     public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
-    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
-    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
-    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem7;
-    public javax.swing.JList jList1;
     public javax.swing.JMenu jMenu1;
     public javax.swing.JMenu jMenu2;
     public javax.swing.JMenuItem jMenuItem1;
@@ -1246,13 +1246,18 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     public javax.swing.JSeparator jSeparator2;
     public javax.swing.JSeparator jSeparator3;
     public javax.swing.JMenuItem jsOpenMenu;
+    public javax.swing.JCheckBoxMenuItem latLonMenu;
     public javax.swing.JLabel latitudeValue;
+    public javax.swing.JCheckBoxMenuItem linksMenu;
+    public javax.swing.JList locatedNodes;
     public javax.swing.JLabel longitudeValue;
     public static org.jdesktop.swingx.JXMapViewer mainMap;
     public javax.swing.JPanel mainPanel;
+    public javax.swing.JCheckBoxMenuItem mapNodesMenu;
     public javax.swing.JPanel mapPanel;
     public javax.swing.JMenuBar menuBar;
     public static org.jdesktop.swingx.JXMapViewer miniMap;
+    public javax.swing.JCheckBoxMenuItem miniMapMenu;
     public javax.swing.JLabel playLabel;
     public javax.swing.JMenuItem saveAsMenu;
     public javax.swing.JButton serviceD;
@@ -1273,10 +1278,8 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     private Double DEFAULT_LON = 0.0;//OK
     private TileFactory tf; //OK
     private Runtime runtime;
-
-    //MainMap and Minimap Variables
-            final List<GeoPosition> region = new ArrayList<GeoPosition>();
-
+//MainMap and Minimap Variables
+    final List<GeoPosition> region = new ArrayList<GeoPosition>();
     public static boolean miniMapVisible = true;//OK
     public static boolean zoomSliderVisible = true;//OK
     public static boolean zoomButtonsVisible = true;//OK
@@ -1292,6 +1295,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     Vector<FreiNode> nodes;
     Vector<FreiLink> links;
     public HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
+    public DefaultListModel locatedN = new DefaultListModel();
 
     public void init(HashMap<String, Object> configuration) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -1325,7 +1329,8 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public FreiNode getNodeByName(String id) {
+    public FreiNode getNodeByName(
+            String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -1367,24 +1372,26 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
     @Action
     public void showLatLon() {
-        if (viewMenu.isEnabled()) {
+        if (latLonMenu.isSelected()) {
             latitudeValue.setVisible(false);
             longitudeValue.setVisible(false);
         } else {
             latitudeValue.setVisible(true);
             longitudeValue.setVisible(true);
         }
+
     }
 
     @Action
     public void showZoomButton() {
-         if (zoomButtonIn.isVisible()) {
-           zoomButtonIn.setVisible(false);
-           zoomButtonOut.setVisible(false);
+        if (zoomButtonIn.isVisible()) {
+            zoomButtonIn.setVisible(false);
+            zoomButtonOut.setVisible(false);
         } else {
-        zoomButtonIn.setVisible(true);
-        zoomButtonOut.setVisible(true);
+            zoomButtonIn.setVisible(true);
+            zoomButtonOut.setVisible(true);
         }
+
     }
 
     @Action
@@ -1394,6 +1401,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         } else {
             setZoomSliderVisible(false);
         }
+
     }
 
     @Action
