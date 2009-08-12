@@ -11,6 +11,7 @@
 
 package freimapgsoc;
 
+import javax.jmdns.JmDNS;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -22,8 +23,9 @@ import javax.swing.JList;
 public class addServices extends javax.swing.JFrame {
 
     /** Creates new form addServices */
-    public addServices(DefaultListModel types) {
+    public addServices(DefaultListModel types, JmDNS jmdns) {
         initComponents();
+        this.jmdns=jmdns;
         for (int i=0; i<services.length; i++){
             servicesList.addItem(services[i]);
         }
@@ -112,7 +114,7 @@ public class addServices extends javax.swing.JFrame {
             this.dispose();
         }
         else{
-           types.addElement(stype+"local.");
+           jmdns.registerServiceType(stype+"local.");
             this.dispose();
         }
     }//GEN-LAST:event_okButtonActionPerformed
@@ -343,7 +345,7 @@ public class addServices extends javax.swing.JFrame {
                 "XUL over HTTP (_xul-http._tcp.)",
                 "Big Bang Backgammon (_bigbangbackgammon._tcp.)",
                 "Big Bang Checkers (_bigbangcheckers._tcp.)",
-                "Skype (_skyper._tcp.)"
+                "Skype (_skype._tcp.)"
 
         };
 
@@ -353,5 +355,6 @@ public class addServices extends javax.swing.JFrame {
     private javax.swing.JComboBox servicesList;
     // End of variables declaration//GEN-END:variables
     public String stype="null";
-    DefaultListModel types;
+    public DefaultListModel types;
+    public JmDNS jmdns;
 }
