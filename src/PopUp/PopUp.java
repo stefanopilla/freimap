@@ -80,42 +80,62 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     "_distcc._tcp.local.",
                     "_xserveraid._tcp.local.",
                     "_net-assistant._tcp.local.",
-                    //"_workstation._tcp.local.",
+                    "_workstation._tcp.local.",
                     "_h323._tcp.local.",
                     "_sip._udp.local."
         };
 
-        /* APPLICATION NAME FOR ANOTHER IMPLEMENTATION
-        "Hypertext Transfer Protocol (HTTP)", //_http._tcp
-                    "File Transfer Protocol (FTP)", // _ftp._tcp
-                    "Secure File Transfer Protocol (SFTP)", // _sftp._tcp
-                    "Trivial File Transfer Protocol (TFTP)",// _tftp._udp
-                    "Secure Shell (SSH)", //_ssh._tcp
-                    "Samba Protocol (SMB)", //_smb._tcp.local.
-                    "Line Printer Daemon (LPD/LPR)", //_printer._tcp
-                    "Airport Base Station",// _airport._tcp
-                    "AppleTalk Filing Protocol (AFP)", //_afpovertcp._tcp
-                    "Network File System (NFS)", //_nfs._tcp
-                    "WebDAV File System (WEBDAV)", // _webdav._tcp
-                    "iChat Instant Messaging Protocol",// _presence._tcp
-                    "Remote AppleEvents", //_eppc._tcp
-                    "Remote Login (TELNET)",// _telnet._tcp
-                    "Remote Audio Output Protocol (RAOP)",// _raop._tcp
-                    "Internet Printing Protocol (IPP)",// _ipp._tcp
-                    " PDL Data Stream (Port 9100)",// _pdl-datastream._tcp
-                    "Remote I/O USB Printer Protocol",// _riousbprint._tcp
-                    "Digital Audio Access Protocol (DAAP)", //_daap._tcp
-                    "Distributed Compiler (XCODE)", //_distcc._tcp.local.
-                    "Xserver RAID",// _xserveraid._tcp
-                    "Apple Remote Desktop (ARD)", //_net-assistant._tcp
-                    "Workgroup Manager", //_workstation._tcp.local.
-                    "H.323 Telefonie", // _h323._tcp.local.
-                    "Session Initiation Protocol (SIP)",//_sip._udp.local.
-                    */
         for (int i = 0 ; i < list.length ; i++) {
             jmdns.registerServiceType(list[i]);
         }
     }
+
+    public PopUp(FreiNode from) {
+        System.out.println("Costructor PopUP(String ip)");
+        initComponents();
+        InetAddress address=null;
+        try {
+            this.jmdns=JmDNS.create(address.getByName(from.id));
+            jmdns.addServiceTypeListener(this);
+            infoNode(from);
+        } catch (IOException ex) {
+            Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // register some well known types
+        list = new String[] {
+            "_services._dns-sd._udp.local.",
+            "_http._tcp.local.",
+                    "_ftp._tcp.local.",
+                    "_sftp._tcp.local.",
+                    "_tftp._tcp.local.",
+                    "_ssh._tcp.local.",
+                    "_smb._tcp.local.",
+                    "_printer._tcp.local.",
+                    "_airport._tcp.local.",
+                    "_afpovertcp._tcp.local.",
+                    "_nfs._tcp.local.",
+                    "_webdav._tcp.local.",
+                    "_presence._tcp.local.",
+                    "_eppc._tcp.local.",
+                    "_telnet._tcp.local.",
+                    "_raop._tcp.local.",
+                    "_ipp._tcp.local.",
+                    "_pdl-datastream._tcp.local.",
+                    "_riousbprint._tcp.local.",
+                    "_daap._tcp.local.",
+                    "_distcc._tcp.local.",
+                    "_xserveraid._tcp.local.",
+                    "_net-assistant._tcp.local.",
+                    "_workstation._tcp.local.",
+                    "_h323._tcp.local.",
+                    "_sip._udp.local."
+        };
+
+        for (int i = 0 ; i < list.length ; i++) {
+            jmdns.registerServiceType(list[i]);
+        }
+    }
+
 
     /** Creates new form ServiceDiscovery */
     public PopUp(FreiNode from, FreiNode to, FreiLink link) {
@@ -166,36 +186,25 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     "_sip._udp.local."
         };
 
-        /* APPLICATION NAME FOR ANOTHER IMPLEMENTATION
-        "Hypertext Transfer Protocol (HTTP)", //_http._tcp
-                    "File Transfer Protocol (FTP)", // _ftp._tcp
-                    "Secure File Transfer Protocol (SFTP)", // _sftp._tcp
-                    "Trivial File Transfer Protocol (TFTP)",// _tftp._udp
-                    "Secure Shell (SSH)", //_ssh._tcp
-                    "Samba Protocol (SMB)", //_smb._tcp.local.
-                    "Line Printer Daemon (LPD/LPR)", //_printer._tcp
-                    "Airport Base Station",// _airport._tcp
-                    "AppleTalk Filing Protocol (AFP)", //_afpovertcp._tcp
-                    "Network File System (NFS)", //_nfs._tcp
-                    "WebDAV File System (WEBDAV)", // _webdav._tcp
-                    "iChat Instant Messaging Protocol",// _presence._tcp
-                    "Remote AppleEvents", //_eppc._tcp
-                    "Remote Login (TELNET)",// _telnet._tcp
-                    "Remote Audio Output Protocol (RAOP)",// _raop._tcp
-                    "Internet Printing Protocol (IPP)",// _ipp._tcp
-                    " PDL Data Stream (Port 9100)",// _pdl-datastream._tcp
-                    "Remote I/O USB Printer Protocol",// _riousbprint._tcp
-                    "Digital Audio Access Protocol (DAAP)", //_daap._tcp
-                    "Distributed Compiler (XCODE)", //_distcc._tcp.local.
-                    "Xserver RAID",// _xserveraid._tcp
-                    "Apple Remote Desktop (ARD)", //_net-assistant._tcp
-                    "Workgroup Manager", //_workstation._tcp.local.
-                    "H.323 Telefonie", // _h323._tcp.local.
-                    "Session Initiation Protocol (SIP)",//_sip._udp.local.
-                    */
+       
         for (int i = 0 ; i < list.length ; i++) {
             jmdns.registerServiceType(list[i]);
         }
+    }
+
+    public void infoNode(FreiNode node){
+        n1Ip.setText(node.id);
+        n1Name.setText(node.toString());
+        n1LatLon.setText(node.lat+" / "+node.lon);
+        n1Avail.setText(node.fqid);
+        System.out.println(node.attributes.values());
+        Set i=node.attributes.entrySet();
+        Set keySet = node.attributes.keySet();
+        for(Object key:keySet){
+        Object value = node.attributes.get(key);
+            attributeArea.append(value.toString());
+        }
+
     }
 
     public void registerAllServices(Vector<FreiNode> list){
@@ -363,32 +372,16 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         nodesGroup = new javax.swing.ButtonGroup();
         flowGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        node1Button = new javax.swing.JRadioButton();
-        node2Button = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        n1avail = new javax.swing.JLabel();
+        n1Avail = new javax.swing.JLabel();
         n1Name = new javax.swing.JLabel();
         n1LatLon = new javax.swing.JLabel();
         n1Ip = new javax.swing.JLabel();
-        n1MinLinks = new javax.swing.JLabel();
-        n1MaxLinks = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        attributeArea = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         serviceList = new JList(services);
@@ -404,7 +397,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         addServicesButton = new javax.swing.JButton();
         ReloadServicesButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(PopUp.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setAlwaysOnTop(true);
@@ -414,25 +407,6 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel1.border.titleFont"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getActionMap(PopUp.class, this);
-        node1Button.setAction(actionMap.get("reloadNode1Data")); // NOI18N
-        nodesGroup.add(node1Button);
-        node1Button.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        node1Button.setSelected(true);
-        node1Button.setText(resourceMap.getString("node1Button.text")); // NOI18N
-        node1Button.setName("node1Button"); // NOI18N
-        node1Button.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                node1ButtonStateChanged(evt);
-            }
-        });
-
-        node2Button.setAction(actionMap.get("reloadNode2Data")); // NOI18N
-        nodesGroup.add(node2Button);
-        node2Button.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        node2Button.setText(resourceMap.getString("node2Button.text")); // NOI18N
-        node2Button.setName("node2Button"); // NOI18N
 
         jLabel4.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -453,17 +427,9 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
 
-        jLabel11.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
-        jLabel11.setName("jLabel11"); // NOI18N
-
-        jLabel12.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
-        jLabel12.setName("jLabel12"); // NOI18N
-
-        n1avail.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        n1avail.setText(resourceMap.getString("n1avail.text")); // NOI18N
-        n1avail.setName("n1avail"); // NOI18N
+        n1Avail.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
+        n1Avail.setText(resourceMap.getString("n1Avail.text")); // NOI18N
+        n1Avail.setName("n1Avail"); // NOI18N
 
         n1Name.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
         n1Name.setText(resourceMap.getString("n1Name.text")); // NOI18N
@@ -477,175 +443,63 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         n1Ip.setText(resourceMap.getString("n1Ip.text")); // NOI18N
         n1Ip.setName("n1Ip"); // NOI18N
 
-        n1MinLinks.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        n1MinLinks.setText(resourceMap.getString("n1MinLinks.text")); // NOI18N
-        n1MinLinks.setName("n1MinLinks"); // NOI18N
+        jScrollPane5.setName("jScrollPane5"); // NOI18N
 
-        n1MaxLinks.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        n1MaxLinks.setText(resourceMap.getString("n1MaxLinks.text")); // NOI18N
-        n1MaxLinks.setName("n1MaxLinks"); // NOI18N
-
-        jLabel7.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
-
-        jLabel8.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jLabel9.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
-        jLabel9.setName("jLabel9"); // NOI18N
-
-        jLabel22.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel22.setText(resourceMap.getString("jLabel22.text")); // NOI18N
-        jLabel22.setName("jLabel22"); // NOI18N
-
-        jLabel23.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel23.setText(resourceMap.getString("jLabel23.text")); // NOI18N
-        jLabel23.setName("jLabel23"); // NOI18N
-
-        jLabel24.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel24.setText(resourceMap.getString("jLabel24.text")); // NOI18N
-        jLabel24.setName("jLabel24"); // NOI18N
-
-        jLabel13.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
-        jLabel13.setName("jLabel13"); // NOI18N
-
-        jLabel14.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
-        jLabel14.setName("jLabel14"); // NOI18N
-
-        jLabel15.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
-        jLabel15.setName("jLabel15"); // NOI18N
-
-        jLabel25.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel25.setText(resourceMap.getString("jLabel25.text")); // NOI18N
-        jLabel25.setName("jLabel25"); // NOI18N
-
-        jLabel26.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel26.setText(resourceMap.getString("jLabel26.text")); // NOI18N
-        jLabel26.setName("jLabel26"); // NOI18N
-
-        jLabel27.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
-        jLabel27.setText(resourceMap.getString("jLabel27.text")); // NOI18N
-        jLabel27.setName("jLabel27"); // NOI18N
+        attributeArea.setColumns(20);
+        attributeArea.setEditable(false);
+        attributeArea.setRows(5);
+        attributeArea.setEnabled(false);
+        attributeArea.setName("attributeArea"); // NOI18N
+        jScrollPane5.setViewportView(attributeArea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(node1Button)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(n1Ip, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(n1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(n1LatLon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(n1avail, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(n1MaxLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(n1MinLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(node2Button))
-                .addContainerGap(67, Short.MAX_VALUE))
+                                .addComponent(n1Name, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(n1LatLon, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(n1Avail, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                            .addComponent(n1Ip, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(125, 125, 125))
+                    .addComponent(jLabel10))
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(281, 281, 281))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(node1Button)
-                    .addComponent(node2Button))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel10)
-                            .addComponent(n1avail)
                             .addComponent(n1Ip))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel11)
-                            .addComponent(n1MinLinks)
                             .addComponent(n1Name))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel12)
-                            .addComponent(n1MaxLinks)
-                            .addComponent(n1LatLon)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel27)
-                            .addComponent(jLabel24))
+                            .addComponent(n1LatLon)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel26)
-                            .addComponent(jLabel23))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel25)
-                            .addComponent(jLabel22))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                            .addComponent(jLabel10)
+                            .addComponent(n1Avail))))
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel2.border.titleFont"))); // NOI18N
@@ -695,6 +549,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         jLabel3.setName("jLabel3"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getActionMap(PopUp.class, this);
         addServicesButton.setAction(actionMap.get("addServices")); // NOI18N
         addServicesButton.setText(resourceMap.getString("addServicesButton.text")); // NOI18N
         addServicesButton.setActionCommand(resourceMap.getString("addServicesButton.actionCommand")); // NOI18N
@@ -714,8 +569,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(addServicesButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ReloadServicesButton)
-                        .addGap(494, 494, 494))
+                        .addComponent(ReloadServicesButton))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -726,14 +580,11 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(298, 298, 298))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-                                .addContainerGap())))))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))))
+                .addGap(84, 84, 84))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -747,14 +598,13 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addServicesButton)
-                    .addComponent(ReloadServicesButton))
-                .addContainerGap(9, Short.MAX_VALUE))
+                    .addComponent(ReloadServicesButton)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -763,27 +613,23 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void node1ButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_node1ButtonStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_node1ButtonStateChanged
 
 
     /**
@@ -846,43 +692,27 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ReloadServicesButton;
     private javax.swing.JButton addServicesButton;
+    private javax.swing.JTextArea attributeArea;
     private javax.swing.ButtonGroup flowGroup;
     private javax.swing.JTextArea info;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel n1Avail;
     private javax.swing.JLabel n1Ip;
     private javax.swing.JLabel n1LatLon;
-    private javax.swing.JLabel n1MaxLinks;
-    private javax.swing.JLabel n1MinLinks;
     private javax.swing.JLabel n1Name;
-    private javax.swing.JLabel n1avail;
-    private javax.swing.JRadioButton node1Button;
-    private javax.swing.JRadioButton node2Button;
     private javax.swing.ButtonGroup nodesGroup;
     private javax.swing.JTextArea sdLog;
     private javax.swing.JList serviceList;

@@ -8,7 +8,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" resourceKey="Form.title"/>
     <Property name="alwaysOnTop" type="boolean" value="true"/>
     <Property name="locationByPlatform" type="boolean" value="true"/>
@@ -35,22 +35,22 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
-                  <Component id="jPanel2" alignment="0" pref="733" max="32767" attributes="1"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
+                  <Component id="jPanel2" alignment="1" pref="897" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="25" max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" pref="295" max="-2" attributes="0"/>
-              <EmptySpace pref="269" max="32767" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,179 +72,68 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="node1Button" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="12" pref="12" max="12" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel6" alignment="1" max="32767" attributes="1"/>
-                              <Component id="jLabel5" alignment="1" max="32767" attributes="1"/>
-                              <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="1"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="n1Ip" min="-2" pref="91" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="n1Name" min="-2" pref="91" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="n1LatLon" min="-2" pref="91" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="n1avail" min="-2" pref="91" max="-2" attributes="0"/>
-                      <Component id="n1MaxLinks" min="-2" pref="91" max="-2" attributes="0"/>
-                      <Component id="n1MinLinks" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel9" alignment="1" max="32767" attributes="1"/>
-                              <Component id="jLabel8" alignment="1" max="32767" attributes="1"/>
-                              <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="1"/>
-                          </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel24" min="-2" pref="91" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel23" min="-2" pref="91" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel22" min="-2" pref="91" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="1"/>
+                              <Component id="jLabel5" alignment="1" pref="54" max="32767" attributes="1"/>
+                              <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel27" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
-                              <Component id="jLabel25" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
-                              <Component id="jLabel26" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="n1Name" alignment="0" pref="120" max="32767" attributes="0"/>
+                                  <Component id="n1LatLon" alignment="0" pref="120" max="32767" attributes="0"/>
+                                  <Component id="n1Avail" alignment="0" pref="120" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="n1Ip" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="node2Button" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="67" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="jScrollPane5" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="281" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="node1Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="node2Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane5" alignment="0" pref="86" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="n1avail" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="n1Ip" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="n1MinLinks" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="n1Name" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="n1MaxLinks" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="n1LatLon" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="n1Avail" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JRadioButton" name="node1Button">
-          <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="PopUp.PopUp" id="reloadNode1Data" methodName="reloadNode1Data"/>
-            </Property>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="nodesGroup"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="node1Button.text"/>
-            <Property name="name" type="java.lang.String" value="node1Button" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="node1ButtonStateChanged"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="node2Button">
-          <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="PopUp.PopUp" id="reloadNode2Data" methodName="reloadNode2Data"/>
-            </Property>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="nodesGroup"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="node2Button.text"/>
-            <Property name="name" type="java.lang.String" value="node2Button" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
@@ -276,25 +165,11 @@
             <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel11">
+        <Component class="javax.swing.JLabel" name="n1Avail">
           <Properties>
             <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel11.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel11" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel12">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel12.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel12" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="n1avail">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="n1avail.text"/>
-            <Property name="name" type="java.lang.String" value="n1avail" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="n1Avail.text"/>
+            <Property name="name" type="java.lang.String" value="n1Avail" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="n1Name">
@@ -318,107 +193,27 @@
             <Property name="name" type="java.lang.String" value="n1Ip" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="n1MinLinks">
+        <Container class="javax.swing.JScrollPane" name="jScrollPane5">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="n1MinLinks.text"/>
-            <Property name="name" type="java.lang.String" value="n1MinLinks" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jScrollPane5" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="n1MaxLinks">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="n1MaxLinks.text"/>
-            <Property name="name" type="java.lang.String" value="n1MaxLinks" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel7">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel7.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel8.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel8" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel9">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel9.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel9" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel22">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel22.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel22" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel23">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel23.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel23" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel24">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel24.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel24" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel13">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel13.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel13" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel14">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel14.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel14" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel15">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel15.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel15" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel25">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel25.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel25" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel26">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel26.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel26" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel27">
-          <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel27.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel27" noResource="true"/>
-          </Properties>
-        </Component>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="attributeArea">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="rows" type="int" value="5"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="attributeArea" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -444,7 +239,6 @@
                           <Component id="addServicesButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="ReloadServicesButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="494" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -458,20 +252,15 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel3" min="-2" pref="86" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="298" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jScrollPane4" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jScrollPane3" alignment="0" pref="300" max="32767" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" pref="86" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jScrollPane4" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jScrollPane3" alignment="0" pref="300" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -488,17 +277,16 @@
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane3" min="-2" pref="107" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="89" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="81" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane2" alignment="0" pref="204" max="32767" attributes="1"/>
-                      <Component id="jScrollPane1" alignment="0" pref="204" max="32767" attributes="1"/>
+                      <Component id="jScrollPane2" alignment="0" pref="196" max="32767" attributes="1"/>
+                      <Component id="jScrollPane1" alignment="0" pref="196" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="addServicesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ReloadServicesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="9" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
