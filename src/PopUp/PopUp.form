@@ -36,10 +36,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
-                  <Component id="jPanel2" alignment="1" pref="897" max="32767" attributes="1"/>
+                  <Component id="jPanel2" alignment="0" min="-2" pref="719" max="-2" attributes="1"/>
+                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="1"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,7 +78,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="1"/>
-                              <Component id="jLabel5" alignment="1" pref="54" max="32767" attributes="1"/>
+                              <Component id="jLabel5" alignment="1" pref="70" max="32767" attributes="1"/>
                               <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -96,7 +96,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                   <Component id="jScrollPane5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="281" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -104,7 +104,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jScrollPane5" alignment="0" pref="86" max="32767" attributes="0"/>
+                      <Component id="jScrollPane5" alignment="0" pref="108" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -136,7 +136,6 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
             <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
@@ -144,7 +143,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" resourceKey="jLabel5.text"/>
             <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
@@ -152,7 +150,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" resourceKey="jLabel6.text"/>
             <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
@@ -160,35 +157,30 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="text" type="java.lang.String" resourceKey="jLabel10.text"/>
             <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="n1Avail">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="text" type="java.lang.String" resourceKey="n1Avail.text"/>
             <Property name="name" type="java.lang.String" value="n1Avail" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="n1Name">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="text" type="java.lang.String" resourceKey="n1Name.text"/>
             <Property name="name" type="java.lang.String" value="n1Name" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="n1LatLon">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="text" type="java.lang.String" resourceKey="n1LatLon.text"/>
             <Property name="name" type="java.lang.String" value="n1LatLon" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="n1Ip">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="jLabel23.font"/>
             <Property name="text" type="java.lang.String" resourceKey="n1Ip.text"/>
             <Property name="name" type="java.lang.String" value="n1Ip" noResource="true"/>
           </Properties>
@@ -260,7 +252,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

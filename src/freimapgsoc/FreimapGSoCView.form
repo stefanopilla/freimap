@@ -11,97 +11,41 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" pref="225" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="latitudeValue" min="-2" pref="88" max="-2" attributes="2"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="longitudeValue" min="-2" pref="88" max="-2" attributes="2"/>
-                              </Group>
-                              <Component id="dateInfo" alignment="0" pref="225" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="24" pref="24" max="24" attributes="0"/>
-                                  <Component id="xValue" min="-2" pref="88" max="-2" attributes="2"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="yValue" min="-2" pref="88" max="-2" attributes="2"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="mousePosition" min="-2" pref="88" max="-2" attributes="2"/>
-                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="mapPanel" min="-2" pref="793" max="-2" attributes="1"/>
                       <Group type="102" attributes="0">
-                          <Component id="playLabel" min="-2" pref="36" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="timeLine" min="-2" pref="512" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="stopLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                           <Component id="serviceD" min="-2" max="-2" attributes="1"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="goToDefaultPosition" min="-2" max="-2" attributes="1"/>
                       </Group>
-                      <Component id="mapPanel" min="-2" pref="943" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="556" max="-2" attributes="1"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel1" min="-2" max="-2" attributes="1"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="longitudeValue" alignment="0" min="-2" pref="14" max="-2" attributes="1"/>
-                              <Component id="latitudeValue" alignment="0" min="-2" pref="14" max="-2" attributes="1"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dateInfo" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="mapPanel" min="-2" pref="604" max="-2" attributes="3"/>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="mapPanel" pref="604" max="32767" attributes="3"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="goToDefaultPosition" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="serviceD" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="playLabel" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="timeLine" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="stopLabel" alignment="0" min="-2" max="-2" attributes="1"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="yValue" alignment="0" min="-2" pref="14" max="-2" attributes="1"/>
-                              <Component id="xValue" alignment="0" min="-2" pref="14" max="-2" attributes="1"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="mousePosition" min="-2" pref="14" max="-2" attributes="1"/>
+                          <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -166,20 +110,13 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="zoomButtonOut" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="738" max="32767" attributes="0"/>
-                                  <Component id="miniMap" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="zoomButtonIn" min="-2" max="-2" attributes="0"/>
-                                      <Component id="zoomSlider" alignment="0" min="-2" pref="46" max="-2" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace pref="873" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="zoomButtonOut" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="zoomButtonIn" min="-2" max="-2" attributes="0"/>
+                              <Component id="zoomSlider" alignment="0" min="-2" pref="46" max="-2" attributes="1"/>
                           </Group>
+                          <EmptySpace pref="577" max="32767" attributes="0"/>
+                          <Component id="miniMap" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -197,7 +134,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="miniMap" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -313,162 +250,447 @@
             <Property name="name" type="java.lang.String" value="goToDefaultPosition" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSlider" name="timeLine">
+        <Container class="javax.swing.JPanel" name="jPanel1">
           <Properties>
-            <Property name="paintTrack" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="timeLine" noResource="true"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+            <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="stopLabel">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="stopLabel.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="stopLabel.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="stopLabel.toolTipText"/>
-            <Property name="verticalAlignment" type="int" value="3"/>
-            <Property name="disabledIcon" type="javax.swing.Icon" resourceKey="stopLabel.disabledIcon"/>
-            <Property name="doubleBuffered" type="boolean" value="true"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="name" type="java.lang.String" value="stopLabel" noResource="true"/>
-            <Property name="opaque" type="boolean" value="true"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="stopLabelMouseClicked"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="playLabel">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="playLabel.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="playLabel.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="playLabel.toolTipText"/>
-            <Property name="disabledIcon" type="javax.swing.Icon" resourceKey="playLabel.disabledIcon"/>
-            <Property name="doubleBuffered" type="boolean" value="true"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="name" type="java.lang.String" value="playLabel" noResource="true"/>
-            <Property name="opaque" type="boolean" value="true"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playLabelMouseClicked"/>
-          </Events>
-        </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="dateInfo" min="-2" pref="233" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="Latitude" alignment="1" max="32767" attributes="1"/>
+                                  <Component id="Longitude" alignment="1" min="-2" max="-2" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="latitudeValue" alignment="1" max="32767" attributes="3"/>
+                                  <Component id="longitudeValue" alignment="0" min="-2" pref="92" max="-2" attributes="3"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="xPos" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="yPos" alignment="0" min="-2" pref="43" max="-2" attributes="1"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="yValue" max="32767" attributes="3"/>
+                                  <Component id="xValue" alignment="0" min="-2" pref="94" max="-2" attributes="3"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="182" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="xPos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="yPos" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="xValue" min="-2" pref="14" max="-2" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="yValue" min="-2" pref="14" max="-2" attributes="1"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="latitudeValue" alignment="3" min="-2" pref="14" max="-2" attributes="1"/>
+                          <Component id="Latitude" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="longitudeValue" alignment="3" min="-2" pref="14" max="-2" attributes="1"/>
+                          <Component id="Longitude" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="dateInfo" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
           <SubComponents>
-            <Component class="javax.swing.JList" name="locatedNodes">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <Properties>
-                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-                <Property name="selectionMode" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="locatedNodes" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JList(locatedN);"/>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JList" name="locatedNodes">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="locatedNodes.font"/>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="name" type="java.lang.String" value="locatedNodes" noResource="true"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JList(locatedN);"/>
+                  </AuxValues>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="dateInfo">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="dateInfo.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="dateInfo.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="dateInfo.text"/>
+                <Property name="name" type="java.lang.String" value="dateInfo" noResource="true"/>
+              </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="yValue">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="latitudeValue.font"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="yValue" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="yPos">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="yPos.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="yPos.text"/>
+                <Property name="name" type="java.lang.String" value="yPos" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="xPos">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="xPos.text"/>
+                <Property name="name" type="java.lang.String" value="xPos" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="xValue">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="latitudeValue.font"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="xValue" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="latitudeValue">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="latitudeValue.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="latitudeValue.text"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="latitudeValue" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="longitudeValue">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="latitudeValue.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="longitudeValue.text"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[88, 14]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="longitudeValue" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Longitude">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="Longitude.text"/>
+                <Property name="name" type="java.lang.String" value="Longitude" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Latitude">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="Latitude.text"/>
+                <Property name="name" type="java.lang.String" value="Latitude" noResource="true"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JPanel" name="jPanel2">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Selected Node Info">
+                      <Property name="titleX" resourceKey="jPanel2.border.title"/>
+                      <Property name="font" resourceKey="jPanel2.border.titleFont"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jPanel2.font"/>
+                <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel10" alignment="1" pref="69" max="32767" attributes="1"/>
+                              <Component id="jLabel8" alignment="1" pref="69" max="32767" attributes="1"/>
+                              <Component id="jLabel5" alignment="1" pref="69" max="32767" attributes="1"/>
+                              <Component id="jLabel7" alignment="1" pref="69" max="32767" attributes="1"/>
+                              <Component id="jLabel11" alignment="0" pref="69" max="32767" attributes="1"/>
+                              <Component id="jLabel6" alignment="0" pref="69" max="32767" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="latLabel" alignment="0" pref="101" max="32767" attributes="1"/>
+                              <Component id="ipLabel" alignment="0" pref="101" max="32767" attributes="1"/>
+                              <Component id="locatedLabel" alignment="1" pref="101" max="32767" attributes="1"/>
+                              <Component id="fqidLabel" alignment="1" pref="101" max="32767" attributes="1"/>
+                              <Component id="lonLabel" alignment="1" pref="101" max="32767" attributes="1"/>
+                              <Component id="ncLabel" alignment="1" pref="101" max="32767" attributes="1"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <Component id="ipLabel" alignment="1" min="-2" pref="13" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="1"/>
+                              <Component id="latLabel" alignment="3" min="0" pref="13" max="32767" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="1"/>
+                              <Component id="locatedLabel" alignment="3" min="-2" pref="13" max="-2" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="fqidLabel" alignment="3" min="-2" pref="13" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lonLabel" alignment="3" min="-2" pref="13" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ncLabel" alignment="3" min="-2" pref="13" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel8.font"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel5.text"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="ipLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel16.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="ipLabel.text"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="ipLabel" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="latLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel16.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="latLabel.text"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="latLabel" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel7">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel8.font"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel7.text"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="locatedLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel16.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="locatedLabel.text"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="locatedLabel" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel11">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel11.font"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel11.text"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jLabel11" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel8.font"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel6.text"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="fqidLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel16.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="fqidLabel.text"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="fqidLabel" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lonLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="lonLabel.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="lonLabel.text"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="lonLabel" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel8">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel8.font"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel8.text"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jLabel8" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel10">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel11.font"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel10.text"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="ncLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabel16.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="ncLabel.text"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="ncLabel" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel3">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Service Discovery">
+                      <Property name="titleX" resourceKey="jPanel3.border.title"/>
+                      <Property name="font" resourceKey="jPanel3.border.titleFont"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jPanel3" noResource="true"/>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="260" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="109" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="latitudeValue">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="latitudeValue.text"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="latitudeValue" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="longitudeValue">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="longitudeValue.text"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="longitudeValue" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="dateInfo">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="dateInfo.text"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-            <Property name="name" type="java.lang.String" value="dateInfo" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="yValue">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="yValue" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="xValue">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="xValue" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="mousePosition">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[88, 14]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="mousePosition" noResource="true"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JMenuBar" name="menuBar">
@@ -483,6 +705,7 @@
         <Menu class="javax.swing.JMenu" name="fileMenu">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="fileMenu.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="fileMenu.font"/>
             <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
           </Properties>
           <AuxValues>
@@ -494,11 +717,13 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenu1.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenu1.text"/>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenu1.font"/>
                 <Property name="name" type="java.lang.String" value="jMenu1" noResource="true"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="xmlOpenMenu">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="xmlOpenMenu.font"/>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="xmlOpenMenu.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="xmlOpenMenu.text"/>
                     <Property name="name" type="java.lang.String" value="xmlOpenMenu" noResource="true"/>
@@ -509,6 +734,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="txtOpenMenu">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="txtOpenMenu.font"/>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="txtOpenMenu.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="txtOpenMenu.text"/>
                     <Property name="name" type="java.lang.String" value="txtOpenMenu" noResource="true"/>
@@ -519,6 +745,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jsOpenMenu">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jsOpenMenu.font"/>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="jsOpenMenu.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="jsOpenMenu.text"/>
                     <Property name="name" type="java.lang.String" value="jsOpenMenu" noResource="true"/>
@@ -534,6 +761,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+S"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="saveAsMenu.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="saveAsMenu.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="saveAsMenu.text"/>
                 <Property name="name" type="java.lang.String" value="saveAsMenu" noResource="true"/>
@@ -552,6 +780,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="exitMenuItem.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="exitMenuItem.icon"/>
                 <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
               </Properties>
@@ -565,6 +794,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jMenu2.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="jMenu2.font"/>
             <Property name="name" type="java.lang.String" value="jMenu2" noResource="true"/>
           </Properties>
           <SubComponents>
@@ -578,6 +808,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="goToDefaultPosition" methodName="goToDefaultPosition"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem5.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem8.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem8.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem8" noResource="true"/>
@@ -588,6 +819,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="addNodeOnMap" methodName="addNodeOnMap"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem5.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem6.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem6.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem6" noResource="true"/>
@@ -598,6 +830,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="takeScreenShot" methodName="takeScreenShot"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem5.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem5.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem5.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem5" noResource="true"/>
@@ -613,6 +846,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+F"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem5.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem12.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem12.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem12" noResource="true"/>
@@ -623,6 +857,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="findNode" methodName="findNode"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem5.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem7.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem7.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem7" noResource="true"/>
@@ -633,6 +868,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="goHere" methodName="goHere"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem5.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem9.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem9.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem9" noResource="true"/>
@@ -643,6 +879,7 @@
         <Menu class="javax.swing.JMenu" name="viewMenu">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="viewMenu.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="viewMenu.font"/>
             <Property name="name" type="java.lang.String" value="viewMenu" noResource="true"/>
           </Properties>
           <SubComponents>
@@ -651,6 +888,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="showNodes" methodName="showNodes"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="mapNodesMenu.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="mapNodesMenu.icon"/>
@@ -662,6 +900,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+2"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="linksMenu.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="linksMenu.icon"/>
@@ -673,6 +912,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="showLatLon" methodName="showLatLon"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="latLonMenu.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="latLonMenu.icon"/>
@@ -684,6 +924,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+4"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="jCheckBoxMenuItem1.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jCheckBoxMenuItem1.icon"/>
@@ -695,6 +936,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="showZoomButton" methodName="showZoomButton"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="zoomButtons.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="zoomButtons.icon"/>
@@ -706,6 +948,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="showSlider" methodName="showSlider"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="zoomSMenu.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="zoomSMenu.icon"/>
@@ -717,6 +960,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="showMiniMap" methodName="showMiniMap"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodesMenu.font"/>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="miniMapMenu.text"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="miniMapMenu.icon"/>
@@ -728,6 +972,7 @@
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="helpMenu.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="helpMenu.font"/>
             <Property name="name" type="java.lang.String" value="helpMenu" noResource="true"/>
           </Properties>
           <AuxValues>
@@ -740,6 +985,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="freimapgsoc.FreimapGSoCView" id="showAboutBox" methodName="showAboutBox"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem1.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="aboutMenuItem.icon"/>
                 <Property name="name" type="java.lang.String" value="aboutMenuItem" noResource="true"/>
               </Properties>
@@ -753,6 +999,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F1"/>
                 </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jMenuItem1.font"/>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem1.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
@@ -760,6 +1007,149 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="ContestMenu">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="rightClickMenu.font"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="rightClickMenu" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.RADVisualComponent$AccessibleParentEditor">
+          <ComponentRef name="mainMap"/>
+        </Property>
+      </AccessibilityProperties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="freimapgsoc.FreimapGSoCView" id="goToDefaultPosition" methodName="goToDefaultPosition"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem2.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jMenuItem2.text"/>
+            <Property name="name" type="java.lang.String" value="jMenuItem2" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="freimapgsoc.FreimapGSoCView" id="takeScreenShot" methodName="takeScreenShot"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem3.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jMenuItem3.text"/>
+            <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shMiniMap">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="shMiniMap.text"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="shMiniMap.icon"/>
+            <Property name="name" type="java.lang.String" value="shMiniMap" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shZoomSlider">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="shZoomSlider.text"/>
+            <Property name="name" type="java.lang.String" value="shZoomSlider" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shZoomButton">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="shZoomButton.text"/>
+            <Property name="name" type="java.lang.String" value="shZoomButton" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shMapNodes">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="shMapNodes.text"/>
+            <Property name="name" type="java.lang.String" value="shMapNodes" noResource="true"/>
+          </Properties>
+        </MenuItem>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="ContestMenuNode">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="ContestMenuNode.font"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="ContestMenuNode" noResource="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="null"/>
+        </Property>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.RADVisualComponent$AccessibleParentEditor">
+          <ComponentRef name="mainMap"/>
+        </Property>
+      </AccessibilityProperties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="SDContestMenuN">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="ServiceDiscovery.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="ServiceDiscovery.text"/>
+            <Property name="name" type="java.lang.String" value="ServiceDiscovery" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="SSHConnectionContestMenuN">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="SSHConnectionContestMenuN.text"/>
+            <Property name="name" type="java.lang.String" value="SSHConnectionContestMenuN" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="deleteNodeContestMenuN">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="deleteNodeContestMenuN.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="deleteNodeContestMenuN.text"/>
+            <Property name="name" type="java.lang.String" value="deleteNodeContestMenuN" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="deleteNodeFSourceContestMenuN">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="deleteNodeFSourceContestMenuN.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="deleteNodeFSourceContestMenuN.text"/>
+            <Property name="name" type="java.lang.String" value="deleteNodeFSourceContestMenuN" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="HideNodeContestMenuN">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="HideNodeContestMenuN.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="HideNodeContestMenuN.text"/>
+            <Property name="name" type="java.lang.String" value="HideNodeContestMenuN" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="ShowNodeContestMenuN">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="ShowNodeContestMenuN.icon"/>
+            <Property name="label" type="java.lang.String" resourceKey="ShowNodeContestMenuN.label"/>
+            <Property name="name" type="java.lang.String" value="ShowNodeContestMenuN" noResource="true"/>
+          </Properties>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>
@@ -781,6 +1171,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="1"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-35,0,0,4,-62"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,-114,0,0,5,38"/>
   </AuxValues>
 </Form>
