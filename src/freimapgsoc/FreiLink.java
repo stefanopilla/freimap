@@ -22,7 +22,6 @@
 
 package freimapgsoc;
 
-import java.util.HashMap;
 
 public class FreiLink {
   public FreiNode from, to;

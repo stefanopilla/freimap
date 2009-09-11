@@ -1,0 +1,80 @@
+Log Of Programming
+
+June/July 2009 Porting to Netbeans IDE
+		Modification of program Structure
+		Implementation of JMapKit for Maps with OpenStreetMap
+		Set Zoom Button
+		Set Jslider for Zoom
+		Added Lat/Lon Label
+		Added Hours/Minute/Sec Label
+		Added File Menu
+			Added OpenMenu
+			Added Save Menu
+		Added Help Menu
+			Added About
+			Added Help (not implemented)	
+		
+		Find Node Panel Added
+		Find Node Menu Added
+		"Go Here" Panel Added
+		"Go Here" Menu Added
+		Show/Hide minimMp mainMap in View Menu
+		Show/Hide ZoomButton
+		Show/Hide ZoomSlider
+		MouseListener for Drag Event
+		MouseListener for DoubleClick Event
+		MoudeListener for RightClick Event
+		TakeSnapshot Utils Added
+		Added Types String List for SD
+		Implementation of Service discovery with jmdns	
+		
+		
+09-Ago-2009: 	List of Services added
+		"Add Services" Button added
+		Fixed Bug of ffmap.xml (FreiMapDataSource)
+		Fixed Bug of latlon.js (LatLonJsDataSource)
+		add nodename on left Jlist
+		add Waypoint to Jmapkit
+
+11-Ago-2009:	Added linkInfo JFrame
+		ReloadService in ServiceDiscovery 
+
+12-Ago-2009:	Add Costructor(FreiNode) for NodeInfo in PopUp Frame
+		Draw Nodes
+		Label on MouseMoved Event on nodes
+		X Y coordinate label added (must be better)
+
+13-Ago-2009:	Implemented node button action (new PopUp)
+		Added Correct Info for node in PopUp
+		Added ContestMenu for nodes
+		Added ContestMenu for map (TO DO...show contest menu...)
+		Added Node Info Label on MainPanel
+		Added ServiceDiscovery Panel
+		Added DateIcon
+		Added Located Icon (must be better)
+
+14-Ago-2009:	Added Listener to List of nodes
+		Added Circle around nodes
+		
+15-Ago-2009:	Go Here Implemented
+		Added Live Services Button for Services discovery
+		Use of _services._dns-sd._udp.local. type
+		Modified ContestMenu (right click menu)
+		Modified ContestMenuNode (right clik on a node)
+
+17-Ago-2009	Open Js File Implemented (now you can open js files)
+	
+
+To do:
+Drawing Links
+Drawing Nodes
+Find Node Implementation
+Multiselection of Nodes
+Save selected node in a file 
+
+
+
+
+
+
+		

@@ -23,10 +23,8 @@
 package freimapgsoc;
 
 import java.awt.*;
-import java.awt.geom.*;
 import java.awt.event.MouseEvent;
 import java.util.*;
-import java.util.regex.*;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.Waypoint;
 import org.jdesktop.swingx.mapviewer.WaypointPainter;

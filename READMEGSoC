@@ -1,0 +1,53 @@
+Stefano Pilla (Freifunk)
+Service Discovery in Mesh Networks / Avahi DataSource for freimap 
+
+Hi,
+
+I've changed my PC on July so I've lost all of my SVN data…
+
+Fortunately, I've made a backup of my Netbeans Project but I've lost all of my previous SVN commit…
+So I send you all of my Sources code but not SVN files…
+
+Some files are part of existing freimap software of Freifunk Project (that is my Organization), not all of these files are used. However in the tar file there are 3 directories:
+
+SRC that contains all of my sources files:
+	- freimapgsoc is the main package where there are a major part of 	my application
+	- data that contains an xml file for representations of the node on 	the map
+	- PopUp that is another package of Freimap Software
+	
+TEST is a test directory (the files are not principal for the application)
+
+NBPROJECT that contains all important information for Netbeans.
+
+I haven't included LIB Directory because it is about of 8 Mbyte…
+
+However the library that you need are:
+jcommon-1.0.8.jar
+jfreechart-1.0.4
+jmdns
+mysql-connector-java-5.0.5-bin
+swing-worker
+swingx-bean
+swingx-ws-2009_06_14
+swingx
+xpp3_min-1.1.4c
+xstream-1.2.2-20061111.171510-1
+appframework-1.0.3
+swing-worker-1.1
+org-netbeans-modules-java-j2seproject-copylibstask
+
+You also need of Java JDK 1.6 or higher.
+
+All others files are Netbeans's files so there aren't important information about my work...
+
+More info about my development process and  are here: http://wiki.freifunk.net/Freimap
+
+There is also a simply LOG of my work in logGSoC file but it is a general description of my work…
+
+If you need some explanations contact me at pillastefano@gmail.com
+
+Thanks a lot!
+
+Pilla Stefano
+
+

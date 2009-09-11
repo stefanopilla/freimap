@@ -194,6 +194,10 @@ public class OlsrdDataSource implements DataSource {
     if (listener != null) listener.timeRangeAvailable(firstUpdateTime, lastUpdateTime);
   }
 
+    public void init(String path) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
   //Listener Of DotDraw Plugin
   class DotPluginListener extends Thread {
     BufferedReader in;

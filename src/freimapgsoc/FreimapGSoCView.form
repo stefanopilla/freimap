@@ -13,7 +13,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" pref="341" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
@@ -80,6 +80,9 @@
                 <Property name="centerPosition" type="org.jdesktop.swingx.mapviewer.GeoPosition" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="def" type="code"/>
                 </Property>
+                <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="contestMenu"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" resourceKey="mainMap.font"/>
                 <Property name="name" type="java.lang.String" value="mainMap" noResource="true"/>
                 <Property name="recenterOnClickEnabled" type="boolean" value="true"/>
@@ -92,10 +95,8 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="mainMapMouseMoved"/>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainMapMousePressed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="mainMap.add(nodeLabel);"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
               <Constraints>
@@ -114,7 +115,7 @@
                               <Component id="zoomButtonIn" min="-2" max="-2" attributes="0"/>
                               <Component id="zoomSlider" alignment="0" min="-2" pref="46" max="-2" attributes="1"/>
                           </Group>
-                          <EmptySpace pref="687" max="32767" attributes="0"/>
+                          <EmptySpace pref="697" max="32767" attributes="0"/>
                           <Component id="miniMap" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -293,31 +294,28 @@
                                   <Component id="xValue" alignment="0" min="-2" pref="94" max="-2" attributes="3"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="1">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jSeparator4" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="deleteNodeButton" min="-2" pref="87" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="addNodeButton" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jScrollPane1" alignment="0" pref="306" max="32767" attributes="1"/>
-                                          <Component id="jSeparator5" alignment="0" min="-2" pref="278" max="-2" attributes="1"/>
-                                          <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
-                                          <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="1">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator4" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="deleteNodeButton" min="-2" pref="87" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="addNodeButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="jScrollPane1" alignment="0" pref="306" max="32767" attributes="1"/>
+                                      <Component id="jSeparator5" alignment="0" min="-2" pref="278" max="-2" attributes="1"/>
+                                      <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -504,21 +502,21 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel10" alignment="1" pref="69" max="32767" attributes="1"/>
-                              <Component id="jLabel8" alignment="1" pref="69" max="32767" attributes="1"/>
-                              <Component id="jLabel5" alignment="1" pref="69" max="32767" attributes="1"/>
-                              <Component id="jLabel7" alignment="1" pref="69" max="32767" attributes="1"/>
-                              <Component id="jLabel11" alignment="0" pref="69" max="32767" attributes="1"/>
-                              <Component id="jLabel6" alignment="0" pref="69" max="32767" attributes="1"/>
+                              <Component id="jLabel10" alignment="1" pref="72" max="32767" attributes="1"/>
+                              <Component id="jLabel8" alignment="1" pref="72" max="32767" attributes="1"/>
+                              <Component id="jLabel5" alignment="1" pref="72" max="32767" attributes="1"/>
+                              <Component id="jLabel7" alignment="1" pref="72" max="32767" attributes="1"/>
+                              <Component id="jLabel11" alignment="0" pref="72" max="32767" attributes="1"/>
+                              <Component id="jLabel6" alignment="0" pref="72" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lonLabel" pref="101" max="32767" attributes="1"/>
-                              <Component id="locatedLabel" alignment="0" pref="101" max="32767" attributes="1"/>
-                              <Component id="latLabel" alignment="0" pref="101" max="32767" attributes="1"/>
-                              <Component id="ipLabel" alignment="0" pref="101" max="32767" attributes="1"/>
-                              <Component id="fqidLabel" alignment="1" pref="101" max="32767" attributes="1"/>
-                              <Component id="ncLabel" alignment="1" pref="101" max="32767" attributes="1"/>
+                              <Component id="lonLabel" pref="104" max="32767" attributes="1"/>
+                              <Component id="locatedLabel" alignment="0" pref="104" max="32767" attributes="1"/>
+                              <Component id="latLabel" alignment="0" pref="104" max="32767" attributes="1"/>
+                              <Component id="ipLabel" alignment="0" pref="104" max="32767" attributes="1"/>
+                              <Component id="fqidLabel" alignment="1" pref="104" max="32767" attributes="1"/>
+                              <Component id="ncLabel" alignment="1" pref="104" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
                       </Group>
@@ -747,6 +745,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="deleteNodeButton.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="deleteNodeButton.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="deleteNodeButton" noResource="true"/>
               </Properties>
               <Events>
@@ -1073,145 +1072,459 @@
         </Menu>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPopupMenu" name="ContestMenu">
+    <Container class="javax.swing.JPopupMenu" name="contestMenu">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="rightClickMenu.font"/>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
+          <Dimension value="[200, 250]"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
+          <Dimension value="[200, 250]"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="rightClickMenu" noResource="true"/>
-        <Property name="opaque" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="ContestMenu" noResource="true"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
+          <Dimension value="[200, 250]"/>
+        </Property>
+        <Property name="selectionModel" type="javax.swing.SingleSelectionModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="null"/>
         </Property>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.RADVisualComponent$AccessibleParentEditor">
-          <ComponentRef name="mainMap"/>
-        </Property>
-      </AccessibilityProperties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
-          <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="freimapgsoc.FreimapGSoCView" id="goToDefaultPosition" methodName="goToDefaultPosition"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem2.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jMenuItem2.text"/>
-            <Property name="name" type="java.lang.String" value="jMenuItem2" noResource="true"/>
-          </Properties>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+        <MenuItem class="javax.swing.JMenuItem" name="takePicture">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="freimapgsoc.FreimapGSoCView" id="takeScreenShot" methodName="takeScreenShot"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem3.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jMenuItem3.text"/>
-            <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
+            <Property name="font" type="java.awt.Font" resourceKey="takePicture.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="takePicture.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="takePicture.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="takePicture.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="takePicture" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shMiniMap">
+        <MenuItem class="javax.swing.JMenuItem" name="addNodeM">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="shMiniMap.text"/>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="shMiniMap.icon"/>
-            <Property name="name" type="java.lang.String" value="shMiniMap" noResource="true"/>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="freimapgsoc.FreimapGSoCView" id="addNodeOnMap" methodName="addNodeOnMap"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" resourceKey="addNodeM.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="addNodeM.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="addNodeM.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="addNodeM.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="addNodeM" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shZoomSlider">
+        <MenuItem class="javax.swing.JMenuItem" name="goToDefaultPos">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="shZoomSlider.text"/>
-            <Property name="name" type="java.lang.String" value="shZoomSlider" noResource="true"/>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="freimapgsoc.FreimapGSoCView" id="goToDefaultPosition" methodName="goToDefaultPosition"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" resourceKey="goToDefaultPos.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="goToDefaultPos.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="goToDefaultPos.text"/>
+            <Property name="name" type="java.lang.String" value="goToDefaultPos" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shZoomButton">
+        <Component class="javax.swing.JSeparator" name="jSeparator6">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="shZoomButton.text"/>
-            <Property name="name" type="java.lang.String" value="shZoomButton" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jSeparator6" noResource="true"/>
+          </Properties>
+        </Component>
+        <Menu class="javax.swing.JMenu" name="File">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="File.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="File.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="File.font"/>
+            <Property name="name" type="java.lang.String" value="File" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="saveSelNodes">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="saveSelNodes.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="saveSelNodes.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="saveSelNodes.text"/>
+                <Property name="name" type="java.lang.String" value="saveSelNodes" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="Edit">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="Edit.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="Edit.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="Edit.font"/>
+            <Property name="name" type="java.lang.String" value="Edit" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="applyFilter">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="findNode.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="applyFilter.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="applyFilter.text"/>
+                <Property name="name" type="java.lang.String" value="applyFilter" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="findNode">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="findNode" methodName="findNode"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="findNode.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="findNode.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="findNode.text"/>
+                <Property name="name" type="java.lang.String" value="findNode" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="goHere">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="goHere" methodName="goHere"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="findNode.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="goHere.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="goHere.text"/>
+                <Property name="name" type="java.lang.String" value="goHere" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="View">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="View.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="View.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="View.font"/>
+            <Property name="name" type="java.lang.String" value="View" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mapNodes">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="mapNodes.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="mapNodes.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="mapNodes.text"/>
+                <Property name="name" type="java.lang.String" value="mapNodes" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="maplinks">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="maplinks.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="maplinks.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="maplinks.text"/>
+                <Property name="name" type="java.lang.String" value="maplinks" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="maplatlon">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="maplatlon.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="maplatlon.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="maplatlon.text"/>
+                <Property name="name" type="java.lang.String" value="maplatlon" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="listofnodes">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="listofnodes.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="listofnodes.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="listofnodes.text"/>
+                <Property name="name" type="java.lang.String" value="listofnodes" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="zoomMapB">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showZoomButton" methodName="showZoomButton"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="zoomMapB.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="zoomMapB.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="zoomMapB.text"/>
+                <Property name="name" type="java.lang.String" value="zoomMapB" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="zoomMapS">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showSlider" methodName="showSlider"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="zoomMapS.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="zoomMapS.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="zoomMapS.text"/>
+                <Property name="name" type="java.lang.String" value="zoomMapS" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miniMapM">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showMiniMap" methodName="showMiniMap"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="miniMapM.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="miniMapM.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="miniMapM.text"/>
+                <Property name="name" type="java.lang.String" value="miniMapM" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Component class="javax.swing.JSeparator" name="jSeparator7">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jSeparator7" noResource="true"/>
+          </Properties>
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="selectAll">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="selectAll.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="selectAll.text"/>
+            <Property name="name" type="java.lang.String" value="selectAll" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="shMapNodes">
+        <Component class="javax.swing.JSeparator" name="jSeparator8">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="shMapNodes.text"/>
-            <Property name="name" type="java.lang.String" value="shMapNodes" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jSeparator8" noResource="true"/>
+          </Properties>
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="aboutfreimap">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="aboutfreimap.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="aboutfreimap.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="aboutfreimap.text"/>
+            <Property name="name" type="java.lang.String" value="aboutfreimap" noResource="true"/>
           </Properties>
         </MenuItem>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPopupMenu" name="ContestMenuNode">
+    <Container class="javax.swing.JPopupMenu" name="contestMenuNode">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="ContestMenuNode.font"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
+          <Dimension value="[200, 250]"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
+          <Dimension value="[200, 250]"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="ContestMenuNode" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="contestMenuNode" noResource="true"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
+          <Dimension value="[200, 250]"/>
+        </Property>
+        <Property name="selectionModel" type="javax.swing.SingleSelectionModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="null"/>
         </Property>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.RADVisualComponent$AccessibleParentEditor">
-          <ComponentRef name="mainMap"/>
-        </Property>
-      </AccessibilityProperties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="SDContestMenuN">
+        <MenuItem class="javax.swing.JMenuItem" name="addNodeDS">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="ServiceDiscovery.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="ServiceDiscovery.text"/>
-            <Property name="name" type="java.lang.String" value="ServiceDiscovery" noResource="true"/>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="addNodeDS.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="addNodeDS.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="addNodeDS.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="addNodeDS" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="SSHConnectionContestMenuN">
+        <MenuItem class="javax.swing.JMenuItem" name="centerMap">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="SSHConnectionContestMenuN.text"/>
-            <Property name="name" type="java.lang.String" value="SSHConnectionContestMenuN" noResource="true"/>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="centerMap.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="centerMap.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="centerMap.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="centerMap" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="deleteNodeContestMenuN">
+        <MenuItem class="javax.swing.JMenuItem" name="serviceDiscovery">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="deleteNodeContestMenuN.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="deleteNodeContestMenuN.text"/>
-            <Property name="name" type="java.lang.String" value="deleteNodeContestMenuN" noResource="true"/>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="serviceDiscovery.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="serviceDiscovery.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="serviceDiscovery.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="serviceDiscovery" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="deleteNodeFSourceContestMenuN">
+        <MenuItem class="javax.swing.JMenuItem" name="ssh">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="deleteNodeFSourceContestMenuN.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="deleteNodeFSourceContestMenuN.text"/>
-            <Property name="name" type="java.lang.String" value="deleteNodeFSourceContestMenuN" noResource="true"/>
+            <Property name="font" type="java.awt.Font" resourceKey="ssh.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="ssh.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="ssh.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="ssh.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="ssh" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="HideNodeContestMenuN">
+        <Component class="javax.swing.JSeparator" name="jSeparator9">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="HideNodeContestMenuN.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="HideNodeContestMenuN.text"/>
-            <Property name="name" type="java.lang.String" value="HideNodeContestMenuN" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jSeparator9" noResource="true"/>
+          </Properties>
+        </Component>
+        <Menu class="javax.swing.JMenu" name="File1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="File1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="File1.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="Edit1.font"/>
+            <Property name="name" type="java.lang.String" value="File1" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="saveSelNodes1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="saveSelNodes1.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="saveSelNodes1.text"/>
+                <Property name="name" type="java.lang.String" value="saveSelNodes1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="Edit1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="Edit1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="Edit1.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="Edit1.font"/>
+            <Property name="name" type="java.lang.String" value="Edit1" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="applyFilter1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/freimapgsoc/resources/filter.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="applyFilter1.text"/>
+                <Property name="name" type="java.lang.String" value="applyFilter1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="findNode1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="findNode" methodName="findNode"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="findNode1.text"/>
+                <Property name="name" type="java.lang.String" value="findNode1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="goHere1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="goHere" methodName="goHere"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="goHere1.text"/>
+                <Property name="name" type="java.lang.String" value="goHere1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="View1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="View1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="View1.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="Edit1.font"/>
+            <Property name="name" type="java.lang.String" value="View1" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mapNodes1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="mapNodes1.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="mapNodes1.text"/>
+                <Property name="name" type="java.lang.String" value="mapNodes1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="maplinks1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="maplinks1.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="maplinks1.text"/>
+                <Property name="name" type="java.lang.String" value="maplinks1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="maplatlon1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/freimapgsoc/resources/latlon.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="maplatlon1.text"/>
+                <Property name="name" type="java.lang.String" value="maplatlon1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="listofnodes1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/freimapgsoc/resources/wrt.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="listofnodes1.text"/>
+                <Property name="name" type="java.lang.String" value="listofnodes1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="zoomMapB1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showZoomButton" methodName="showZoomButton"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="zoomMapB1.text"/>
+                <Property name="name" type="java.lang.String" value="zoomMapB1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="zoomMapS1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showSlider" methodName="showSlider"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="zoomMapS1.text"/>
+                <Property name="name" type="java.lang.String" value="zoomMapS1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miniMapM1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="freimapgsoc.FreimapGSoCView" id="showMiniMap" methodName="showMiniMap"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="miniMapM1.text"/>
+                <Property name="name" type="java.lang.String" value="miniMapM1" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Component class="javax.swing.JSeparator" name="jSeparator10">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jSeparator10" noResource="true"/>
+          </Properties>
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="selectThisNode">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="selectThisNode.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="selectThisNode.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="selectThisNode.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="selectThisNode" noResource="true"/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="ShowNodeContestMenuN">
+        <MenuItem class="javax.swing.JMenuItem" name="selectAll1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="ShowNodeContestMenuN.icon"/>
-            <Property name="label" type="java.lang.String" resourceKey="ShowNodeContestMenuN.label"/>
-            <Property name="name" type="java.lang.String" value="ShowNodeContestMenuN" noResource="true"/>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="selectAll1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="selectAll1.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="selectAll1.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="selectAll1" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <Component class="javax.swing.JSeparator" name="jSeparator11">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jSeparator11" noResource="true"/>
+          </Properties>
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="aboutfreimap1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="selectAll1.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="aboutfreimap1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="aboutfreimap1.text"/>
+            <Property name="name" type="java.lang.String" value="aboutfreimap1" noResource="true"/>
           </Properties>
         </MenuItem>
       </SubComponents>

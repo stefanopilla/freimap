@@ -51,6 +51,10 @@ public interface DataSource {
 /** Initialize this data source with its configuration parameters. **/
   public void init(HashMap<String, Object> configuration);
 
+  /** Initialize this data source with path file. **/
+
+  public void init(String path);
+
 /** @return	A Vector of FreiNodes to be displayed. */
   public Vector<FreiNode> getNodeList();
 /** <b>To be deprecated soon.</b>

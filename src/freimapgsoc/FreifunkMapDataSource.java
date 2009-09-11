@@ -184,4 +184,8 @@ public class FreifunkMapDataSource implements DataSource {
 		return nodes;
 	}
 
+    public void init(String path) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

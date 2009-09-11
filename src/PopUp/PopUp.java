@@ -10,6 +10,7 @@
  */
 package PopUp;
 
+import freimapgsoc.log;
 import freimapgsoc.FreiLink;
 import freimapgsoc.FreiNode;
 import freimapgsoc.addServices;
@@ -44,17 +45,19 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     public PopUp(String ip) {
         System.out.println("Costructor PopUP(String ip)");
         initComponents();
-        InetAddress address=null;
+        InetAddress address = null;
         try {
-            this.jmdns=JmDNS.create(address.getByName(ip));
+            this.jmdns = JmDNS.create(address.getByName(ip));
             jmdns.addServiceTypeListener(this);
+            System.out.println("HostName:" + jmdns.getHostName());
+            System.out.println("Interface: " + jmdns.getInterface().toString());
         } catch (IOException ex) {
             Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         // register some well known types
-        list = new String[] {
-            "_services._dns-sd._udp.local.",
-            "_http._tcp.local.",
+        list = new String[]{
+                    "_http._tcp.local.",
                     "_ftp._tcp.local.",
                     "_sftp._tcp.local.",
                     "_tftp._tcp.local.",
@@ -79,28 +82,29 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     "_workstation._tcp.local.",
                     "_h323._tcp.local.",
                     "_sip._udp.local."
-        };
+                };
 
-        for (int i = 0 ; i < list.length ; i++) {
+        for (int i = 0; i < list.length; i++) {
             jmdns.registerServiceType(list[i]);
         }
+
     }
 
     public PopUp(FreiNode from) {
         System.out.println("Costructor PopUP(String ip)");
         initComponents();
-        InetAddress address=null;
+        InetAddress address = null;
         try {
-            this.jmdns=JmDNS.create(address.getByName(from.id));
+            this.jmdns = JmDNS.create(address.getByName(from.id));
             jmdns.addServiceTypeListener(this);
             infoNode(from);
         } catch (IOException ex) {
             Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
         }
         // register some well known types
-        list = new String[] {
-            "_services._dns-sd._udp.local.",
-            "_http._tcp.local.",
+        list = new String[]{
+                    "_services._dns-sd._udp.local.",
+                    "_http._tcp.local.",
                     "_ftp._tcp.local.",
                     "_sftp._tcp.local.",
                     "_tftp._tcp.local.",
@@ -125,20 +129,20 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     "_workstation._tcp.local.",
                     "_h323._tcp.local.",
                     "_sip._udp.local."
-        };
+                };
 
-        for (int i = 0 ; i < list.length ; i++) {
+
+        for (int i = 0; i < list.length; i++) {
             jmdns.registerServiceType(list[i]);
         }
     }
 
-
     /** Creates new form ServiceDiscovery */
     public PopUp(FreiNode from, FreiNode to, FreiLink link) {
         initComponents();
-        this.from=from;
-        this.to=to;
-        this.link=link;
+        this.from = from;
+        this.to = to;
+        this.link = link;
         aboutNodes();
 
         n1Ip.setText(from.id);
@@ -146,93 +150,99 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     }
 
     public PopUp(JmDNS jmdns) throws IOException {
-          System.out.println("Costructor PopUP(jmdns)");
+        System.out.println("Costructor PopUP(jmdns)");
         initComponents();
-       
+
 
         this.jmdns = jmdns;
         jmdns.addServiceTypeListener(this);
 
         // register some well known types
-        String list[] = new String[] {
+        String list[] = new String[]{
             "_http._tcp.local.",
-                    "_ftp._tcp.local.",
-                    "_sftp._tcp.local.",
-                    "_tftp._tcp.local.",
-                    "_ssh._tcp.local.",
-                    "_smb._tcp.local.",
-                    "_printer._tcp.local.",
-                    "_airport._tcp.local.",
-                    "_afpovertcp._tcp.local.",
-                    "_nfs._tcp.local.",
-                    "_webdav._tcp.local.",
-                    "_presence._tcp.local.",
-                    "_eppc._tcp.local.",
-                    "_telnet._tcp.local",
-                    "_raop._tcp.local.",
-                    "_ipp._tcp.local.",
-                    "_pdl-datastream._tcp.local.",
-                    "_riousbprint._tcp.local.",
-                    "_daap._tcp.local",
-                    "_distcc._tcp.local.",
-                    "_xserveraid._tcp.local.",
-                    "_net-assistant._tcp.local.",
-                    "_workstation._tcp.local.",
-                    "_h323._tcp.local.",
-                    "_sip._udp.local."
+            "_ftp._tcp.local.",
+            "_sftp._tcp.local.",
+            "_tftp._tcp.local.",
+            "_ssh._tcp.local.",
+            "_smb._tcp.local.",
+            "_printer._tcp.local.",
+            "_airport._tcp.local.",
+            "_afpovertcp._tcp.local.",
+            "_nfs._tcp.local.",
+            "_webdav._tcp.local.",
+            "_presence._tcp.local.",
+            "_eppc._tcp.local.",
+            "_telnet._tcp.local",
+            "_raop._tcp.local.",
+            "_ipp._tcp.local.",
+            "_pdl-datastream._tcp.local.",
+            "_riousbprint._tcp.local.",
+            "_daap._tcp.local",
+            "_distcc._tcp.local.",
+            "_xserveraid._tcp.local.",
+            "_net-assistant._tcp.local.",
+            "_workstation._tcp.local.",
+            "_h323._tcp.local.",
+            "_sip._udp.local."
         };
 
-       
-        for (int i = 0 ; i < list.length ; i++) {
+
+        for (int i = 0; i < list.length; i++) {
             jmdns.registerServiceType(list[i]);
         }
     }
 
-    public void infoNode(FreiNode node){
+    public void infoNode(FreiNode node) {
         n1Ip.setText(node.id);
         n1Name.setText(node.toString());
-        n1LatLon.setText(node.lat+" / "+node.lon);
+        n1LatLon.setText(node.lat + " / " + node.lon);
         n1Avail.setText(node.fqid);
-        System.out.println(node.attributes.values());
-        Set i=node.attributes.entrySet();
+        //System.out.println(node.attributes.values());
+        Set i = node.attributes.entrySet();
         Set keySet = node.attributes.keySet();
-        for(Object key:keySet){
-        Object value = node.attributes.get(key);
+        for (Object key : keySet) {
+            Object value = node.attributes.get(key);
             attributeArea.append(value.toString());
         }
 
     }
 
-    public void registerAllServices(Vector<FreiNode> list){
-        HashMap<FreiNode, ServiceInfo> all= new HashMap<FreiNode, ServiceInfo>();
-        //Before Discover All Services for every node.... 
-        //the goal is to have an HashMap in which there are the key=the name of the node and a value = ServiceInfo vector in which there are all services
-        for(int i=0;i<list.size();i++){
-           // ServiceInfo ser=list[i];
-           // all.put(i, serviceinfo);
+    public void aboutNodes() {
+        n1Ip.setText(from.id);
+        if (from.lat == 0 || from.lat == 0) {
+            n1LatLon.setText(from.DEFAULT_LAT + "/" + from.DEFAULT_LON);
         }
+        n1LatLon.setText(from.lat + "/" + from.lon);
+        //Find a value in the attributes HAshMap and set minLinks and MaxLinks
     }
 
-    public void aboutNodes(){
-        n1Ip.setText(from.id);
-        if(from.lat == 0 || from.lat == 0){
-           n1LatLon.setText(from.DEFAULT_LAT +"/"+from.DEFAULT_LON);
-        }
-        n1LatLon.setText(from.lat +"/"+from.lon);
-        //Find a value in the attributes HAshMap and set minLinks and MaxLinks
+    public void insertAllServices(DefaultListModel model, ServiceInfo[] value) {
     }
 
     /**
      * Add a service.
      */
     public void serviceAdded(ServiceEvent event) {
-        final String name = event.getName();
-        sdLog.append("Service added: " + name + "\n");
-        System.out.println("ADD: " + name);
-        SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-            insertSorted(services, name); }
-        });
+        if (event.getType().equals("_services._dns-sd._udp.local.")) {
+            final String name = event.getName();
+            sdLog.append("Service added: " + name + "\n");
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run() {
+                    insertSorted(types, name);
+                }
+            });
+
+        } else {
+            final String name = event.getName();
+            sdLog.append("Service added: " + name + "\n");
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run() {
+                    insertSorted(services, name);
+                }
+            });
+        }
     }
 
     /**
@@ -241,10 +251,11 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     public void serviceRemoved(ServiceEvent event) {
         final String name = event.getName();
         sdLog.append("Service removed: " + name + "\n");
-        System.out.println("REMOVE: " + name);
         SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-            services.removeElement(name); }
+
+            public void run() {
+                services.removeElement(name);
+            }
         });
     }
 
@@ -253,27 +264,22 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
      */
     public void serviceTypeAdded(ServiceEvent event) {
         final String type = event.getType();
-        System.out.println("Event Type: "+event.getType());
-        System.out.println("Event Name: "+event.getName());
-        System.out.println("Event DNS: "+event.getDNS());
-        //if(event.getName().equals("_services._dns-sd._udp.local.")){
-       //    services.addElement("See All Services");
-       //    services.removeElement("_services._dns-sd._udp.local.");
-      // }
-         sdLog.append("ServiceType added: " + type + "\n");
-        System.out.println("TYPE: " + type);
+        sdLog.append("ServiceType added: " + type + "\n");
         SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-                insertSorted(types, type); }
+
+            public void run() {
+                insertSorted(types, type);
+            }
         });
     }
 
-
-    void insertSorted(DefaultListModel model, String value) {
-        for (int i = 0, n = model.getSize() ; i < n ; i++) {
-            if (value.compareToIgnoreCase((String)model.elementAt(i)) < 0) {
+    public void insertSorted(DefaultListModel model, String value) {
+        for (int i = 0, n = model.getSize(); i <
+                n; i++) {
+            if (value.compareToIgnoreCase((String) model.elementAt(i)) < 0) {
                 model.insertElementAt(value, i);
                 return;
+
             }
         }
         model.addElement(value);
@@ -286,13 +292,12 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         String name = event.getName();
         String type = event.getType();
         ServiceInfo info = event.getInfo();
-       
-        if (name.equals(serviceList.getSelectedValue())) {
 
+        if (name.equals(serviceList.getSelectedValue())) {
             if (info == null) {
                 this.info.setText("service not found");
             } else {
-            
+
                 StringBuffer buf = new StringBuffer();
                 buf.append(name);
                 buf.append('.');
@@ -306,8 +311,8 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                 buf.append(':');
                 buf.append(info.getPort());
                 buf.append('\n');
-                for (Enumeration names = info.getPropertyNames() ; names.hasMoreElements() ; ) {
-                    String prop = (String)names.nextElement();
+                for (Enumeration names = info.getPropertyNames(); names.hasMoreElements();) {
+                    String prop = (String) names.nextElement();
                     buf.append(prop);
                     buf.append('=');
                     buf.append(info.getPropertyString(prop));
@@ -316,6 +321,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
                 this.info.setText(buf.toString());
             }
+
         }
     }
 
@@ -325,36 +331,37 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
             if (e.getSource() == typeList) {
-                type = (String)typeList.getSelectedValue();
-                jmdns.removeServiceListener(type, this);
-                services.setSize(0);
-                info.setText("");
-                if (type != null) {
-                jmdns.addServiceListener(type, this);
+                type = (String) typeList.getSelectedValue();
+                if (!types.isEmpty()) {
+                    jmdns.removeServiceListener(type, this);
+                    services.setSize(0);
+                    info.setText("");
                 }
+                if (type != null) {
+                    jmdns.addServiceListener(type, this);
+                }
+
             } else if (e.getSource() == serviceList) {
-                String name = (String)serviceList.getSelectedValue();
+                String name = (String) serviceList.getSelectedValue();
                 if (name == null) {
                     info.setText("");
                 } else {
-                    System.out.println(this+" valueChanged() type:"+type+" name:"+name);
-                    System.out.flush();
+                    sdLog.append(" valueChanged() type:" + type + " name:" + name);
                     ServiceInfo service = jmdns.getServiceInfo(type, name);
                     if (service == null) {
                         info.setText("service not found");
                     } else {
                         jmdns.requestServiceInfo(type, name);
                     }
+
                 }
             }
         }
     }
 
-    public void deleteDuplicate(JList list){
-       //IMPLEMENT ME....!
+    public void deleteDuplicate(JList list) {
+        //IMPLEMENT ME....!
     }
-    
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -392,6 +399,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         jLabel3 = new javax.swing.JLabel();
         addServicesButton = new javax.swing.JButton();
         ReloadServicesButton = new javax.swing.JButton();
+        liveServicesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(PopUp.class);
@@ -547,6 +555,14 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         ReloadServicesButton.setText(resourceMap.getString("reloadServices.text")); // NOI18N
         ReloadServicesButton.setName("reloadServices"); // NOI18N
 
+        liveServicesButton.setText(resourceMap.getString("liveServicesButton.text")); // NOI18N
+        liveServicesButton.setName("liveServicesButton"); // NOI18N
+        liveServicesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                liveServicesButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -557,7 +573,9 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(addServicesButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ReloadServicesButton))
+                        .addComponent(ReloadServicesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(liveServicesButton))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -585,13 +603,14 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addServicesButton)
-                    .addComponent(ReloadServicesButton)))
+                    .addComponent(ReloadServicesButton)
+                    .addComponent(liveServicesButton)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -608,7 +627,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -618,6 +637,13 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void liveServicesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liveServicesButtonActionPerformed
+        services.removeAllElements();
+        types.removeAllElements();
+        type = "_services._dns-sd._udp.local.";
+        jmdns.registerServiceType(type);
+        jmdns.addServiceListener(type, this);
+    }//GEN-LAST:event_liveServicesButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -628,53 +654,41 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
             public void run() {
                 InetAddress add = null;
                 try {
-                    add=InetAddress.getByName("10.0.1.29");
+                    add = InetAddress.getByName("10.0.1.29");
                     System.out.println(add);
                     //add = InetAddress.getByName("10.0.1.29"); //logically this is to try...
                 } catch (UnknownHostException ex) {
                     Logger.getLogger(PopUp.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
-                    new PopUp("10.0.1.29").setVisible(true);
-              
+
+                new PopUp("10.0.1.29").setVisible(true);
+
             }
         });
     }
 
     @Action
-    public void reloadNode1Data() {
-        //Reset View of frame...all to default position!
-        //When Node 1 is selected reload data in jchart, ServiceDiscovery and Labels...
-
-    }
-
-    @Action
-    public void reloadNode2Data() {
-        //Reset View of frame...all to default position!
-        //When Node 2 is selected reload data in jchart, ServiceDiscovery and Labels...
-    }
-
-    @Action
     public void addServices() {
-        new addServices(types,jmdns).setVisible(true);
-       // jmdns.registerServiceType(types.lastElement().toString());
+        new addServices(types, jmdns).setVisible(true);
+        // jmdns.registerServiceType(types.lastElement().toString());
 
     }
 
     @Action
     public void reloadServices() {
-        try{
-        sdLog.append("All Services Reloaded...");
-        jmdns.unregisterAllServices();
-        services.removeAllElements();
-        types.removeAllElements();
-        for(int i=0;i<list.length;i++){
-            types.addElement(list[i]);
-            jmdns.registerServiceType(list[i]);
+        try {
+            sdLog.append("All Services Reloaded...\n");
+            jmdns.unregisterAllServices();
+            services.removeAllElements();
+            types.removeAllElements();
+            for (int i = 0; i < list.length; i++) {
+                types.addElement(list[i]);
+                jmdns.registerServiceType(list[i]);
+            }
+        } catch (Exception e) {
+            log.append(e.getMessage().toString());
         }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ReloadServicesButton;
@@ -696,6 +710,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JButton liveServicesButton;
     private javax.swing.JLabel n1Avail;
     private javax.swing.JLabel n1Ip;
     private javax.swing.JLabel n1LatLon;
@@ -708,10 +723,9 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private JmDNS jmdns;
     private String type;
     private DefaultListModel services = new DefaultListModel();
-    private DefaultListModel types=new DefaultListModel();
+    private DefaultListModel types = new DefaultListModel();
     private FreiNode from;
     private FreiNode to;
     private FreiLink link;
     private String list[];
-   
-   }
+}

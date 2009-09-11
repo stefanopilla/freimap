@@ -13,6 +13,7 @@ package freimapgsoc;
 
 import java.awt.Point;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,12 +22,31 @@ import java.awt.Toolkit;
 public class InfoPopUp extends javax.swing.JFrame {
 
     /** Creates new form InfoPopUp */
-    public InfoPopUp(String msg) {
+    public InfoPopUp(String msg,String state) {
         initComponents();
         this.setLocationRelativeTo(this);
         msgLabel.setText(msg);
+        if(state=="APPROVE"){
+            approveButton.setText("OK");
+            approveButton.setIcon(new ImageIcon(getClass().getResource("/freimapgsoc/resources/statuok.png")));
+        }else if(state=="ERROR"){
+            approveButton.setText("Close");
+            approveButton.setIcon(new ImageIcon(getClass().getResource("/freimapgsoc/resources/close2.png")));        }
     }
 
+    public InfoPopUp(String msg1, String msg2,String state) {
+        initComponents();
+        this.setLocationRelativeTo(this);
+        msgLabel.setText(msg1);
+        msgLabel2.setText(msg2);
+
+        if(state=="APPROVE"){
+            approveButton.setText("OK");
+            approveButton.setIcon(new ImageIcon(getClass().getResource("/freimapgsoc/resources/statuok.png")));
+        }else if(state=="ERROR"){
+            approveButton.setText("Close");
+            approveButton.setIcon(new ImageIcon(getClass().getResource("/freimapgsoc/resources/close2.png")));        }
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -37,7 +57,8 @@ public class InfoPopUp extends javax.swing.JFrame {
     private void initComponents() {
 
         msgLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        approveButton = new javax.swing.JButton();
+        msgLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(InfoPopUp.class);
@@ -50,14 +71,18 @@ public class InfoPopUp extends javax.swing.JFrame {
         msgLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         msgLabel.setName("msgLabel"); // NOI18N
 
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        approveButton.setIcon(resourceMap.getIcon("approveButton.icon")); // NOI18N
+        approveButton.setText(resourceMap.getString("approveButton.text")); // NOI18N
+        approveButton.setName("approveButton"); // NOI18N
+        approveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                approveButtonActionPerformed(evt);
             }
         });
+
+        msgLabel2.setFont(resourceMap.getFont("msgLabel.font")); // NOI18N
+        msgLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        msgLabel2.setName("msgLabel2"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,33 +92,38 @@ public class InfoPopUp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(approveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(msgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(msgLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                            .addComponent(msgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(msgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(msgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(msgLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(approveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_approveButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton approveButton;
     private javax.swing.JLabel msgLabel;
+    private javax.swing.JLabel msgLabel2;
     // End of variables declaration//GEN-END:variables
 
 }

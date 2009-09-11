@@ -9,15 +9,15 @@ public class log {
 
     public static void append(String message) {
 
-        String path = "/Users/stefanopilla/Desktop/freimap/log.txt";
-
+        String path = "/Users/stefanopilla/Desktop/FreimapGSoC/src/Data/log.txt";
+            File file = new File(path);
         try {
 
-            File file = new File(path);
             if (file.exists()) {
                 PrintStream output = new PrintStream(file);
                 output.append(message);
             } else  {
+                file.createNewFile();
                 FileOutputStream fileo = new FileOutputStream(path);
                 PrintStream output = new PrintStream(fileo);
                 output.append(message);

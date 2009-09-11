@@ -304,6 +304,10 @@ public class YamlDataSource implements DataSource {
   public void getLinkCountProfile(FreiNode node, NodeInfo info) {
     System.err.println("Not available: getLinkCountProfile");
   }
+
+    public void init(String path) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
   
   class TimeStampFetcher implements Runnable { //use an own connection for concurrency!
     private final static int OFFSET = 1000;

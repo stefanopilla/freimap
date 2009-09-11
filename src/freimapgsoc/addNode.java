@@ -12,7 +12,6 @@ package freimapgsoc;
 
 import java.util.Vector;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 
 /**
  *

@@ -13,8 +13,7 @@ package freimapgsoc;
 
 import javax.jmdns.JmDNS;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JList;
+
 
 /**
  *

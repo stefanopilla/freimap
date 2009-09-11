@@ -278,6 +278,10 @@ public class MysqlDataSource implements DataSource {
     new LPFetcher(link, linkinfo).start();
   }
 
+    public void init(String path) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
   class LCPFetcher extends Thread {
     FreiNode node;
     NodeInfo nodeinfo;

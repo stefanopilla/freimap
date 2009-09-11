@@ -12,12 +12,9 @@
 package freimapgsoc;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.PlotOrientation;
