@@ -38,7 +38,7 @@ public class OlsrdDataSource implements DataSource {
   String nodefile;
   
   MysqlDataSource mysqlSource;
-  FreifunkMapDataSource ffmdSource;
+  xmlDataSource ffmdSource;
 
   DataSource nodeSource;
   String sNodeSource;
