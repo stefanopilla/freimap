@@ -511,23 +511,24 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="locatedLabel" pref="104" max="32767" attributes="1"/>
-                              <Component id="lonLabel" alignment="0" pref="104" max="32767" attributes="1"/>
-                              <Component id="latLabel" alignment="0" pref="104" max="32767" attributes="1"/>
-                              <Component id="ipLabel" alignment="0" pref="104" max="32767" attributes="1"/>
-                              <Component id="fqidLabel" alignment="1" pref="104" max="32767" attributes="1"/>
-                              <Component id="ncLabel" alignment="1" pref="104" max="32767" attributes="1"/>
+                              <Component id="locatedLabel" pref="204" max="32767" attributes="1"/>
+                              <Component id="lonLabel" alignment="0" pref="204" max="32767" attributes="1"/>
+                              <Component id="latLabel" alignment="0" pref="204" max="32767" attributes="1"/>
+                              <Component id="fqidLabel" alignment="1" pref="204" max="32767" attributes="1"/>
+                              <Component id="ncLabel" alignment="1" pref="204" max="32767" attributes="1"/>
+                              <Component id="ipLabel" alignment="0" min="-2" pref="204" max="-2" attributes="1"/>
                           </Group>
-                          <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <Component id="ipLabel" alignment="1" min="-2" pref="13" max="-2" attributes="0"/>
+                              <Component id="ipLabel" min="-2" pref="13" max="-2" attributes="0"/>
+                              <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -771,10 +772,6 @@
             <Property name="font" type="java.awt.Font" resourceKey="fileMenu.font"/>
             <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-          </AuxValues>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
@@ -830,7 +827,6 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="xmlAppendMenu">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" resourceKey="jMenuItem4.font"/>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="xmlAppendMenu.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="xmlAppendMenu.text"/>
                     <Property name="name" type="java.lang.String" value="xmlAppendMenu" noResource="true"/>
@@ -841,7 +837,6 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="txtAppendMenu">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" resourceKey="jMenuItem4.font"/>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="txtAppendMenu.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="txtAppendMenu.text"/>
                     <Property name="enabled" type="boolean" value="false"/>
@@ -878,6 +873,39 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveAsMenuActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JSeparator" name="jSeparator12">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jSeparator12" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <Menu class="javax.swing.JMenu" name="recentFilesMenu">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="recentFilesMenu.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="recentFilesMenu.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" resourceKey="recentFilesMenu.font"/>
+                <Property name="name" type="java.lang.String" value="recentFilesMenu" noResource="true"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JSeparator" name="jSeparator13">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="jSeparator13" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="deleteRecentMenu">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="deleteRecentMenu.font"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="deleteRecentMenu.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="deleteRecentMenu.text"/>
+                    <Property name="toolTipText" type="java.lang.String" resourceKey="deleteRecentMenu.toolTipText"/>
+                    <Property name="name" type="java.lang.String" value="deleteRecentMenu" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteRecentMenuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator3">
               <Properties>
                 <Property name="name" type="java.lang.String" value="jSeparator3" noResource="true"/>
