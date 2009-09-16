@@ -107,6 +107,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     }
 
     public void addRecentFile() {
+        JMenuItem recentMenuItem = null;
         if (verifyRecentFile()) {
             recentFilesMenu.setEnabled(true);
             String path = recentFile.getPath();
@@ -114,17 +115,26 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 FileReader fr = new FileReader(path);
                 BufferedReader reader = new BufferedReader(fr);
                 String line;
+                int i = 0;
                 while ((line = reader.readLine()) != null) {
-                    String[] result = line.split(",");
-                    for (int i = 0; i < result.length; i = i + 2) {
-                        JMenuItem recentMenuItem = new JMenuItem(result[i]);
+                    final String[] result = line.split(",");
+                    for (i = 0; i < result.length; i = i + 2) {
+                        recentMenuItem = new JMenuItem(result[i]);
                         recentMenuItem.setToolTipText(result[i + 1]);
                         recentFilesMenu.add(recentMenuItem, i);
-                    }
-                }
-                reader.close();
-                fr.close();
+                        recentFilePath = result[i + 1];
+                        recentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                newRecentFileActionPerformed(evt, recentFilePath);
+                            }
+                        });
 
+
+                    }
+                    reader.close();
+                    fr.close();
+
+                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -1835,14 +1845,14 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
     private void deleteAllfromMap(JXMapViewer map, DefaultListModel locatedN) {
         locatedN.removeAllElements();
-        WaypointPainter removerPainter = new WaypointPainter();//MUST BE IMPLEMENTED
-        map.setOverlayPainter(removerPainter);
+        Set<Waypoint> remover = painter.getWaypoints();
+        remover.clear();
+        map.setOverlayPainter(painter);
     }
 
     public boolean verifyRecentFile() {
-        String recentPath = "/Users/stefanopilla/Desktop/FreimapGSoC/src/Data/recentMenu.txt";
+        String recentPath = "/Users/stefanopilla/Desktop/FreimapGSoC/src/Data/.recentMenu";
         recentFile = new File(recentPath);
-
         if (recentFile.exists()) {
             return true;
         } else {
@@ -1850,27 +1860,39 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         }
     }
 
-    public void addRecentFile(String path, String name) {
+    private void newRecentFileActionPerformed(java.awt.event.ActionEvent evt, String path) {
+            deleteAllfromMap(mainMap, locatedN);
+        File file = new File(path);
+        readConfigurationFile(file.getPath());
+    }
+
+    public void addRecentFile(final String path, String name) {
         try {
             if (verifyRecentFile()) {
                 recentFilesMenu.setEnabled(true);
                 JMenuItem newRecentFile = new JMenuItem(name);
                 recentFilesMenu.add(newRecentFile, recentFilesMenu.getItemCount() - 2);
+                newRecentFile.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        newRecentFileActionPerformed(evt, path);
+                    }
+                });
                 newRecentFile.setToolTipText(path);
-                FileOutputStream file = null;
-                file = new FileOutputStream(recentFile.getPath());
-                PrintStream output = new PrintStream(file);
-                output.println(name + "," + path);
+                PrintStream output = new PrintStream(new FileOutputStream(recentFile.getPath()));
+                output.append(name + "," + path);
             } else if (!verifyRecentFile()) {
                 recentFile.createNewFile();
                 recentFilesMenu.setEnabled(true);
                 JMenuItem newRecentFile = new JMenuItem(name);
+                newRecentFile.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        newRecentFileActionPerformed(evt, path);
+                    }
+                });
                 recentFilesMenu.add(newRecentFile, recentFilesMenu.getItemCount() - 2);
                 newRecentFile.setToolTipText(path);
-                FileOutputStream file = null;
-                file = new FileOutputStream(recentFile.getPath());
-                PrintStream output = new PrintStream(file);
-                output.println(name + "," + path);
+                PrintStream output = new PrintStream(new FileOutputStream(recentFile.getPath()));
+                output.append(name + "," + path);
             }
         } catch (FileNotFoundException ex) {
             ex.getMessage();
@@ -1890,7 +1912,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 File file = fcxml.getSelectedFile();
                 readConfigurationFile(file.getPath());
                 addRecentFile(file.getPath(), file.getName());
-            } else {
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
 
@@ -1906,12 +1928,12 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             int returnVal = fctxt.showOpenDialog(fctxt);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 deleteAllfromMap(mainMap, locatedN);
+
                 File file = fctxt.getSelectedFile();
                 System.out.println("FILE TXT OPENED!");
                 readConfigurationFile(file.getPath());
-
                 addRecentFile(file.getPath(), file.getName());
-            } else {
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
 
@@ -1926,12 +1948,13 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             int returnVal = fcjs.showOpenDialog(fcjs);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 deleteAllfromMap(mainMap, locatedN);
+
                 File file = fcjs.getSelectedFile();
                 System.out.println("FILE JS OPENED");
                 System.out.println("Opening: " + file.getName() + ".\n");
                 readConfigurationFile(file.getPath());
                 addRecentFile(file.getPath(), file.getName());
-            } else {
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
 
@@ -2076,7 +2099,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     }//GEN-LAST:event_mainMapMouseMoved
 
     private void xmlAppendMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlAppendMenuActionPerformed
-        if (evt.getSource() == xmlOpenMenu) {
+        if (evt.getSource() == xmlAppendMenu) {
             JFileChooser fcxml = new JFileChooser();
             fcxml.addChoosableFileFilter(new xmlFileFilter());
             fcxml.setAcceptAllFileFilterUsed(false);
@@ -2087,7 +2110,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 readConfigurationFile(file.getPath());
                 addRecentFile(file.getPath(), file.getName());
                 System.out.println("Opening: " + file.getName() + ".\n");
-            } else {
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
 
@@ -2095,7 +2118,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     }//GEN-LAST:event_xmlAppendMenuActionPerformed
 
     private void txtAppendMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAppendMenuActionPerformed
-        if (evt.getSource() == txtOpenMenu) {
+        if (evt.getSource() == txtAppendMenu) {
             JFileChooser fctxt = new JFileChooser();
             fctxt.setAcceptAllFileFilterUsed(false);
             fctxt.addChoosableFileFilter(new txtFileFilter());
@@ -2106,7 +2129,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 readConfigurationFile(file.getPath());
                 addRecentFile(file.getPath(), file.getName());
                 System.out.println("Opening: " + file.getName() + "\n");
-            } else {
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
 
@@ -2114,7 +2137,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     }//GEN-LAST:event_txtAppendMenuActionPerformed
 
     private void jsAppendMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsAppendMenuActionPerformed
-        if (evt.getSource() == jsOpenMenu) {
+        if (evt.getSource() == jsAppendMenu) {
             JFileChooser fcjs = new JFileChooser();
             fcjs.addChoosableFileFilter(new jsFileFilter());
             fcjs.setAcceptAllFileFilterUsed(false);
@@ -2126,7 +2149,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                 System.out.println("Opening: " + file.getName() + ".\n");
                 readConfigurationFile(file.getPath());
                 addRecentFile(file.getPath(), file.getName());
-            } else {
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
 
@@ -2185,7 +2208,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
 
             }
-            
 
             public void mouseReleased(MouseEvent e) {
                 miniMap.setCenterPosition(mapCenterPosition);
@@ -2546,4 +2568,5 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     private int countPop = 0;
     private String nodeName = null;
     private File recentFile;
+    private String recentFilePath;
 }
