@@ -13,10 +13,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" pref="341" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="defaultButton" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="serviceD" min="-2" max="-2" attributes="1"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="goToDefaultPosition" min="-2" max="-2" attributes="1"/>
@@ -42,6 +44,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="goToDefaultPosition" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="serviceD" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="defaultButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
                       </Group>
@@ -77,15 +80,15 @@
                     <LineBorder/>
                   </Border>
                 </Property>
+                <Property name="autoscrolls" type="boolean" value="true"/>
                 <Property name="centerPosition" type="org.jdesktop.swingx.mapviewer.GeoPosition" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="def" type="code"/>
                 </Property>
-                <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="contestMenu"/>
-                </Property>
                 <Property name="font" type="java.awt.Font" resourceKey="mainMap.font"/>
+                <Property name="horizontalWrapped" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="mainMap" noResource="true"/>
                 <Property name="recenterOnClickEnabled" type="boolean" value="true"/>
+                <Property name="restrictOutsidePanning" type="boolean" value="true"/>
                 <Property name="tileFactory" type="org.jdesktop.swingx.mapviewer.TileFactory" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="tf" type="code"/>
                 </Property>
@@ -755,6 +758,16 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="defaultButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="defaultButton.font"/>
+            <Property name="text" type="java.lang.String" resourceKey="defaultButton.text"/>
+            <Property name="name" type="java.lang.String" value="defaultButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="defaultButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JMenuBar" name="menuBar">
