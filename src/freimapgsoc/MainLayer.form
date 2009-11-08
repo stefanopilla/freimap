@@ -13,7 +13,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" pref="341" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
@@ -805,18 +805,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xmlOpenMenuActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="txtOpenMenu">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" resourceKey="txtOpenMenu.font"/>
-                    <Property name="icon" type="javax.swing.Icon" resourceKey="txtOpenMenu.icon"/>
-                    <Property name="text" type="java.lang.String" resourceKey="txtOpenMenu.text"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                    <Property name="name" type="java.lang.String" value="txtOpenMenu" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOpenMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jsOpenMenu">
                   <Properties>
                     <Property name="font" type="java.awt.Font" resourceKey="jsOpenMenu.font"/>
@@ -840,23 +828,13 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="xmlAppendMenu">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="xmlAppendMenu.font"/>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="xmlAppendMenu.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="xmlAppendMenu.text"/>
                     <Property name="name" type="java.lang.String" value="xmlAppendMenu" noResource="true"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xmlAppendMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="txtAppendMenu">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" resourceKey="txtAppendMenu.icon"/>
-                    <Property name="text" type="java.lang.String" resourceKey="txtAppendMenu.text"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                    <Property name="name" type="java.lang.String" value="txtAppendMenu" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAppendMenuActionPerformed"/>
                   </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jsAppendMenu">

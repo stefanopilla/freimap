@@ -3,6 +3,7 @@
  */
 package freimapgsoc;
 
+import freimapgsoc.*;
 import java.io.FileNotFoundException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -81,10 +82,9 @@ import org.jdesktop.swingx.painter.Painter;
 /**
  * The application's main frame.
  */
-public class FreimapGSoCView extends FrameView implements DataSource {
+public class MainLayer implements DataSource {
 
-    public FreimapGSoCView(SingleFrameApplication app) {
-        super(app);
+    public MainLayer(DataSource source) {
 
         final int maxzoomlevel = 14;
         final int totalmapzoom = 14;
@@ -100,14 +100,20 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
         //In a future: possibilty to change this with settings menu parameters; now is in Italy Rome
         tf = new DefaultTileFactory(info);
-        DEFAULT_LAT = 41.8639;
-        DEFAULT_LON = 12.5535;
+        //If there is no Lat/Lon Data
+        DEFAULT_LAT = 41.8639;//In Rome
+        DEFAULT_LON = 12.5535;//In Rome
         def = new GeoPosition(DEFAULT_LAT, DEFAULT_LON);
         initComponents();
         initMapComponents();
+        check_configurations();
         printDateTime();
         addRecentFile();
+        check_configurations();
+    }
 
+    public void check_configurations(){
+        new InfoPopUpSelect("There are more than one active DataSources", "please choose one...").setVisible(true);
     }
 
     public void addRecentFile() {
@@ -146,7 +152,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         }
     }
 
-    public void readConfiguration() {
+    public void readConfiguration(DataSource source) {
         config = new Configurator();
         sources = new HashMap<String, DataSource>();
         try {
@@ -452,6 +458,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
                         countPop = 1;
                     }
                 } else if (nodes.size() != 0) {
+
                     //Draw Nodes and Links
                     drawLinks(links);
                     drawNodes(nodes);
@@ -506,7 +513,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         boolean old = this.isMiniMapVisible();
         this.miniMapVisible = miniMapVisible;
         miniMap.setVisible(miniMapVisible);
-        firePropertyChange("miniMapVisible", old, this.isMiniMapVisible());
     }//OK
 
     /**
@@ -525,7 +531,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         boolean old = this.isZoomSliderVisible();
         this.zoomSliderVisible = zoomSliderVisible;
         zoomSlider.setVisible(zoomSliderVisible);
-        firePropertyChange("zoomSliderVisible", old, this.isZoomSliderVisible());
     }//OK
 
     /**
@@ -547,7 +552,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         this.zoomButtonsVisible = zoomButtonsVisible;
         //zoomInButton.setVisible(zoomButtonsVisible);
         //zoomOutButton.setVisible(zoomButtonsVisible);
-        firePropertyChange("zoomButtonsVisible", old, this.isZoomButtonsVisible());
     }//OK
 
     /**
@@ -721,11 +725,9 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         fileMenu = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         xmlOpenMenu = new javax.swing.JMenuItem();
-        txtOpenMenu = new javax.swing.JMenuItem();
         jsOpenMenu = new javax.swing.JMenuItem();
         AppendMenu = new javax.swing.JMenu();
         xmlAppendMenu = new javax.swing.JMenuItem();
-        txtAppendMenu = new javax.swing.JMenuItem();
         jsAppendMenu = new javax.swing.JMenuItem();
         saveAsMenu = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JSeparator();
@@ -816,7 +818,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         mainMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         mainMap.setAutoscrolls(true);
         mainMap.setCenterPosition(def);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(FreimapGSoCView.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(MainLayer.class);
         mainMap.setFont(resourceMap.getFont("mainMap.font")); // NOI18N
         mainMap.setHorizontalWrapped(false);
         mainMap.setName("mainMap"); // NOI18N
@@ -928,7 +930,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             }
         });
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getActionMap(FreimapGSoCView.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getActionMap(MainLayer.class, this);
         goToDefaultPosition.setAction(actionMap.get("goToDefaultPosition")); // NOI18N
         goToDefaultPosition.setFont(resourceMap.getFont("goToDefaultPosition.font")); // NOI18N
         goToDefaultPosition.setText(resourceMap.getString("goToDefaultPosition.text")); // NOI18N
@@ -1254,7 +1256,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
@@ -1306,18 +1308,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         });
         jMenu1.add(xmlOpenMenu);
 
-        txtOpenMenu.setFont(resourceMap.getFont("txtOpenMenu.font")); // NOI18N
-        txtOpenMenu.setIcon(resourceMap.getIcon("txtOpenMenu.icon")); // NOI18N
-        txtOpenMenu.setText(resourceMap.getString("txtOpenMenu.text")); // NOI18N
-        txtOpenMenu.setEnabled(false);
-        txtOpenMenu.setName("txtOpenMenu"); // NOI18N
-        txtOpenMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOpenMenuActionPerformed(evt);
-            }
-        });
-        jMenu1.add(txtOpenMenu);
-
         jsOpenMenu.setFont(resourceMap.getFont("jsOpenMenu.font")); // NOI18N
         jsOpenMenu.setIcon(resourceMap.getIcon("jsOpenMenu.icon")); // NOI18N
         jsOpenMenu.setText(resourceMap.getString("jsOpenMenu.text")); // NOI18N
@@ -1336,6 +1326,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         AppendMenu.setFont(resourceMap.getFont("AppendMenu.font")); // NOI18N
         AppendMenu.setName("AppendMenu"); // NOI18N
 
+        xmlAppendMenu.setFont(resourceMap.getFont("xmlAppendMenu.font")); // NOI18N
         xmlAppendMenu.setIcon(resourceMap.getIcon("xmlAppendMenu.icon")); // NOI18N
         xmlAppendMenu.setText(resourceMap.getString("xmlAppendMenu.text")); // NOI18N
         xmlAppendMenu.setName("xmlAppendMenu"); // NOI18N
@@ -1345,17 +1336,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             }
         });
         AppendMenu.add(xmlAppendMenu);
-
-        txtAppendMenu.setIcon(resourceMap.getIcon("txtAppendMenu.icon")); // NOI18N
-        txtAppendMenu.setText(resourceMap.getString("txtAppendMenu.text")); // NOI18N
-        txtAppendMenu.setEnabled(false);
-        txtAppendMenu.setName("txtAppendMenu"); // NOI18N
-        txtAppendMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAppendMenuActionPerformed(evt);
-            }
-        });
-        AppendMenu.add(txtAppendMenu);
 
         jsAppendMenu.setFont(resourceMap.getFont("jsAppendMenu.font")); // NOI18N
         jsAppendMenu.setIcon(resourceMap.getIcon("jsAppendMenu.icon")); // NOI18N
@@ -1860,7 +1840,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
             try {
                 new PopUp(JmDNS.create(intf)).setVisible(true);
             } catch (IOException ex) {
-                Logger.getLogger(FreimapGSoCView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (UnknownHostException ex) {
             Logger.getLogger(PopUpMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1953,26 +1933,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
 
     }//GEN-LAST:event_xmlOpenMenuActionPerformed
 
-    private void txtOpenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpenMenuActionPerformed
-        if (evt.getSource() == txtOpenMenu) {
-            JFileChooser fctxt = new JFileChooser();
-            fctxt.setAcceptAllFileFilterUsed(false);
-            fctxt.addChoosableFileFilter(new txtFileFilter());
-            int returnVal = fctxt.showOpenDialog(fctxt);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                deleteAllfromMap(mainMap, locatedN);
-
-                File file = fctxt.getSelectedFile();
-                System.out.println("FILE TXT OPENED!");
-                readConfigurationFile(file.getPath());
-                addRecentFile(file.getPath(), file.getName());
-            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Open command cancelled by user." + "\n");
-            }
-
-        }
-    }//GEN-LAST:event_txtOpenMenuActionPerformed
-
+    /** DELETED BECUASE IS SIMILAR TO XML FILES*/
     private void jsOpenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsOpenMenuActionPerformed
         if (evt.getSource() == jsOpenMenu) {
             JFileChooser fcjs = new JFileChooser();
@@ -2094,24 +2055,7 @@ public class FreimapGSoCView extends FrameView implements DataSource {
         }            // TODO add your handling code here:
     }//GEN-LAST:event_xmlAppendMenuActionPerformed
 
-    private void txtAppendMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAppendMenuActionPerformed
-        if (evt.getSource() == txtAppendMenu) {
-            JFileChooser fctxt = new JFileChooser();
-            fctxt.setAcceptAllFileFilterUsed(false);
-            fctxt.addChoosableFileFilter(new txtFileFilter());
-            int returnVal = fctxt.showOpenDialog(fctxt);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fctxt.getSelectedFile();
-                System.out.println("FILE TXT OPENED!");
-                readConfigurationFile(file.getPath());
-                addRecentFile(file.getPath(), file.getName());
-                System.out.println("Opening: " + file.getName() + "\n");
-            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Open command cancelled by user." + "\n");
-            }
-
-        }
-    }//GEN-LAST:event_txtAppendMenuActionPerformed
+    /**DELETED BECAUSE IS SIMILAR TO XML FILE*/
 
     private void jsAppendMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsAppendMenuActionPerformed
         if (evt.getSource() == jsAppendMenu) {
@@ -2496,8 +2440,6 @@ public class FreimapGSoCView extends FrameView implements DataSource {
     public javax.swing.JMenuItem serviceDiscovery;
     public javax.swing.JMenuItem ssh;
     public javax.swing.JMenuItem takePicture;
-    public javax.swing.JMenuItem txtAppendMenu;
-    public javax.swing.JMenuItem txtOpenMenu;
     public javax.swing.JMenu viewMenu;
     public javax.swing.JLabel xPos;
     public javax.swing.JLabel xValue;
