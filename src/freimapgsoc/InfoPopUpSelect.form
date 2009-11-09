@@ -45,7 +45,7 @@
                           <Component id="chooseFileButton" max="32767" attributes="1"/>
                           <Component id="nameServiceButton" alignment="0" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="113" max="32767" attributes="0"/>
+                      <EmptySpace pref="209" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -89,27 +89,23 @@
     </Component>
     <Component class="javax.swing.JButton" name="nameServiceButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="nameServiceButton.text"/>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="nameServiceButton" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="olsrButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="olsrButton.text"/>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="olsrButton" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="chooseFileButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="chooseFileButton.text"/>
         <Property name="name" type="java.lang.String" value="chooseFileButton" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="mySqlButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="mySqlButton.text"/>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="mySqlButton" noResource="true"/>
       </Properties>

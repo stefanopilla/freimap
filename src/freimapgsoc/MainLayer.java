@@ -116,41 +116,7 @@ public class MainLayer implements DataSource {
         new InfoPopUpSelect("There are more than one active DataSources", "please choose one...").setVisible(true);
     }
 
-    public void addRecentFile() {
-        JMenuItem recentMenuItem = null;
-        if (verifyRecentFile()) {
-            recentFilesMenu.setEnabled(true);
-            String path = recentFile.getPath();
-            try {
-                FileReader fr = new FileReader(path);
-                BufferedReader reader = new BufferedReader(fr);
-                String line;
-                int i = 0;
-                while ((line = reader.readLine()) != null) {
-                    final String[] result = line.split(",");
-                    for (i = 0; i < result.length; i = i + 2) {
-                        recentMenuItem = new JMenuItem(result[i]);
-                        recentMenuItem.setToolTipText(result[i + 1]);
-                        recentFilesMenu.add(recentMenuItem, i);
-                        recentFilePath = result[i + 1];
-                        recentMenuItem.addActionListener(new java.awt.event.ActionListener() {
-
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                newRecentFileActionPerformed(evt, recentFilePath);
-                            }
-                        });
-
-
-                    }
-                    reader.close();
-                    fr.close();
-
-                }
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+    
 
     public void readConfiguration(DataSource source) {
         config = new Configurator();
@@ -1877,42 +1843,7 @@ public class MainLayer implements DataSource {
         readConfigurationFile(file.getPath());
     }
 
-    public void addRecentFile(final String path, String name) {
-        try {
-            if (verifyRecentFile()) {
-                recentFilesMenu.setEnabled(true);
-                JMenuItem newRecentFile = new JMenuItem(name);
-                recentFilesMenu.add(newRecentFile, recentFilesMenu.getItemCount() - 2);
-                newRecentFile.addActionListener(new java.awt.event.ActionListener() {
-
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        newRecentFileActionPerformed(evt, path);
-                    }
-                });
-                newRecentFile.setToolTipText(path);
-                PrintStream output = new PrintStream(new FileOutputStream(recentFile.getPath()));
-                output.append(name + "," + path);
-            } else if (!verifyRecentFile()) {
-                recentFile.createNewFile();
-                recentFilesMenu.setEnabled(true);
-                JMenuItem newRecentFile = new JMenuItem(name);
-                newRecentFile.addActionListener(new java.awt.event.ActionListener() {
-
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        newRecentFileActionPerformed(evt, path);
-                    }
-                });
-                recentFilesMenu.add(newRecentFile, recentFilesMenu.getItemCount() - 2);
-                newRecentFile.setToolTipText(path);
-                PrintStream output = new PrintStream(new FileOutputStream(recentFile.getPath()));
-                output.append(name + "," + path);
-            }
-        } catch (FileNotFoundException ex) {
-            ex.getMessage();
-        } catch (IOException io) {
-            io.getMessage();
-        }
-    }
+    
 
     private void xmlOpenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlOpenMenuActionPerformed
         if (evt.getSource() == xmlOpenMenu) {

@@ -201,6 +201,7 @@ public class Configurator {
   }
 
   @SuppressWarnings("unchecked")
+
   void parseConfigFile() {
     File found=null;
     for (int i=0;i<CONFIG_LOCATIONS.length;i++) {

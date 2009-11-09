@@ -39,6 +39,8 @@ public class InfoPopUpSelect extends javax.swing.JFrame {
 
     public void enableMySqlBut(){
             mySqlButton.setEnabled(true);
+            //new DataSource(id)
+            //return DATASOURCE ID
     }
 
     public void enableNameServiceBut(){

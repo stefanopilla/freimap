@@ -74,11 +74,28 @@ public class CheckActiveDataSource {
         return false;
     }
 
+    public String[] getActiveDataSource(){
+
+        if(check_olsr()){
+            ActiveDataSources[0]="OLSR";
+        }
+        if(check_mysql()){
+            ActiveDataSources[1]="MySQL";
+        }
+        if(check_nameservice()){
+            ActiveDataSources[2]="NameService";
+        }
+
+        return ActiveDataSources;
+    }
+
+    public String[] ActiveDataSources;
+
     public static void main(String arg[]) {
         CheckActiveDataSource check = new CheckActiveDataSource();
         System.out.println(check.check_olsr());
        System.out.println(check.check_nameservice());
-
     }
+
 }
 

@@ -25,8 +25,8 @@ import org.xml.sax.SAXException;
  */
 public class xmlDataSource implements DataSource {
 
-    Vector<FreiNode> nodes = new Vector<FreiNode>();
-    HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
+    Vector<MapNode> nodes = new Vector<MapNode>();
+    HashMap<String, MapNode> nodeByName = new HashMap<String, MapNode>();
 
     public void init(HashMap<String, Object> configuration) {
         String sServerURL = null;
@@ -138,7 +138,7 @@ public class xmlDataSource implements DataSource {
                 StringTokenizer stip = new StringTokenizer(ip, ",", false);
                 while (stip.hasMoreTokens()) {
                     String oneip = stip.nextToken();
-                    FreiNode nnode = new FreiNode(oneip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
+                    MapNode nnode = new MapNode(oneip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
                     if (height != null) {
                         nnode.attributes.put("height", new Integer(Integer.parseInt(height)));
                     }
@@ -147,7 +147,7 @@ public class xmlDataSource implements DataSource {
                 }
                 continue;
             }
-            FreiNode nnode = new FreiNode(ip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
+            MapNode nnode = new MapNode(ip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
             if (height != null) {
                 nnode.attributes.put("height", new Integer(Integer.parseInt(height)));
             }
@@ -185,29 +185,29 @@ public class xmlDataSource implements DataSource {
         return 1;
     }
 
-    public FreiNode getNodeByName(String id) {
-        return nodeByName.get(id);
+    public MapNode getNodeByName(String id) {
+        return nodeByName.put("null", new MapNode("prova","Prova","Prova"));
     }
 
-    public void addNode(FreiNode node) {
+    public void addNode(MapNode node) {
         nodes.remove(node); //just in case
         nodes.add(node);
-        nodeByName.put(node.id, node);
+       // nodeByName.put(node.id, node);
     }
 
-    public void getLinkCountProfile(FreiNode node, NodeInfo info) {
+    public void getLinkCountProfile(MapNode node, NodeInfo info) {
         // TODO: Implement me.
         info.setLinkCountProfile(new LinkedList<LinkCount>());
     }
 
-    public void getLinkProfile(FreiLink link, LinkInfo info) {
+    public void getLinkProfile(Link link, LinkInfo info) {
         // TODO: Implement me.
         info.setLinkProfile(new LinkedList<LinkData>());
     }
 
-    public Vector<FreiLink> getLinks(long time) {
+    public Vector<Link> getLinks(long time) {
         // TODO: Implement me.
-        return new Vector<FreiLink>();
+        return new Vector<Link>();
     }
 
     public Hashtable<String, Float> getNodeAvailability(long time) {
@@ -215,7 +215,25 @@ public class xmlDataSource implements DataSource {
         return new Hashtable<String, Float>();
     }
 
-    public Vector<FreiNode> getNodeList() {
+    public Vector<MapNode> getNodeList() {
         return nodes;
     }
+
+
+
+    public freimapgsoc.MapNode getNodeById(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+
+    public Vector<Link> getLinksFromSource(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromDest(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
 }

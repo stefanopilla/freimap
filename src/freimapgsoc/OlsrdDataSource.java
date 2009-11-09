@@ -29,9 +29,9 @@ import java.util.*;
 public class OlsrdDataSource implements DataSource {
   DotPluginListener dot;
   DataSourceListener listener;
-  TreeMap<Long, Vector<FreiLink>> data = new TreeMap<Long, Vector<FreiLink>>();
-  Hashtable<String, FreiNode> knownNodes=new Hashtable<String, FreiNode>();
-  Hashtable<String, FreiNode> generatedNodes=new Hashtable<String, FreiNode>();
+  TreeMap<Long, Vector<Link>> data = new TreeMap<Long, Vector<Link>>();
+  Hashtable<String, MapNode> knownNodes=new Hashtable<String, MapNode>();
+  Hashtable<String, MapNode> generatedNodes=new Hashtable<String, MapNode>();
   
   long lastUpdateTime = 1, 
        firstUpdateTime = 1;
@@ -45,6 +45,25 @@ public class OlsrdDataSource implements DataSource {
        
   public OlsrdDataSource() {
   }
+
+
+  public void init(HashMap<String, Object> conf) {
+    String host = Configurator.getS("host", conf);
+    int port = Configurator.getI("port", conf);
+
+    nodefile = Configurator.getS("nodefile", conf);
+    //System.out.println("nodefile = "+nodefile);
+
+    sNodeSource = Configurator.getS("nodesource", conf);
+
+    if (port==-1) {
+      System.err.println("invalid port parameter "+port);
+      System.exit(1);
+    }
+    dot = new DotPluginListener(host, port, this);
+    return
+  }
+  /*
   public void init(HashMap<String, Object> conf) {
     String host = Configurator.getS("host", conf);
     int port = Configurator.getI("port", conf);
@@ -59,10 +78,10 @@ public class OlsrdDataSource implements DataSource {
       System.exit(1);
     }
     dot = new DotPluginListener(host, port, this);
-  }
+  }*/
   
   @SuppressWarnings("unchecked")
-  public Vector<FreiNode> getNodeList() {
+  public Vector<MapNode> getNodeList() {
    if ((nodeSource == null) && (sNodeSource != null)) {
       System.out.println("nodeSource in OlsrdDataSource.java:"+ nodeSource);
      nodeSource=MainLayer.sources.get(sNodeSource);
@@ -70,7 +89,7 @@ public class OlsrdDataSource implements DataSource {
     }
 
     if (nodeSource!=null) {
-      Vector<FreiNode> nodes = nodeSource.getNodeList();
+      Vector<MapNode> nodes = nodeSource.getNodeList();
       for (Enumeration<String> enu = generatedNodes.keys(); enu.hasMoreElements();) {
         nodes.add(generatedNodes.get(enu.nextElement()));
       }
@@ -82,7 +101,7 @@ public class OlsrdDataSource implements DataSource {
     } else {
       try {
         ObjectInputStream ois=new ObjectInputStream(ClassLoader.getSystemResourceAsStream(nodefile));
-        Vector<FreiNode> nodes = (Vector<FreiNode>)ois.readObject();
+        Vector<MapNode> nodes = (Vector<MapNode>)ois.readObject();
         ois.close();
         for (int i=0;i<nodes.size();i++) { 
           knownNodes.put(nodes.elementAt(i).id, nodes.elementAt(i));
@@ -95,12 +114,12 @@ public class OlsrdDataSource implements DataSource {
     return null;
   }
 
-  public FreiNode getNodeByName(String id) {
+  public MapNode getNodeByName(String id) {
     if (nodeSource!=null) {
-      FreiNode x = nodeSource.getNodeByName(id);
+      MapNode x = nodeSource.getNodeByName(id);
       if (x!=null) return x;
     }
-    FreiNode node= knownNodes.get(id);
+    MapNode node= knownNodes.get(id);
     if (node!=null) return node;
     else return generatedNodes.get(id);
   }
@@ -139,8 +158,8 @@ public class OlsrdDataSource implements DataSource {
     return cur;
   }
   
-  public Vector<FreiLink> getLinks(long time) {
-    Vector<FreiLink> linkdata = data.get(new Long(time));
+  public Vector<Link> getLinks(long time) {
+    Vector<Link> linkdata = data.get(new Long(time));
     return linkdata;
   }
   //threaded information fetching
@@ -149,17 +168,17 @@ public class OlsrdDataSource implements DataSource {
     if (!dot.isAlive()) dot.start();
   }
   //some optional methods
-  public void getLinkCountProfile(FreiNode node, NodeInfo info) {
+  public void getLinkCountProfile(MapNode node, NodeInfo info) {
     LinkedList<LinkCount> lcp=new LinkedList<LinkCount>();
     //select HIGH_PRIORITY unix_timestamp(clock) as time, count(*) as num_links from "+TABLE_LINKS+" where dest='"+node.id+"' group by clock"
     Iterator<Long> times=data.keySet().iterator(); 
     while(times.hasNext()) {
       Long time=times.next();
-      Vector<FreiLink> links=data.get(time);
+      Vector<Link> links=data.get(time);
       int lc=0;
       for (int i=0; i<links.size(); i++) {
-        FreiLink link=links.elementAt(i);
-        if (link.to.equals(node)) {
+        Link link=links.elementAt(i);
+        if (link.dest.equals(node)) {
           lc++;
         }
       }
@@ -167,16 +186,16 @@ public class OlsrdDataSource implements DataSource {
     }
     info.setLinkCountProfile(lcp);
   }
-  public void getLinkProfile(FreiLink mylink, LinkInfo info) {
+  public void getLinkProfile(Link mylink, LinkInfo info) {
     LinkedList<LinkData> lp=new LinkedList<LinkData>();
     //select HIGH_PRIORITY unix_timestamp(clock) as time, quality from "+TABLE_LINKS+" where src='"+link.from.id+"' and dest='"+link.to.id+"'");
     Iterator <Long> times=data.keySet().iterator();
     while (times.hasNext()) {
       Long time=times.next();
-      Vector<FreiLink> links=data.get(time);
+      Vector<Link> links=data.get(time);
       float quality=0;
       for (int i=0; i<links.size(); i++) {
-        FreiLink link=links.elementAt(i);
+        Link link=links.elementAt(i);
         if (link.equals(mylink)) {
           quality=link.etx;
         }
@@ -187,7 +206,7 @@ public class OlsrdDataSource implements DataSource {
   }
 
   //private methods
-  private void addLinkData(long time, Vector<FreiLink> linkData) {
+  private void addLinkData(long time, Vector<Link> linkData) {
     data.put(new Long(time), linkData);
     if (firstUpdateTime==1) firstUpdateTime=time;
     lastUpdateTime=time;
@@ -197,6 +216,19 @@ public class OlsrdDataSource implements DataSource {
     public void init(String path) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public MapNode getNodeById(String name) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromSource(MapNode source) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromDest(MapNode dest) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
   //Listener Of DotDraw Plugin
   class DotPluginListener extends Thread {
@@ -215,7 +247,7 @@ public class OlsrdDataSource implements DataSource {
 
     //DotDraw Methods that open a Socket on the port 2004 and listen the traffic
     public void run() {
-      Vector<FreiLink> linkData = null;
+      Vector<Link> linkData = null;
       try {
         InetSocketAddress destination = new InetSocketAddress(host, port);
         while (true) { //reconnect upon disconnection
@@ -229,7 +261,7 @@ public class OlsrdDataSource implements DataSource {
               if (line==null) break;
               if (line.equals("digraph topology")) {
                 if (linkData!=null) parent.addLinkData(System.currentTimeMillis()/1000, linkData);
-                linkData = new Vector<FreiLink>();
+                linkData = new Vector<Link>();
               } else if ((linkData != null) && (line.length()>0) && (line.charAt(0)=='"')) {
                 StringTokenizer st=new StringTokenizer(line, "\"", false);
                 String from = st.nextToken();
@@ -245,19 +277,19 @@ public class OlsrdDataSource implements DataSource {
                   }
                   boolean hna = setx.equals("HNA"); 
                   float etx = hna?0:Float.parseFloat(setx);
-                  FreiNode nfrom = getNodeByName(from),
+                  MapNode nfrom = getNodeByName(from),
                            nto   = getNodeByName(to);
                   if (nfrom == null) {
-                            nfrom = new FreiNode(from);
+                            nfrom = new MapNode(from);
                             generatedNodes.put(from, nfrom);
                             if (listener!=null) listener.nodeListUpdate(nfrom);
                   }
                   if (nto   == null) {
-                            nto = new FreiNode(to);
+                            nto = new MapNode(to);
                             generatedNodes.put(to, nto);
                             if (listener!=null) listener.nodeListUpdate(nto);
                   }
-                  linkData.add(new FreiLink(nfrom, nto, etx, hna));
+                  linkData.add(new Link(nfrom, nto, etx, hna));
                 }
               } 
             }

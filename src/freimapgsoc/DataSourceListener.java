@@ -26,5 +26,5 @@ import java.util.*;
 
 public interface DataSourceListener {
   public void timeRangeAvailable(long from, long until);
-  public void nodeListUpdate(FreiNode node);
+  public void nodeListUpdate(MapNode node);
 }
