@@ -27,11 +27,11 @@ import java.sql.*;
 
 public class MysqlDataSource implements DataSource {
   
-  private Vector<FreiNode> nodeList=new Vector<FreiNode>();
-  private Hashtable<String, FreiNode> nodeByName=new Hashtable<String, FreiNode>(); //fixme: not effective
+  private Vector<MapNode> nodeList=new Vector<MapNode>();
+  private Hashtable<String, MapNode> nodeByName=new Hashtable<String, MapNode>(); //fixme: not effective
   private LinkedList<Long> updateTimes=new LinkedList<Long>(); 
   boolean updateClosest = true;
-  private Vector<FreiLink> linkList=new Vector<FreiLink>();
+  private Vector<Link> linkList=new Vector<Link>();
   private Hashtable<String, Float> availmap = null;
   private Connection conn, conn2, conn3;
   private long firstUpdateTime = 1,
@@ -95,10 +95,10 @@ public class MysqlDataSource implements DataSource {
     }
 
     if (nodeSource!=null) {
-      Vector<FreiNode> nodev = nodeSource.getNodeList();
-      Iterator<FreiNode> nodes=nodev.iterator();
+      Vector<MapNode> nodev = nodeSource.getNodeList();
+      Iterator<MapNode> nodes=nodev.iterator();
       while (nodes.hasNext()) {
-        FreiNode node = nodes.next();
+        MapNode node = nodes.next();
         nodeList.remove(node);
         nodeList.add(node);
         nodeByName.put(node.id, node);
@@ -115,7 +115,7 @@ public class MysqlDataSource implements DataSource {
         }
         double lon = r.getDouble("lon"),
               lat = r.getDouble("lat");
-        FreiNode node=new FreiNode(ip, lon, lat);
+        MapNode node=new MapNode(ip, lon, lat);
         nodeList.remove(node);
         nodeList.add(node);
         nodeByName.put(node.id, node);
@@ -123,14 +123,14 @@ public class MysqlDataSource implements DataSource {
     }
   }
   
-  public Vector<FreiNode> getNodeList() {
+  public Vector<MapNode> getNodeList() {
     return nodeList;
   }
   
-  public FreiNode getNodeByName(String name) {
+  public MapNode getNodeByName(String name) {
     return nodeByName.get(name);
   }
-  public void addNode(FreiNode node) {
+  public void addNode(MapNode node) {
     nodeList.remove(node); //just in case
     nodeList.add(node);
     nodeByName.put(node.id, node);
@@ -235,8 +235,8 @@ public class MysqlDataSource implements DataSource {
     return firstUpdateTime;
   }
   
-  public Vector<FreiLink> getLinks(long time) {
-    linkList=new Vector<FreiLink>();
+  public Vector<Link> getLinks(long time) {
+    linkList=new Vector<Link>();
     if ((time<=0) /* || (time>MAX_UNIX_TIME)*/ ) return linkList; //empty
     try {
       Statement s = conn.createStatement();
@@ -249,17 +249,17 @@ public class MysqlDataSource implements DataSource {
         Object srcn=nodeByName.get(src);
         Object dstn=nodeByName.get(dest);
 	if (srcn==null) { //enable real-time interpolation
-	  srcn=new FreiNode(src);
-  	  nodeByName.put(src, (FreiNode)srcn);
-          if (listener!=null) listener.nodeListUpdate((FreiNode)srcn);
+	  srcn=new MapNode(src);
+  	  nodeByName.put(src, (MapNode)srcn);
+          if (listener!=null) listener.nodeListUpdate((MapNode)srcn);
         }
 	if (dstn==null) {
-	  dstn=new FreiNode(dest);
-  	  nodeByName.put(dest, (FreiNode)dstn);
-          if (listener!=null) listener.nodeListUpdate((FreiNode)dstn);
+	  dstn=new MapNode(dest);
+  	  nodeByName.put(dest, (MapNode)dstn);
+          if (listener!=null) listener.nodeListUpdate((MapNode)dstn);
         }
         if ((srcn!=null) && (dstn!=null)) {
-          FreiLink link=new FreiLink((FreiNode)srcn, (FreiNode)dstn, q);
+          Link link=new Link((MapNode)srcn, (MapNode)dstn, q);
           linkList.remove(link);
           linkList.add(link);
         }
@@ -271,10 +271,10 @@ public class MysqlDataSource implements DataSource {
     return linkList;
   }
 
-  public void getLinkCountProfile(FreiNode node, NodeInfo nodeinfo) {
+  public void getLinkCountProfile(MapNode node, NodeInfo nodeinfo) {
     new LCPFetcher(node, nodeinfo).start();
   }
-  public void getLinkProfile(FreiLink link, LinkInfo linkinfo) {
+  public void getLinkProfile(Link link, LinkInfo linkinfo) {
     new LPFetcher(link, linkinfo).start();
   }
 
@@ -282,11 +282,23 @@ public class MysqlDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public MapNode getNodeById(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromSource(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromDest(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
   class LCPFetcher extends Thread {
-    FreiNode node;
+    MapNode node;
     NodeInfo nodeinfo;
 
-    public LCPFetcher(FreiNode node, NodeInfo nodeinfo) {
+    public LCPFetcher(MapNode node, NodeInfo nodeinfo) {
       this.node=node;
       this.nodeinfo=nodeinfo;
     }
@@ -311,10 +323,10 @@ public class MysqlDataSource implements DataSource {
   }
 
   class LPFetcher extends Thread {
-    FreiLink link;
+    Link link;
     LinkInfo linkinfo;
 
-    public LPFetcher(FreiLink link, LinkInfo linkinfo) {
+    public LPFetcher(Link link, LinkInfo linkinfo) {
       this.link=link;
       this.linkinfo=linkinfo;
     }
@@ -323,7 +335,7 @@ public class MysqlDataSource implements DataSource {
       LinkedList<LinkData> lp=new LinkedList<LinkData>();
       try {
         Statement s = conn3.createStatement();
-        ResultSet r = s.executeQuery("select HIGH_PRIORITY unix_timestamp(clock) as time, quality from "+TABLE_LINKS+" where src='"+link.from.id+"' and dest='"+link.to.id+"'");
+        ResultSet r = s.executeQuery("select HIGH_PRIORITY unix_timestamp(clock) as time, quality from "+TABLE_LINKS+" where src='"+link.source.id+"' and dest='"+link.dest.id+"'");
         while (r.next()) {
           long  clock   = r.getLong("time");
           float quality = r.getFloat("quality");

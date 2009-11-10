@@ -42,9 +42,9 @@ public class YamlDataSource implements DataSource {
   long firstUpdateTime=1, lastUpdateTime=1;
   int clockCount;
   LinkedList<YamlState> updateTimes=new LinkedList<YamlState>();
-  HashMap<Integer, FreiNode> nodeByID=new HashMap<Integer, FreiNode>();
-  HashMap<String, FreiNode> nodeByName=new HashMap<String, FreiNode>();
-  Vector<FreiNode> nodes;
+  HashMap<Integer, MapNode> nodeByID=new HashMap<Integer, MapNode>();
+  HashMap<String, MapNode> nodeByName=new HashMap<String, MapNode>();
+  Vector<MapNode> nodes;
   
   DataSourceListener listener;
   
@@ -160,7 +160,7 @@ public class YamlDataSource implements DataSource {
     }
   }
   
-  public Vector<FreiNode> getNodeList() {
+  public Vector<MapNode> getNodeList() {
     if (useMysqlSource) {
       nodes = mysqlSource.getNodeList();
       //for (Enumeration<String> enu = generatedNodes.keys(); enu.hasMoreElements();) {
@@ -170,7 +170,7 @@ public class YamlDataSource implements DataSource {
     } else {
       try {
         //ObjectInputStream ois=new ObjectInputStream(getClass().getResourceAsStream(Configurator.get("olsrd.nodefile")));
-        //nodes = (Vector<FreiNode>)ois.readObject();
+        //nodes = (Vector<MapNode>)ois.readObject();
         //ois.close();
         //for (int i=0;i<nodes.size();i++) { 
         //  knownNodes.put(nodes.elementAt(i).id, nodes.elementAt(i));
@@ -210,7 +210,7 @@ public class YamlDataSource implements DataSource {
     //TODO 
     return 1;
   }
-  public FreiNode getNodeByName(String id) {
+  public MapNode getNodeByName(String id) {
     //TODO
     return null;
   }
@@ -231,8 +231,8 @@ public class YamlDataSource implements DataSource {
   }
 
   @SuppressWarnings("unchecked")
-  public Vector<FreiLink> getLinks(long time) { //hack. expects a yamlstate id, not a timestamp. see directly above. (...FIXME)
-    Vector <FreiLink> linkList=new Vector<FreiLink>();
+  public Vector<Link> getLinks(long time) { //hack. expects a yamlstate id, not a timestamp. see directly above. (...FIXME)
+    Vector <Link> linkList=new Vector<Link>();
     try {
       //Object yaml=getYAML(yamlURL+"/uptime/yaml/state/detail/", new String[][]{{"id",""+time}});
       HashMap<String, Object> yaml=(HashMap<String, Object>)Yaml.load(new File("detail.yaml"));
@@ -244,8 +244,8 @@ public class YamlDataSource implements DataSource {
         HashMap<String, Object> conn=conns.get(i);
         Integer srcid=(Integer)conn.get("from");
         Integer destid=(Integer)conn.get("to");
-        FreiNode srcnode=nodeByID.get(srcid);
-        FreiNode destnode=nodeByID.get(destid);
+        MapNode srcnode=nodeByID.get(srcid);
+        MapNode destnode=nodeByID.get(destid);
         if (srcnode==null) {
           srcnode = getNode(srcid);
         }
@@ -254,7 +254,7 @@ public class YamlDataSource implements DataSource {
         }
         Double lq = (Double)conn.get("lq");
         Double nlq = (Double)conn.get("nlq");
-        FreiLink link=new FreiLink(srcnode, destnode, lq.floatValue(), nlq.floatValue(), false); //TODO HNA?
+        Link link=new Link(srcnode, destnode, lq.floatValue(), nlq.floatValue(), false); //TODO HNA?
         linkList.remove(link);
         linkList.add(link);
       }
@@ -268,7 +268,7 @@ public class YamlDataSource implements DataSource {
   }
   
   @SuppressWarnings("unchecked")
-  public FreiNode getNode(Integer id) {
+  public MapNode getNode(Integer id) {
     //fetches full node info by id.
     //updates nodes' status
     //adds node to nodeByID
@@ -279,7 +279,7 @@ public class YamlDataSource implements DataSource {
       //HashMap<String, HashMap> yaml=Yaml.load(new File("node.yaml"));
       HashMap<String, Object> nodedata = yaml.get(id.toString());
       String ip=(String)nodedata.get("ip");
-      FreiNode node=nodeByName.get(ip);
+      MapNode node=nodeByName.get(ip);
       //System.out.println("getNode "+id);
       //System.out.println(xstream.toXML(yaml));
       //System.out.println(xstream.toXML(nodedata));
@@ -298,10 +298,10 @@ public class YamlDataSource implements DataSource {
     listener=dsl;
   }
   //some optional methods
-  public void getLinkProfile(FreiLink link, LinkInfo info) {
+  public void getLinkProfile(Link link, LinkInfo info) {
     System.err.println("Not available: getLinkProfile");
   }
-  public void getLinkCountProfile(FreiNode node, NodeInfo info) {
+  public void getLinkCountProfile(MapNode node, NodeInfo info) {
     System.err.println("Not available: getLinkCountProfile");
   }
 

@@ -141,9 +141,9 @@ public class LatLonJsDataSource implements DataSource {
         }
     }*/
 
-    public HashMap<MapNode, Link> init(String path) {
+    public HashMap<Vector<MapNode>, Vector<Link>> init(String path) {
         HashMap<String, Object> configuration = new HashMap<String, Object>();
-        HashMap<MapNode, Link> config=new HashMap<MapNode,Link>();
+        HashMap<Vector<MapNode>, Vector<Link>> config=new HashMap<Vector<MapNode>, Vector<Link>>();
         configuration.put("freimapgsoc.LatLonJsDataSource", path);
         String sServerURL = null;
         try {

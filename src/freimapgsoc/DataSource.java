@@ -30,15 +30,15 @@ data. It will be called by the Freimap core classes, i.e. {@link VisorFrame} and
 <li>Usually, a {@link DataSourceListener} is registered first.</li>
 <li>Then, by calling getFirst- and getLastUpdateTime, the initial time interval 
 to be displayed is determined. </li>
-<li>A call to getNodeList should return an initial Vector of {@link Freinode}s.</li>
+<li>A call to getNodeList should return an initial Vector of {@link MapNode}s.</li>
 <li>Optionally, getNodeAvailability may return an availability value for each node. 
 That's a bit of a hack, and more general node properties will be implemented soon.</li>
 </ol>
 The initiation phase is thus concluded. In the following, the core will repeatedly 
 request getClosestUpdateTime for unix timestamps which it seeks to display. Ususally, 
 this time value will then be used to retrieve the actual link data from getLinks. 
-The core may also request to retrieve a LinkInfo profile (for FreiLinks) or a NodeProfile
-(for FreiNodes) using the methods getLinkProfile and getLinkCountProfile (to be renamed). 
+The core may also request to retrieve a LinkInfo profile (for Links) or a NodeProfile
+(for MapNodes) using the methods getLinkProfile and getLinkCountProfile (to be renamed). 
 These methods may directly alter the LinkInfo and NodeInfo objects and set the appropriate 
 status flags.
 At any time, the methods in {@link DataSourceListener} may be called by the DataSource to 

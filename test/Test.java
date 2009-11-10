@@ -2,8 +2,8 @@
 import freimapgsoc.Configurator;
 import freimapgsoc.DataSource;
 import freimapgsoc.DataSourceListener;
-import freimapgsoc.FreiLink;
-import freimapgsoc.FreiNode;
+import freimapgsoc.Link;
+import freimapgsoc.MapNode;
 import freimapgsoc.InfoPopUp;
 import freimapgsoc.LatLonJsDataSource;
 import freimapgsoc.LinkInfo;
@@ -39,9 +39,9 @@ import org.xml.sax.SAXException;
 
 public class Test implements DataSource {
 
-    private static Vector<FreiNode> nodes = new Vector<FreiNode>();
-    private static Vector<FreiLink> links = new Vector<FreiLink>();
-    HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
+    private static Vector<MapNode> nodes = new Vector<MapNode>();
+    private static Vector<Link> links = new Vector<Link>();
+    HashMap<String, MapNode> nodeByName = new HashMap<String, MapNode>();
     public static Configurator config;
     public static HashMap<String, DataSource> sources;
     //NodeLayer nl;
@@ -133,7 +133,7 @@ public class Test implements DataSource {
                 StringTokenizer stip = new StringTokenizer(ip, ",", false);
                 while (stip.hasMoreTokens()) {
                     String oneip = stip.nextToken();
-                    FreiNode nnode = new FreiNode(oneip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
+                    MapNode nnode = new MapNode(oneip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
                     if (height != null) {
                         nnode.attributes.put("height", new Integer(Integer.parseInt(height)));
                     }
@@ -142,7 +142,7 @@ public class Test implements DataSource {
                 }
                 continue;
             }
-            FreiNode nnode = new FreiNode(ip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
+            MapNode nnode = new MapNode(ip, tooltip, Double.parseDouble(splitCoords[1]), Double.parseDouble(splitCoords[0]));
             if (height != null) {
                 nnode.attributes.put("height", new Integer(Integer.parseInt(height)));
             }
@@ -155,7 +155,7 @@ public class Test implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Vector<FreiNode> getNodeList() {
+    public Vector<MapNode> getNodeList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -183,11 +183,11 @@ public class Test implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public FreiNode getNodeByName(String id) {
+    public MapNode getNodeByName(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Vector<FreiLink> getLinks(long time) {
+    public Vector<Link> getLinks(long time) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -195,11 +195,11 @@ public class Test implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getLinkProfile(FreiLink link, LinkInfo info) {
+    public void getLinkProfile(Link link, LinkInfo info) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getLinkCountProfile(FreiNode node, NodeInfo info) {
+    public void getLinkCountProfile(MapNode node, NodeInfo info) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -210,7 +210,7 @@ public class Test implements DataSource {
         return str.substring(1, str.length() - 1);
     }
 
-      public static void storeLatLon(Vector<FreiNode> nodes) {
+      public static void storeLatLon(Vector<MapNode> nodes) {
         latlon = new HashMap<Vector, String>();
         for (int i = 0; i < nodes.size(); i++) {
             Vector latlon2 = new Vector();
@@ -246,8 +246,8 @@ public class Test implements DataSource {
             source.init(path); //initialize datasource with file's path
             System.out.println("NodeList: " + source.getNodeList());
             System.out.println("LinksList: " + source.getLinks(0));
-            nodes = new Vector<FreiNode>(); //list of jnow nodes
-            links = new Vector<FreiLink>(); //list of know links
+            nodes = new Vector<MapNode>(); //list of jnow nodes
+            links = new Vector<Link>(); //list of know links
 
             for (int t = 0; t < links.size(); t++) {
                 System.out.println("Links Element(" + t + "):" + links.elementAt(t));

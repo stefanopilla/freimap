@@ -20,7 +20,7 @@ import javax.swing.DefaultListModel;
 public class addNode extends javax.swing.JFrame {
 
     /** Creates new form addNode */
-    public addNode(DefaultListModel list, Vector<FreiNode> nodes) {
+    public addNode(DefaultListModel list, Vector<MapNode> nodes) {
         this.list = list;
         this.nodes = nodes;
         initComponents();
@@ -196,7 +196,7 @@ public class addNode extends javax.swing.JFrame {
         } else {
             located = true;
         }
-        nodes.add(new FreiNode(ip, nname, lon, lat, located));
+        nodes.add(new MapNode(ip, nname, lon, lat));
         list.addElement(nname);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -222,5 +222,5 @@ public class addNode extends javax.swing.JFrame {
     private javax.swing.JRadioButton yesRButton;
     // End of variables declaration//GEN-END:variables
     private DefaultListModel list;
-    private Vector<FreiNode> nodes;
+    private Vector<MapNode> nodes;
 }

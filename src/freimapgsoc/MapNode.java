@@ -4,6 +4,7 @@
  */
 package freimapgsoc;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
  *
  * @author stefanopilla
  */
-public class MapNode {
+public class MapNode implements Comparable, Serializable {
 
     public MapNode() {
     }
@@ -29,6 +30,12 @@ public class MapNode {
         this.id = id;
         this.name = name;
         this.ip = ip;
+    }
+
+    public MapNode(String id, double lat, double lon) {
+        this.id = id;
+        this.lat=lat;
+        this.lon=lon;
     }
 
     public MapNode(String id, String name, double lat, double lon) {
@@ -99,6 +106,8 @@ public class MapNode {
     }
     MapNode eqo;
 
+
+
     public boolean equals(Object o) {
         if (!(o instanceof MapNode)) {
             return false;
@@ -121,6 +130,10 @@ public class MapNode {
         return id;
     }
 
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     
     public String id;
     public String name;
@@ -135,4 +148,6 @@ public class MapNode {
     public double lat;
     public double lon;
     public HashMap<String, Object> attributes = new HashMap<String, Object>();
+
+
 }

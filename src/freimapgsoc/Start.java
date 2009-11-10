@@ -31,7 +31,7 @@ public class Start extends javax.swing.JFrame {
             nameServiceButton.setEnabled(true);
         }
         if(check.olsr){
-            olsrButton.setEnabled(true);
+            olsrdButton.setEnabled(true);
         }
         if(!check.mySql&&!check.nameservice&&!check.olsr){
             firstLabel.setText("There aren't Live DataSources");
@@ -48,7 +48,7 @@ public class Start extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        olsrButton = new javax.swing.JButton();
+        olsrdButton = new javax.swing.JButton();
         mySQLButton = new javax.swing.JButton();
         nameServiceButton = new javax.swing.JButton();
         openFileButton = new javax.swing.JButton();
@@ -59,20 +59,23 @@ public class Start extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(Start.class);
-        olsrButton.setText(resourceMap.getString("olsrButton.text")); // NOI18N
-        olsrButton.setEnabled(false);
-        olsrButton.setName("olsrButton"); // NOI18N
-        olsrButton.addActionListener(new java.awt.event.ActionListener() {
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(Start.class);
+        olsrdButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
+        olsrdButton.setText(resourceMap.getString("olsrdButton.text")); // NOI18N
+        olsrdButton.setEnabled(false);
+        olsrdButton.setName("olsrdButton"); // NOI18N
+        olsrdButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                olsrButtonActionPerformed(evt);
+                olsrdButtonActionPerformed(evt);
             }
         });
 
+        mySQLButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
         mySQLButton.setText(resourceMap.getString("mySQLButton.text")); // NOI18N
         mySQLButton.setEnabled(false);
         mySQLButton.setName("mySQLButton"); // NOI18N
 
+        nameServiceButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
         nameServiceButton.setText(resourceMap.getString("nameServiceButton.text")); // NOI18N
         nameServiceButton.setEnabled(false);
         nameServiceButton.setName("nameServiceButton"); // NOI18N
@@ -82,6 +85,7 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
+        openFileButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
         openFileButton.setText(resourceMap.getString("openFileButton.text")); // NOI18N
         openFileButton.setName("openFileButton"); // NOI18N
         openFileButton.addActionListener(new java.awt.event.ActionListener() {
@@ -90,12 +94,15 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(resourceMap.getFont("secondLabel.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        firstLabel.setFont(resourceMap.getFont("secondLabel.font")); // NOI18N
         firstLabel.setText(resourceMap.getString("firstLabel.text")); // NOI18N
         firstLabel.setName("firstLabel"); // NOI18N
 
+        secondLabel.setFont(resourceMap.getFont("secondLabel.font")); // NOI18N
         secondLabel.setText(resourceMap.getString("secondLabel.text")); // NOI18N
         secondLabel.setName("secondLabel"); // NOI18N
 
@@ -116,7 +123,7 @@ public class Start extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(openFileButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                             .addComponent(mySQLButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                            .addComponent(olsrButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                            .addComponent(olsrdButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                             .addComponent(nameServiceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -133,24 +140,24 @@ public class Start extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(secondLabel)
                 .addGap(34, 34, 34)
-                .addComponent(olsrButton)
+                .addComponent(olsrdButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameServiceButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mySQLButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(openFileButton)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void olsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_olsrButtonActionPerformed
+    private void olsrdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_olsrdButtonActionPerformed
         //new Layer(new OlsrdDataSource().init());
         this.dispose();
 
-    }//GEN-LAST:event_olsrButtonActionPerformed
+    }//GEN-LAST:event_olsrdButtonActionPerformed
 
     private void nameServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameServiceButtonActionPerformed
     new Layer(new LatLonJsDataSource().init("/var/run/latlon.js"));
@@ -195,7 +202,7 @@ public class Start extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton mySQLButton;
     private javax.swing.JButton nameServiceButton;
-    private javax.swing.JButton olsrButton;
+    private javax.swing.JButton olsrdButton;
     private javax.swing.JButton openFileButton;
     private javax.swing.JLabel secondLabel;
     // End of variables declaration//GEN-END:variables

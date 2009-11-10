@@ -38,7 +38,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="openFileButton" alignment="0" pref="265" max="32767" attributes="1"/>
                           <Component id="mySQLButton" alignment="0" pref="265" max="32767" attributes="1"/>
-                          <Component id="olsrButton" alignment="0" pref="265" max="32767" attributes="1"/>
+                          <Component id="olsrdButton" alignment="0" pref="265" max="32767" attributes="1"/>
                           <Component id="nameServiceButton" alignment="0" pref="265" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -61,31 +61,33 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="secondLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="olsrButton" min="-2" max="-2" attributes="0"/>
+              <Component id="olsrdButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="nameServiceButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="mySQLButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="openFileButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace pref="44" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="olsrButton">
+    <Component class="javax.swing.JButton" name="olsrdButton">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="olsrButton.text"/>
+        <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="olsrdButton.text"/>
         <Property name="enabled" type="boolean" value="false"/>
-        <Property name="name" type="java.lang.String" value="olsrButton" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="olsrdButton" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="olsrButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="olsrdButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="mySQLButton">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
         <Property name="text" type="java.lang.String" resourceKey="mySQLButton.text"/>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="mySQLButton" noResource="true"/>
@@ -93,6 +95,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="nameServiceButton">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
         <Property name="text" type="java.lang.String" resourceKey="nameServiceButton.text"/>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="nameServiceButton" noResource="true"/>
@@ -103,6 +106,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="openFileButton">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
         <Property name="text" type="java.lang.String" resourceKey="openFileButton.text"/>
         <Property name="name" type="java.lang.String" value="openFileButton" noResource="true"/>
       </Properties>
@@ -112,18 +116,21 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="secondLabel.font"/>
         <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
         <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="firstLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="secondLabel.font"/>
         <Property name="text" type="java.lang.String" resourceKey="firstLabel.text"/>
         <Property name="name" type="java.lang.String" value="firstLabel" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="secondLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="secondLabel.font"/>
         <Property name="text" type="java.lang.String" resourceKey="secondLabel.text"/>
         <Property name="name" type="java.lang.String" value="secondLabel" noResource="true"/>
       </Properties>

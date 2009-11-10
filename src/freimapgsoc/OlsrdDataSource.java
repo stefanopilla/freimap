@@ -61,7 +61,6 @@ public class OlsrdDataSource implements DataSource {
       System.exit(1);
     }
     dot = new DotPluginListener(host, port, this);
-    return
   }
   /*
   public void init(HashMap<String, Object> conf) {
@@ -226,6 +225,14 @@ public class OlsrdDataSource implements DataSource {
     }
 
     public Vector<Link> getLinksFromDest(MapNode dest) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromSource(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromDest(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

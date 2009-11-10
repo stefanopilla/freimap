@@ -11,8 +11,8 @@
 package PopUp;
 
 import freimapgsoc.log;
-import freimapgsoc.FreiLink;
-import freimapgsoc.FreiNode;
+import freimapgsoc.Link;
+import freimapgsoc.MapNode;
 import freimapgsoc.addServices;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -90,7 +90,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
     }
 
-    public PopUp(FreiNode from) {
+    public PopUp(MapNode from) {
         System.out.println("Costructor PopUP(String ip)");
         initComponents();
         InetAddress address = null;
@@ -138,7 +138,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     }
 
     /** Creates new form ServiceDiscovery */
-    public PopUp(FreiNode from, FreiNode to, FreiLink link) {
+    public PopUp(MapNode from, MapNode to, Link link) {
         initComponents();
         this.from = from;
         this.to = to;
@@ -192,7 +192,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         }
     }
 
-    public void infoNode(FreiNode node) {
+    public void infoNode(MapNode node) {
         n1Ip.setText(node.id);
         n1Name.setText(node.toString());
         n1LatLon.setText(node.lat + " / " + node.lon);
@@ -724,8 +724,8 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     private String type;
     private DefaultListModel services = new DefaultListModel();
     private DefaultListModel types = new DefaultListModel();
-    private FreiNode from;
-    private FreiNode to;
-    private FreiLink link;
+    private MapNode from;
+    private MapNode to;
+    private Link link;
     private String list[];
 }

@@ -18,7 +18,7 @@ public class Layer {
         this.currentDs=datasource;
     }
 
-    public Layer(HashMap<MapNode, Link> datasources) {
+    public Layer(HashMap<Vector<MapNode>, Vector<Link>> datasources) {
         this.datasources = datasources;
     }
 
@@ -65,7 +65,7 @@ public class Layer {
     public Vector<MapNode> nodes = new Vector<MapNode>();
     public Vector<Link> links = new Vector<Link>();
     public DataSource currentDs;
-    public HashMap<MapNode, Link> datasources;
+    public HashMap<Vector<MapNode>, Vector<Link>> datasources;
     public HashMap<Double, String> sources;
 }
 

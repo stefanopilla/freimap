@@ -36,11 +36,11 @@ public class NodeLayer implements DataSourceListener {
   int w, h;    //screen width, hight
   int cx, cy; //center of screen
 
-  Vector<FreiNode> nodes; //vector of known nodes
-  Vector<FreiLink> links; //vector of currently displayed links
+  Vector<MapNode> nodes; //vector of known nodes
+  Vector<Link> links; //vector of currently displayed links
   Hashtable<String, Float> availmap; //node availability in percent (0f-1f)
   Hashtable<String, NodeInfo> nodeinfo=new Hashtable<String, NodeInfo>(); //stores nodeinfo upon right click
-  Hashtable<FreiLink, LinkInfo> linkinfo=new Hashtable<FreiLink, LinkInfo>(); //stores linkinfo upon right click
+  Hashtable<Link, LinkInfo> linkinfo=new Hashtable<Link, LinkInfo>(); //stores linkinfo upon right click
 
   //create a Set of waypoints
     Set<Waypoint> bluewaypoints = new HashSet<Waypoint>();
@@ -54,12 +54,12 @@ JXMapViewer mainMap;
   //FIXME the following paragraph is identical and static in VisorFrame. Use these definitions and remove the paragraph.
  
   DataSource source;
-  FreiNode selectedNode;
-  FreiLink selectedLink;
+  MapNode selectedNode;
+  Link selectedLink;
   double selectedNodeDistance,
          selectedLinkDistance;
 
-  private FreiNode uplink = new FreiNode("0.0.0.0/0.0.0.0");
+  private MapNode uplink = new MapNode("0.0.0.0/0.0.0.0");
 
   long crtTime;
 
@@ -75,7 +75,7 @@ JXMapViewer mainMap;
         availmap=source.getNodeAvailability(0);
     System.out.print("reading link list.");
         long now = System.currentTimeMillis();
-        links = new Vector<FreiLink>();//source.getLinks(firstUpdateTime);
+        links = new Vector<Link>();//source.getLinks(firstUpdateTime);
     System.out.println("("+(System.currentTimeMillis()-now)+"ms)");
     drawNodes();
   }
@@ -84,7 +84,7 @@ JXMapViewer mainMap;
   public void timeRangeAvailable(long from, long until) {
     //obsolete.
   }
-  public void nodeListUpdate(FreiNode node) {
+  public void nodeListUpdate(MapNode node) {
     if (nodes!=null) { //this really should not happen
       nodes.add(node);
     }
@@ -185,7 +185,7 @@ mainMap.setOverlayPainter(painter);
     g.setStroke(linkStroke);
     if ((links != null) && (links.size()>0)) {
       for(int i = 0; i < links.size(); i++) {
-        FreiLink link = links.elementAt(i);
+        Link link = links.elementAt(i);
         if (!(matchFilter(link.from)&&matchFilter(link.to))) continue;
 
         boolean isneighbourlink = (link.from.equals(selectedNode)||link.to.equals(selectedNode));
@@ -251,7 +251,7 @@ mainMap.setOverlayPainter(painter);
       public void drawNodes(){
       if (nodes != null)
             for (int i=0; i<nodes.size(); i++) {
-            FreiNode node=(FreiNode)nodes.elementAt(i);
+            MapNode node=(MapNode)nodes.elementAt(i);
                 if (node.equals(uplink)) continue;
         if (node.unlocated) {
             addToWayPointsSets(node.lat,node.lon, "Yellow");
@@ -425,7 +425,7 @@ mainMap.setOverlayPainter(painter);
 
  
 
-  public FreiNode getSelectedNode() {
+  public MapNode getSelectedNode() {
     return selectedNode;
   }
 
@@ -436,31 +436,31 @@ mainMap.setOverlayPainter(painter);
     return Math.sqrt(sqr(x1-x2)+sqr(y1-y2));
   }
 
-  public FreiLink getClosestLink(double lon, double lat) {
+  public Link getClosestLink(double lon, double lat) {
     if (links==null) return null;
     double dmin=Double.POSITIVE_INFINITY;
-    FreiLink closest=null, link;
+    Link closest=null, link;
     boolean within;
     for (int i=0; i<links.size(); i++) {
       link=links.elementAt(i);
       within=true;
-      if (link.from.lon < link.to.lon) { 
-        if ((lon < link.from.lon) || (lon > link.to.lon)) within = false;
+      if (link.source.lon < link.dest.lon) {
+        if ((lon < link.source.lon) || (lon > link.dest.lon)) within = false;
       } else {
-        if ((lon > link.from.lon) || (lon < link.to.lon)) within = false;
+        if ((lon > link.source.lon) || (lon < link.dest.lon)) within = false;
       }
-      if (link.from.lat < link.to.lat) { 
-        if ((lat < link.from.lat) || (lat > link.to.lat)) within = false;
+      if (link.source.lat < link.dest.lat) {
+        if ((lat < link.source.lat) || (lat > link.dest.lat)) within = false;
       } else {
-        if ((lat > link.from.lat) || (lat < link.to.lat)) within = false;
+        if ((lat > link.source.lat) || (lat < link.dest.lat)) within = false;
       }
       if (within) {
-        if (dist(lat, link.from.lat, lon, link.from.lon) > dist(lat, link.to.lat, lon, link.to.lon)) continue; 
+        if (dist(lat, link.source.lat, lon, link.source.lon) > dist(lat, link.dest.lat, lon, link.dest.lon)) continue;
            //we will then select the other link direction.
-        double x1 = link.from.lat, 
-               x2 = link.to.lat,
-               y1 = link.from.lon,
-               y2 = link.to.lon;
+        double x1 = link.source.lat,
+               x2 = link.dest.lat,
+               y1 = link.source.lon,
+               y2 = link.dest.lon;
         double d = Math.abs((x2-x1)*(y1-lon) - (x1-lat)*(y2-y1)) / Math.sqrt(sqr(x2-x1)+sqr(y2-y1));
         if (d<dmin) {
 	  dmin=d;
@@ -472,9 +472,9 @@ mainMap.setOverlayPainter(painter);
     return closest;
   }
 
-  public FreiNode getClosestNode(double lon, double lat) {
+  public MapNode getClosestNode(double lon, double lat) {
     double dmin=Double.POSITIVE_INFINITY;
-    FreiNode closest=null, node;
+    MapNode closest=null, node;
     for (int i=0; i<nodes.size(); i++) {
       node=nodes.elementAt(i);
       double d = Math.abs(node.lon - lon) + Math.abs(node.lat - lat); //no need to sqrt here

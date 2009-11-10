@@ -3,6 +3,7 @@
  */
 package freimapgsoc;
 
+import FileMngmt.FileMenu;
 import freimapgsoc.*;
 import java.io.FileNotFoundException;
 import java.text.Format;
@@ -106,127 +107,10 @@ public class MainLayer implements DataSource {
         def = new GeoPosition(DEFAULT_LAT, DEFAULT_LON);
         initComponents();
         initMapComponents();
-        check_configurations();
         printDateTime();
-        addRecentFile();
-        check_configurations();
     }
 
-    public void check_configurations(){
-        new InfoPopUpSelect("There are more than one active DataSources", "please choose one...").setVisible(true);
-    }
-
-    
-
-    public void readConfiguration(DataSource source) {
-        config = new Configurator();
-        sources = new HashMap<String, DataSource>();
-        try {
-            HashMap<String, Object> ds = (HashMap<String, Object>) config.get("datasources");
-            //System.out.println(ds);
-            HashMap<String, HashMap<String, Object>> ds2subconfig = new HashMap<String, HashMap<String, Object>>();
-            Iterator<String> i = ds.keySet().iterator();
-
-            while (i.hasNext()) {
-                String id = i.next();
-                HashMap<String, Object> subconfig = (HashMap<String, Object>) ds.get(id);
-                @SuppressWarnings("static-access")
-                String claz = config.getS("class", subconfig);
-                Class<DataSource> csource = (Class<DataSource>) Class.forName(claz); //this cast cannot be checked!
-                DataSource source = csource.newInstance();
-                ds2subconfig.put(id, subconfig);
-                sources.put(id, source);
-            }
-
-            Iterator<String> j = sources.keySet().iterator();
-            while (j.hasNext()) {
-                String id = j.next();
-                DataSource source = sources.get(id);
-                source.init(ds2subconfig.get(id)); //initialize datasource with configuration parameters
-                nodes = new Vector<FreiNode>(); //list of jnow nodes
-                links = new Vector<FreiLink>(); //list of know links
-
-                links = source.getLinks(0);
-                nodes = source.getNodeList();
-                storeLatLon(nodes);
-                System.out.println(latlon);
-                for (int k = 0; k < nodes.size(); k++) {
-                    //System.out.println("id: " + nodes.get(k) + " lat: " + nodes.get(k).lat + " lon: " + nodes.get(k).lon);
-                    locatedN.addElement(nodes.get(k));
-                    //System.out.println("to:" + links.get(k).to);
-                    //System.out.println("from: " + links.get(k).from);
-                    //System.out.println("HNA:" + links.get(k).HNA);
-                    //System.out.println("udp:" + links.get(k).udp);
-                    //System.out.println("udp:" + links.get(k).tcp);
-                    //System.out.println("udp:" + links.get(k).packets);
-                    //System.out.println("nlq:" + links.get(k).bytes);
-                    //System.out.println("etx:" + links.get(k).etx);
-                    //System.out.println("lq:" + links.get(k).lq);
-                    //System.out.println("nlq:" + links.get(k).nlq);
-                    //System.out.println("other:" + links.get(k).other);
-                    //System.out.println("icmp:" + links.get(k).icmp);
-                }
-                drawAll(links, nodes);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return;
-        }
-    }
-
-    public void readConfigurationFile(String path) {
-        path = "file:" + path;
-        try {
-            String id = "jsFile";
-            File f = new File(path);
-            String extension = Utils.getExtension(f);
-            DataSource source = null;
-            if (extension != null) {
-                if (extension.equals(Utils.js)) {
-                    source = new LatLonJsDataSource();
-                }
-                if (extension.equals(Utils.xml)) {
-                    source = new xmlDataSource();
-                }
-                if (extension.equals(Utils.txt)) {
-                    //IMPLEMENT ME
-                    // source = new txtDataSource();
-                }
-            }
-            //System.out.println("file:" + path);
-            source.init(path); //initialize datasource with file's path
-            //System.out.println("NodeList: " + source.getNodeList());
-            //System.out.println("LinksList: " + source.getLinks(0));
-            nodes = new Vector<FreiNode>(); //list of jnow nodes
-            links = new Vector<FreiLink>(); //list of know links
-
-            links = source.getLinks(0);
-            nodes = source.getNodeList();
-            storeLatLon(nodes);
-            for (int k = 0; k < nodes.size(); k++) {
-                //System.out.println("id: " + nodes.get(k) + " lat: " + nodes.get(k).lat + " lon: " + nodes.get(k).lon);
-                locatedN.addElement(nodes.get(k));
-                //System.out.println("to:" + links.get(k).to);
-                //System.out.println("from: " + links.get(k).from);
-                //System.out.println("HNA:" + links.get(k).HNA);
-                //System.out.println("udp:" + links.get(k).udp);
-                //System.out.println("udp:" + links.get(k).tcp);
-                //System.out.println("udp:" + links.get(k).packets);
-                //System.out.println("nlq:" + links.get(k).bytes);
-                //System.out.println("etx:" + links.get(k).etx);
-                //System.out.println("lq:" + links.get(k).lq);
-                //System.out.println("nlq:" + links.get(k).nlq);
-                //System.out.println("other:" + links.get(k).other);
-                //System.out.println("icmp:" + links.get(k).icmp);
-                }
-            drawAll(links, nodes);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return;
-        }
-    }
-
-    public void storeLatLon(Vector<FreiNode> nodes) {
+    public void storeLatLon(Vector<MapNode> nodes) {
         latlon = new HashMap<Vector, String>();
         for (int i = 0; i < nodes.size(); i++) {
             Vector latlon2 = new Vector();
@@ -243,19 +127,19 @@ public class MainLayer implements DataSource {
         Point2D gp_pt = mainMap.getTileFactory().geoToPixel(posNode, mainMap.getZoom());
         //convert to screen
         Rectangle rect = mainMap.getViewportBounds();
-        Point converted_gp_pt = new Point((int) gp_pt.getX() - rect.x,(int) gp_pt.getY() - rect.y);
+        Point converted_gp_pt = new Point((int) gp_pt.getX() - rect.x, (int) gp_pt.getY() - rect.y);
         //check if near the mouse
         if (converted_gp_pt.distance(evt.getPoint()) < 10) {
             System.out.println("OK SEI SUL NODO!");
         }
     }
-    
 
-    public void drawNodes(Vector<FreiNode> nodes) {
+    public void drawNodes(Vector<MapNode> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
             final GeoPosition posNode = new GeoPosition(nodes.elementAt(i).lat, nodes.elementAt(i).lon);
             final JButton waynode = new JButton(nodes.elementAt(i).toString());
             waynode.addActionListener(new ActionListener() {
+
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("The test2 button was clicked");
                 }
@@ -302,7 +186,7 @@ public class MainLayer implements DataSource {
         }
     }
 
-    public void drawNodes(Vector<FreiNode> nodes, Double lat, Double lon) {
+    public void drawNodes(Vector<MapNode> nodes, Double lat, Double lon) {
         for (int i = 0; i < nodes.size(); i++) {
             GeoPosition posNode = new GeoPosition(nodes.elementAt(i).lat, nodes.elementAt(i).lon);
             if (nodes.elementAt(i).lat == lat && nodes.elementAt(i).lon == lon) {
@@ -373,10 +257,10 @@ public class MainLayer implements DataSource {
     }
 
     //TO IMPLEMENT IT DOESN'T WORK
-    public void drawLinks(Vector<FreiLink> links) {
+    public void drawLinks(Vector<Link> links) {
         for (int i = 0; i < links.size(); i++) {
-            GeoPosition posFrom = new GeoPosition(links.elementAt(i).from.lat, links.elementAt(i).from.lon);
-            GeoPosition posTo = new GeoPosition(links.elementAt(i).to.lat, links.elementAt(i).to.lon);
+            GeoPosition posFrom = new GeoPosition(links.elementAt(i).source.lat, links.elementAt(i).source.lon);
+            GeoPosition posTo = new GeoPosition(links.elementAt(i).dest.lat, links.elementAt(i).dest.lon);
             final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
             final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
             Rectangle rect = mainMap.getViewportBounds();
@@ -403,7 +287,7 @@ public class MainLayer implements DataSource {
         }
     }
 
-    public void drawAll(Vector<FreiLink> links, Vector<FreiNode> nodes) {
+    public void drawAll(Vector<Link> links, Vector<MapNode> nodes) {
         try {
             if (links.size() == 0) {
                 if (nodes.size() != 0) {
@@ -448,181 +332,6 @@ public class MainLayer implements DataSource {
 
     }
 
-//MAP METHODS ##################################
-    public void setZoom(int zoom) {
-        zoomChanging = true;
-        mainMap.setZoom(zoom);
-        miniMap.setZoom(mainMap.getZoom() + 4);
-        if (sliderReversed) {
-            zoomSlider.setValue(zoomSlider.getMaximum() - zoom);
-        } else {
-            zoomSlider.setValue(zoom);
-            mainMap.repaint();
-        }
-
-        zoomChanging = false;
-    } //OK
-
-    /**
-     * Indicates if the mini-map is currently visible
-     * @return the current value of the mini-map property
-     */
-    public boolean isMiniMapVisible() {
-        return miniMapVisible;
-    }//OK
-
-    /**
-     * Sets if the mini-map should be visible
-     * @param miniMapVisible a new value for the miniMap property
-     */
-    public void setMiniMapVisible(boolean miniMapVisible) {
-        boolean old = this.isMiniMapVisible();
-        this.miniMapVisible = miniMapVisible;
-        miniMap.setVisible(miniMapVisible);
-    }//OK
-
-    /**
-     * Indicates if the zoom slider is currently visible
-     * @return the current value of the zoomSliderVisible property
-     */
-    public boolean isZoomSliderVisible() {
-        return zoomSliderVisible;
-    }//OK
-
-    /**
-     * Sets if the zoom slider should be visible
-     * @param zoomSliderVisible the new value of the zoomSliderVisible property
-     */
-    public void setZoomSliderVisible(boolean zoomSliderVisible) {
-        boolean old = this.isZoomSliderVisible();
-        this.zoomSliderVisible = zoomSliderVisible;
-        zoomSlider.setVisible(zoomSliderVisible);
-    }//OK
-
-    /**
-     * Indicates if the zoom buttons are visible. This is a bound property
-     * and can be listed for using a PropertyChangeListener
-     * @return current value of the zoomButtonsVisible property
-     */
-    public boolean isZoomButtonsVisible() {
-        return zoomButtonsVisible;
-    }//OK
-
-    /**
-     * Sets if the zoom buttons should be visible. This ia bound property.
-     * Changes can be listened for using a PropertyChaneListener
-     * @param zoomButtonsVisible new value of the zoomButtonsVisible property
-     */
-    public void setZoomButtonsVisible(boolean zoomButtonsVisible) {
-        boolean old = this.isZoomButtonsVisible();
-        this.zoomButtonsVisible = zoomButtonsVisible;
-        //zoomInButton.setVisible(zoomButtonsVisible);
-        //zoomOutButton.setVisible(zoomButtonsVisible);
-    }//OK
-
-    /**
-     * Sets the tile factory for both embedded JXMapViewer components.
-     * Calling this method will also reset the center and zoom levels
-     * of both maps, as well as the bounds of the zoom slider.
-     * @param fact the new TileFactory
-     */
-    public void setTileFactory(TileFactory fact) {
-        mainMap.setTileFactory(fact);
-        mainMap.setZoom(fact.getInfo().getDefaultZoomLevel());
-        mainMap.setCenterPosition(new GeoPosition(0, 0));
-        miniMap.setTileFactory(fact);
-        miniMap.setZoom(fact.getInfo().getDefaultZoomLevel() + 3);
-        miniMap.setCenterPosition(new GeoPosition(0, 0));
-        zoomSlider.setMinimum(fact.getInfo().getMinimumZoomLevel());
-        zoomSlider.setMaximum(fact.getInfo().getMaximumZoomLevel());
-    }//OK
-
-    public void setCenterPosition(GeoPosition pos) {
-        mainMap.setCenterPosition(pos);
-        miniMap.setCenterPosition(pos);
-    }//OK
-
-    /**
-     * Returns a reference to the main embedded JXMapViewer component
-     * @return the main map
-     */
-    public JXMapViewer getMainMap() {
-        return this.mainMap;
-    }//OK
-
-    /**
-     * Returns a reference to the mini embedded JXMapViewer component
-     * @return the minimap JXMapViewer component
-     */
-    public JXMapViewer getMiniMap() {
-        return this.miniMap;
-    }//OK
-
-    /**
-     * returns a reference to the zoom in button
-     * @return a jLabel
-     */
-    public JLabel getZoomInButton() {
-        return this.zoomButtonIn;
-    }//OK
-
-    /**
-     * returns a reference to the zoom out button
-     * @return a jLabel
-     */
-    public JLabel getZoomOutButton() {
-        return this.zoomButtonOut;
-    }//OK
-
-    /**
-     * returns a reference to the zoom slider
-     * @return a jslider
-     */
-    public JSlider getZoomSlider() {
-        return this.zoomSlider;
-    }//OK
-
-//Get String Latitude from the Map
-    private String getLat(GeoPosition pos) {
-        Double lat = pos.getLatitude();
-        return lat.toString();
-    }
-
-//Get String Longitude from the Map
-    private String getLon(GeoPosition pos) {
-        Double lon = pos.getLatitude();
-        return lon.toString();
-    }
-
-    @Action
-    public void goToDefaultPosition() {
-        mainMap.setAddressLocation(def);
-    }
-
-    @Action
-    public void takeScreenShot() throws AWTException, IOException {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Point p = new Point(mainMap.getLocationOnScreen());
-        Dimension d = new Dimension(mainMap.getSize());
-        Rectangle mapPosition = new Rectangle(p, d);
-        Robot robot = new Robot();
-        BufferedImage image = robot.createScreenCapture(mapPosition);
-        ImageIO.write(image, "jpg", new File("/tmp/freimapSnapShot.jpg"));
-        new InfoPopUp("Screenshot is in /tmp/ directory", "APPROVE").setVisible(true);
-    }
-
-//END OF MAP METHODS################################
-    @Action
-    public void showAboutBox() {
-        if (aboutBox == null) {
-            JFrame mainFrame = FreimapGSoCApp.getApplication().getMainFrame();
-            aboutBox =
-                    new FreimapGSoCAboutBox(mainFrame);
-            aboutBox.setLocationRelativeTo(mainFrame);
-        }
-
-        FreimapGSoCApp.getApplication().show(aboutBox);
-    }
 
     public boolean nodeIsPresent(String nodeName) {
         boolean find = false;
@@ -1840,10 +1549,14 @@ public class MainLayer implements DataSource {
     private void newRecentFileActionPerformed(java.awt.event.ActionEvent evt, String path) {
         deleteAllfromMap(mainMap, locatedN);
         File file = new File(path);
-        readConfigurationFile(file.getPath());
+        String extension = Utils.getExtension(file);
+        if (extension.equals(Utils.xml)) {
+//                                new Layer(new xmlDataSource().init(null));
+        }
+        if (extension.equals(Utils.js)) {
+            new Layer(new LatLonJsDataSource().init(file.getPath()));
+        }
     }
-
-    
 
     private void xmlOpenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlOpenMenuActionPerformed
         if (evt.getSource() == xmlOpenMenu) {
@@ -1854,8 +1567,9 @@ public class MainLayer implements DataSource {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 deleteAllfromMap(mainMap, locatedN);
                 File file = fcxml.getSelectedFile();
-                readConfigurationFile(file.getPath());
-                addRecentFile(file.getPath(), file.getName());
+                //new Layer(new xmlDataSource().init(null));
+                FileMenu fm = new FileMenu();
+                fm.addRecentFile(file.getPath(), file.getName());
             } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
@@ -1877,8 +1591,9 @@ public class MainLayer implements DataSource {
                 File file = fcjs.getSelectedFile();
                 System.out.println("FILE JS OPENED");
                 System.out.println("Opening: " + file.getName() + ".\n");
-                readConfigurationFile(file.getPath());
-                addRecentFile(file.getPath(), file.getName());
+                new Layer(new LatLonJsDataSource().init(file.getPath()));
+                FileMenu fm=new FileMenu();
+                fm.addRecentFile(file.getPath(), file.getName());
             } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
@@ -1976,8 +1691,9 @@ public class MainLayer implements DataSource {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fcxml.getSelectedFile();
                 System.out.println("FILE XML OPENED!");
-                readConfigurationFile(file.getPath());
-                addRecentFile(file.getPath(), file.getName());
+                //new Layer(new xmlDataSource().init(file.getPath()));
+                FileMenu fm = new FileMenu();
+                fm.addRecentFile(file.getPath(), file.getName());
                 System.out.println("Opening: " + file.getName() + ".\n");
             } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
@@ -1987,7 +1703,6 @@ public class MainLayer implements DataSource {
     }//GEN-LAST:event_xmlAppendMenuActionPerformed
 
     /**DELETED BECAUSE IS SIMILAR TO XML FILE*/
-
     private void jsAppendMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsAppendMenuActionPerformed
         if (evt.getSource() == jsAppendMenu) {
             JFileChooser fcjs = new JFileChooser();
@@ -1999,8 +1714,9 @@ public class MainLayer implements DataSource {
                 System.out.println("FILE JS OPENED");
                 //OPEN A FILE AND RELOAD ALL DATA ON THE MAP!
                 System.out.println("Opening: " + file.getName() + ".\n");
-                readConfigurationFile(file.getPath());
-                addRecentFile(file.getPath(), file.getName());
+                new Layer(new LatLonJsDataSource().init(file.getPath()));
+                FileMenu fm = new FileMenu();
+                fm.addRecentFile(file.getPath(), file.getName());
             } else if (returnVal == JFileChooser.CANCEL_OPTION) {
                 System.out.println("Open command cancelled by user." + "\n");
             }
@@ -2022,134 +1738,13 @@ public class MainLayer implements DataSource {
         setTileFactory(tf);        // TODO add your handling code here:
     }//GEN-LAST:event_defaultButtonActionPerformed
 
-    //MAP COMPONENTS
-    public void initMapComponents() {
-        mainMap.setCenterPosition(new GeoPosition(0, 0));
-        miniMap.setCenterPosition(new GeoPosition(0, 0));
-        mainMap.setRestrictOutsidePanning(true);
-        miniMap.setRestrictOutsidePanning(true);
-
-        Set<Waypoint> wps = new HashSet<Waypoint>();
-        WaypointPainter wp = new WaypointPainter();
-        wp.setWaypoints(wps);
-
-        mainMap.setOverlayPainter(new CompoundPainter(new Painter<JXMapViewer>() {
-
-            public void paint(Graphics2D g, JXMapViewer map, int width, int height) {
-                g.setPaint(Color.WHITE);
-                g.drawString(" ", 50, map.getHeight() - 10);
-            }
-        }, wp));
-
-
-        // adapter to move the minimap after the main map has moved
-        MouseInputAdapter ma = new MouseInputAdapter() {
-
-            public void mousePressed(MouseEvent evt) {
-                String nodeName = "";
-                Point pt = evt.getPoint();
-                GeoPosition gp = mainMap.convertPointToGeoPosition(new Point2D.Double(evt.getX(), evt.getY()));
-                //Se la posizione del mouse è uguale a una presente nel vettore latlon allora prendi il nome e visualizzalo
-
-                coor.add(String.format("%.2f", gp.getLatitude()));
-                coor.add(String.format("%.2f", gp.getLongitude()));
-                //System.out.println("latlon.get(coor): " + latlon.get(coor));
-                //System.out.println("evt.getPoint():" + evt.getPoint());
-                //System.out.println("pt:" + pt);
-                Point2D gp_pt = mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom());
-                Rectangle rect = mainMap.getViewportBounds();
-                Point converted_gp_pt = new Point((int) pt.getX() - rect.x, (int) pt.getY() - rect.y);
-
-            }
-
-            public void mouseReleased(MouseEvent e) {
-                miniMap.setCenterPosition(mapCenterPosition);
-            }
-        };
-
-
-        mainMap.addMouseMotionListener(ma);
-        mainMap.addMouseListener(ma);
-        mainMap.addPropertyChangeListener("center", new PropertyChangeListener() {
-
-            public void propertyChange(PropertyChangeEvent evt) {
-                Point2D mapCenter = (Point2D) evt.getNewValue();
-                TileFactory tf = mainMap.getTileFactory();
-                GeoPosition mapPos = tf.pixelToGeo(mapCenter, mainMap.getZoom());
-                miniMap.setCenterPosition(mapPos);
-            }
-        });
-
-
-        mainMap.addPropertyChangeListener("centerPosition", new PropertyChangeListener() {
-
-            public void propertyChange(PropertyChangeEvent evt) {
-                mapCenterPosition = (GeoPosition) evt.getNewValue();
-                miniMap.setCenterPosition(mapCenterPosition);
-                Point2D pt = miniMap.getTileFactory().geoToPixel(mapCenterPosition, miniMap.getZoom());
-                miniMap.setCenter(pt);
-                miniMap.repaint();
-            }
-        });
-
-        mainMap.addPropertyChangeListener("zoom", new PropertyChangeListener() {
-
-            public void propertyChange(PropertyChangeEvent evt) {
-                zoomSlider.setValue(mainMap.getZoom());
-            }
-        });
-
-
-        miniMap.setOverlayPainter(new Painter<JXMapViewer>() {
-
-            public void paint(Graphics2D g, JXMapViewer map, int width, int height) {
-                // get the viewport rect of the main map
-                Rectangle mainMapBounds = mainMap.getViewportBounds();
-
-                // convert to Point2Ds
-                Point2D upperLeft2D = mainMapBounds.getLocation();
-                Point2D lowerRight2D = new Point2D.Double(upperLeft2D.getX() + mainMapBounds.getWidth(),
-                        upperLeft2D.getY() + mainMapBounds.getHeight());
-
-                // convert to GeoPostions
-                GeoPosition upperLeft = mainMap.getTileFactory().pixelToGeo(upperLeft2D, mainMap.getZoom());
-                GeoPosition lowerRight = mainMap.getTileFactory().pixelToGeo(lowerRight2D, mainMap.getZoom());
-
-                // convert to Point2Ds on the mini-map
-                upperLeft2D =
-                        map.getTileFactory().geoToPixel(upperLeft, map.getZoom());
-                lowerRight2D =
-                        map.getTileFactory().geoToPixel(lowerRight, map.getZoom());
-                g =
-                        (Graphics2D) g.create();
-                Rectangle rect = map.getViewportBounds();
-                //p("rect = " + rect);
-                g.translate(-rect.x, -rect.y);
-                Point2D centerpos = map.getTileFactory().geoToPixel(mapCenterPosition, map.getZoom());
-                //p("center pos = " + centerpos);
-                g.setPaint(Color.RED);
-                //g.drawRect((int)centerpos.getX()-30,(int)centerpos.getY()-30,60,60);
-                g.drawRect((int) upperLeft2D.getX(), (int) upperLeft2D.getY(),
-                        (int) (lowerRight2D.getX() - upperLeft2D.getX()),
-                        (int) (lowerRight2D.getY() - upperLeft2D.getY()));
-                g.setPaint(new Color(255, 0, 0, 50));
-                g.fillRect((int) upperLeft2D.getX(), (int) upperLeft2D.getY(),
-                        (int) (lowerRight2D.getX() - upperLeft2D.getX()),
-                        (int) (lowerRight2D.getY() - upperLeft2D.getY()));
-                //g.drawOval((int)lowerRight2D.getX(),(int)lowerRight2D.getY(),1,1);
-                g.dispose();
-            }
-        });
-
-        setZoom(12);// HACK joshy: hack, i shouldn't need this here
-        this.setCenterPosition(new GeoPosition(0, 0));
-    }//OK
+    
 
     public void init(HashMap<String, Object> configuration) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Vector<FreiNode> getNodeList() {
+    public Vector<MapNode> getNodeList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -2177,12 +1772,11 @@ public class MainLayer implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public FreiNode getNodeByName(
-            String id) {
+    public MapNode getNodeByName(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Vector<FreiLink> getLinks(long time) {
+    public Vector<Link> getLinks(long time) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -2190,11 +1784,11 @@ public class MainLayer implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getLinkProfile(FreiLink link, LinkInfo info) {
+    public void getLinkProfile(Link link, LinkInfo info) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getLinkCountProfile(FreiNode node, NodeInfo info) {
+    public void getLinkCountProfile(MapNode node, NodeInfo info) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -2389,36 +1983,24 @@ public class MainLayer implements DataSource {
     public javax.swing.JSlider zoomSlider;
     // End of variables declaration//GEN-END:variables
     private JDialog aboutBox;
-    private GeoPosition def;//OK
-    private Double DEFAULT_LAT = 0.0;//OK
-    private Double DEFAULT_LON = 0.0;//OK
-    private TileFactory tf; //OK
+   
     private Runtime runtime;
-//MainMap and Minimap Variables
-    final List<GeoPosition> region = new ArrayList<GeoPosition>();
-    public static boolean miniMapVisible = true;//OK
-    public static boolean zoomSliderVisible = true;//OK
-    public static boolean zoomButtonsVisible = true;//OK
-    public static final boolean sliderReversed = false;//OK
-    private static WaypointPainter painter = new WaypointPainter();//OK
-    private static Set<Waypoint> waypoints = new HashSet<Waypoint>();//OK
-    private static WaypointPainter linkpainter = new WaypointPainter();//OK
-    private static Set<Waypoint> linkwaypoints = new HashSet<Waypoint>();//OK
-    private FreiNode uplink = new FreiNode("0.0.0.0/0.0.0.0");//OK
-    private Point2D mapCenter = new Point2D.Double(0, 0);//OK
-    private GeoPosition mapCenterPosition = new GeoPosition(0, 0);//OK
-    private boolean zoomChanging = false;//OK
-    public static Configurator config;
-    public static HashMap<String, DataSource> sources;
-    Vector<FreiNode> nodes;
-    Vector<FreiLink> links;
-    public HashMap<String, FreiNode> nodeByName = new HashMap<String, FreiNode>();
-    HashMap<Vector, String> latlon;
-    Vector coor = new Vector();
+   
     public DefaultListModel locatedN = new DefaultListModel();
-    private JLabel nodeLabel = new JLabel();
     private int countPop = 0;
     private String nodeName = null;
     private File recentFile;
     private String recentFilePath;
+
+    public MapNode getNodeById(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromSource(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromDest(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

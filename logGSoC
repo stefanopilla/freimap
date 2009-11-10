@@ -39,7 +39,7 @@ June/July 2009 Porting to Netbeans IDE
 11-Ago-2009:	Added linkInfo JFrame
 		ReloadService in ServiceDiscovery 
 
-12-Ago-2009:	Add Costructor(FreiNode) for NodeInfo in PopUp Frame
+12-Ago-2009:	Add Costructor(MapNode) for NodeInfo in PopUp Frame
 		Draw Nodes
 		Label on MouseMoved Event on nodes
 		X Y coordinate label added (must be better)
