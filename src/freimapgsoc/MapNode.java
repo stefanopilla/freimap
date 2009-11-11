@@ -17,51 +17,40 @@ public class MapNode implements Comparable, Serializable {
     public MapNode() {
     }
 
-    public MapNode(String id) {
-        this(id, id); //use id as a name
+    public MapNode(String ip) {
+        this(ip, "noname"); //use "noname" as a name
     }
 
-    public MapNode(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public MapNode(String id, String name, String ip) {
-        this.id = id;
+    public MapNode(String ip, String name) {
         this.name = name;
         this.ip = ip;
     }
 
     public MapNode(String id, double lat, double lon) {
-        this.id = id;
         this.lat=lat;
         this.lon=lon;
     }
 
-    public MapNode(String id, String name, double lat, double lon) {
-        this.id = id;
+    public MapNode(String ip, String name, double lat, double lon) {
         this.name = name;
         this.lat=lat;
         this.lon=lon;
     }
 
-    public MapNode(String id, String name, String ip, double uptime) {
-        this.id = id;
+    public MapNode(String ip, String name, double uptime) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
     }
 
-    public MapNode(String id, String name, String ip, double uptime, Connections conn) {
-        this.id = id;
+    public MapNode(String ip, String name, double uptime, Connections conn) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
         this.conn = conn;
     }
 
-    public MapNode(String id, String name, String ip, double uptime, Connections conn, Interfaces ifaces) {
-        this.id = id;
+    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -69,8 +58,7 @@ public class MapNode implements Comparable, Serializable {
         this.inter = ifaces;
     }
 
-    public MapNode(String id, String name, String ip, double uptime, Connections conn, Interfaces ifaces, double lat, double lon) {
-        this.id = id;
+    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces, double lat, double lon) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -81,8 +69,7 @@ public class MapNode implements Comparable, Serializable {
 
     }
 
-    public MapNode(String id, String name, String ip, double uptime, Connections conn, Interfaces ifaces, double lon) {
-        this.id = id;
+    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces, double lon) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -93,8 +80,7 @@ public class MapNode implements Comparable, Serializable {
 
     }
 
-    public MapNode(String id, String name, String ip, double uptime, Connections conn, Interfaces ifaces, double lat, double lon, HashMap<String, Object> attributes) {
-        this.id = id;
+    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces, double lat, double lon, HashMap<String, Object> attributes) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -113,7 +99,7 @@ public class MapNode implements Comparable, Serializable {
             return false;
         }
         eqo = (MapNode) o;
-        if (this.id.equals(eqo.id)) {
+        if (this.name.equals(eqo.name)) {
             return true;
         }
         /*if (this.fqid != null) {
@@ -127,7 +113,7 @@ public class MapNode implements Comparable, Serializable {
     }
 
     public String toString() {
-        return id;
+        return name;
     }
 
     public int compareTo(Object o) {
@@ -135,7 +121,6 @@ public class MapNode implements Comparable, Serializable {
     }
 
     
-    public String id;
     public String name;
     public String ip;
     public double uptime;
