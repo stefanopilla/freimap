@@ -308,6 +308,18 @@ public class YamlDataSource implements DataSource {
     public void init(String path) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public MapNode getNodeById(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromSource(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Vector<Link> getLinksFromDest(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
   
   class TimeStampFetcher implements Runnable { //use an own connection for concurrency!
     private final static int OFFSET = 1000;

@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdesktop.swingx.JXMapViewer;
 
 /**
@@ -26,127 +28,13 @@ public class LatLonJsDataSource implements DataSource {
     long initTime = System.currentTimeMillis() / 1000;
     boolean fetchLinks = true;
 
-    /*
-    public void init(String path) {
-    HashMap<String, Object> configuration = new HashMap<String, Object>();
-    configuration.put("freimapgsoc.LatLonJsDataSource", path);
-    String sServerURL = null;
-    try {
-    sServerURL = path;
-    //fetchLinks = Configurator.getB("fetchlinks", configuration);
-    fetchLinks = true;
-    System.out.println("Fetch Status Is: " + fetchLinks);
-    System.out.println("fetching data from URL: " + sServerURL);
-    if (!fetchLinks) {
-    System.out.println("NOT fetching link information.");
-    }
-    System.out.print("This may take a while ... ");
-
-    BufferedReader in = new BufferedReader(new InputStreamReader(new URL(sServerURL).openStream()));
-    while (true) {
-    String line = in.readLine();
-    System.out.println("Line: " + line);
-    if (line == null) {
-    break;//if there aren't string in a file
-    }
-    if ((line.length() > 4) && (line.substring(0, 4).equals("Node"))) {
-    StringTokenizer st = new StringTokenizer(line.substring(5, line.length() - 2), ",", false);
-    String ip = st.nextToken();
-    double lat = Double.parseDouble(st.nextToken());
-    double lon = Double.parseDouble(st.nextToken());
-    int isgateway = Integer.parseInt(st.nextToken());
-    String gatewayip = st.nextToken();
-    String fqid = st.nextToken();
-
-    ip = stripQuotes(ip); //strip single quotes
-    fqid = stripQuotes(fqid);
-    gatewayip = stripQuotes(gatewayip);
-
-    // Use ip or coordinates as fqid if tooltip is missing
-    if (ip.equals("")) {
-    ip = null;
-    }
-    if (fqid == null) {
-    if (ip == null) {
-    fqid = lat + "," + lon;
-    } else {
-    fqid = ip;
-    }
-    }
-    if (ip == null) { //we need at least one identifier
-    ip = fqid;
-    }
-
-    Node nnode;
-    if ((lat < -90d) || (lat > 90d) || (lon < -180d) || (lon > 180d)) { //obviously bogus. some people do that.
-    nnode = new Node(ip, fqid);//create a node with Default positions
-    } else {
-    nnode = new Node(ip, fqid, lon, lat); //create a node with lat lon coordinates
-    }
-    nodes.add(nnode);//add node to Vector "nodes"
-    if (isgateway == 1) { //if node is a Gateway
-    nnode.attributes.put("Gateway", "SELF"); //add attributes ("Gateway", "SELF") or ("Gateway", "OTHER:"+gatewayip) to attributes hash table of Node
-    } else {
-    nnode.attributes.put("Gateway", "OTHER: " + gatewayip);
-    }
-    //System.out.println("nnode.id:"+ nnode.id);
-    //System.out.println("nnode: "+ nnode);
-    nodeByName.put(nnode.id, nnode); //add node to hashmap of nodebyname <String, Node>
-
-    } else if ((fetchLinks) && (line.length() > 5) && (line.substring(0, 5).equals("PLink"))) {
-    StringTokenizer st = new StringTokenizer(line.substring(6, line.length() - 2), ",", false);
-    String src = st.nextToken();
-    String dest = st.nextToken();
-    System.out.println("SRC: " + src);
-    System.out.println("DEST: " + dest);
-
-    double lq = Double.parseDouble(st.nextToken());
-    double nlq = Double.parseDouble(st.nextToken());
-    double etx = Double.parseDouble(st.nextToken());
-
-    System.out.println("lq: " + lq);
-    System.out.println("nlq: " + nlq);
-    System.out.println("etx: " + etx);
-
-
-    src = stripQuotes(src);
-    dest = stripQuotes(dest);
-
-    Node nsrc = nodeByName.get(src);
-    Node ndest = nodeByName.get(dest);
-
-    if (nsrc == null) {
-    System.err.println(src + " not found.");
-    continue;
-    }
-    if (ndest == null) {
-    System.err.println(dest + " not found.");
-    continue;
-    }
-
-    Link link = new Link(nsrc, ndest, (float) lq, (float) nlq, false);
-    links.add(link);
-    }
-    }
-
-    System.out.println("finished.");
-    //nl=new NodeLayer(this,map);
-
-    } catch (MalformedURLException mue) {
-    System.out.println("failed!");
-    throw new IllegalStateException("Invalid server URL: " + sServerURL);
-    } catch (IOException ioe) {
-    System.out.println("failed! IOException in LatLonJSDataSource");
-    ioe.printStackTrace();
-    }
-    }*/
     public HashMap<Vector<MapNode>, Vector<Link>> init(String path) {
         HashMap<Vector<MapNode>, Vector<Link>> config = new HashMap<Vector<MapNode>, Vector<Link>>();
         String sServerURL = null;
         try {
             sServerURL = path;
             System.out.println("Fetching data from URL: " + sServerURL);
-            System.out.print("This may take a while ... ");
+            System.out.println("This may take a while ... ");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(new URL(sServerURL).openStream()));
             while (true) {
@@ -155,6 +43,8 @@ public class LatLonJsDataSource implements DataSource {
                 if (line == null) {
                     break;//if there aren't string in a file
                 }
+
+                //PARSE NODE
                 if ((line.length() > 4) && (line.substring(0, 4).equals("Node"))) {
                     StringTokenizer st = new StringTokenizer(line.substring(5, line.length() - 2), ",", false);
                     String ip = st.nextToken();
@@ -164,25 +54,30 @@ public class LatLonJsDataSource implements DataSource {
                     String gatewayip = st.nextToken();
                     String name = st.nextToken();
 
-                    System.out.println("ip:"+stripQuotes(ip));
-                    System.out.println("lat:"+lat);
-                    System.out.println("lon:"+lon);
-                    System.out.println("isgateway:"+isgateway);
-                    System.out.println("gatewayip:"+gatewayip);
-                    System.out.println("name:"+stripQuotes(name));
+                    System.out.println("ip:" + stripQuotes(ip));
+                    //System.out.println("lat:" + lat);
+                    //System.out.println("lon:" + lon);
+                    //System.out.println("isgateway:" + isgateway);
+                    //System.out.println("gatewayip:" + gatewayip);
+                    //System.out.println("name:" + stripQuotes(name));
 
                     ip = stripQuotes(ip); //strip single quotes
                     name = stripQuotes(name);
                     gatewayip = stripQuotes(gatewayip);
 
+
                     // Use ip or coordinates as fqid if tooltip is missing
-                    if (ip.equals("")) {
+                    if (ip == null) { //i not need this but....! :-D
                         ip = null;
                     }
                     if (name == null) {
+                        System.out.println("This node has no name!");
                         if (ip == null) {
+                            System.out.println("This node has no ip.");
+                            System.out.println("I use (lat,lon) as name");
                             name = lat + "," + lon;
                         } else {
+                            System.out.println("I use ip as name");
                             name = ip;
                         }
                     }
@@ -190,66 +85,141 @@ public class LatLonJsDataSource implements DataSource {
                         ip = name;
                     }
 
-                    MapNode nnode;
-                    if ((lat < -90d) || (lat > 90d) || (lon < -180d) || (lon > 180d)) { //obviously bogus. some people do that.
-                        nnode = new MapNode(ip, name);//create a node with id=ip and name=fqid Default positions
-                    } else {
-                        nnode = new MapNode(ip, name, lat, lon); //create a node with id=ip and name=fqid lat lon coordinates
+                    int index = getIndex(nodes, ip);
+                    if (index != -1) {
+                        if (isgateway == 1) { //if node is a Gateway
+                            nodes.get(index).attributes.put("Gateway", "SELF"); //add attributes ("Gateway", "SELF") or ("Gateway", "OTHER:"+gatewayip) to attributes hash table of Node
+                        } else {
+                            nodes.get(index).attributes.put("Gateway", "OTHER: " + gatewayip);
+                        }
+                        nodes.get(index).ip = ip;
+                        nodes.get(index).name = name;
+                        //System.out.println("nnode.id:" + nodes.get(index).name);
+                        //System.out.println("nnode: " + nodes.get(index));
+                        nodeByName.put(nodes.get(index).ip, nodes.get(index)); //add node to hashmap of nodebyname <String, Node>
+                        System.out.println("node by name:" + nodeByName.values());
+                    } else if (index == -1) {
+                        MapNode nnode;
+                        if ((lat < -90d) || (lat > 90d) || (lon < -180d) || (lon > 180d)) { //obviously bogus. some people do that.
+                            System.out.println("MapNode(" + ip + "," + name + ")");
+                            nnode = new MapNode(ip, name);//create a node with id=ip and name=fqid Default positions
+                        } else {
+                            System.out.println("MapNode(" + ip + "," + name + "." + lat + "," + lon + ")");
+
+                            nnode = new MapNode(ip, name, lat, lon); //create a node with id=ip and name=fqid lat lon coordinates
+                        }
+                        nnode.ip = ip;
+                        nnode.name = name;
+                        if (isgateway == 1) { //if node is a Gateway
+                            nnode.attributes.put("Gateway", "SELF"); //add attributes ("Gateway", "SELF") or ("Gateway", "OTHER:"+gatewayip) to attributes hash table of Node
+                        } else {
+                            nnode.attributes.put("Gateway", "OTHER: " + gatewayip);
+                        }
+
+                        nodes.add(nnode);//add node to Vector "nodes"
+                        // System.out.println("nnode.id(exist):" + nnode.name);
+                        // System.out.println("nnode(exist): " + nnode);
+                        nodeByName.put(nnode.ip, nnode); //add node to hashmap of nodebyname <String, Node>
+                        System.out.println("node by name(exist):" + nodeByName.values());
                     }
 
-                    nodes.add(nnode);//add node to Vector "nodes"
-
-                    if (isgateway == 1) { //if node is a Gateway
-                        nnode.attributes.put("Gateway", "SELF"); //add attributes ("Gateway", "SELF") or ("Gateway", "OTHER:"+gatewayip) to attributes hash table of Node
-                    } else {
-                        nnode.attributes.put("Gateway", "OTHER: " + gatewayip);
-                    }
-                    System.out.println("nnode.id:" + nnode.name);
-                    System.out.println("nnode: " + nnode);
-                    nodeByName.put(nnode.name, nnode); //add node to hashmap of nodebyname <String, Node>
-                       System.out.println("node by name:"+nodeByName.size());
                 }
-
-                else if ((line.length() > 5) && (line.substring(0, 5).equals("PLink"))) {
-                    StringTokenizer st = new StringTokenizer(line.substring(6, line.length() - 2), ",", false);
-                    String src = st.nextToken();
-                    String dest = st.nextToken();
-                    System.out.println("SRC: " + src);
-                    System.out.println("DEST: " + dest);
-
-                    double lq = Double.parseDouble(st.nextToken());
-                    double nlq = Double.parseDouble(st.nextToken());
-                    double etx = Double.parseDouble(st.nextToken());
-
-                    System.out.println("lq: " + lq);
-                    System.out.println("nlq: " + nlq);
-                    System.out.println("etx: " + etx);
-
-
-                    src = stripQuotes(src);
-                    dest = stripQuotes(dest);
-
-                    MapNode nsrc = nodeByName.get(src);
-                    MapNode ndest = nodeByName.get(dest);
-
-                    if (nsrc == null) {
-                        System.err.println(src + " not found.");
-                        continue;
-                    }
-                    if (ndest == null) {
-                        System.err.println(dest + " not found.");
-                        continue;
-                    }
-
-                 links.add(new Link(nsrc, ndest, (float) lq, (float) nlq, false));
-                
-                 }
             }
-            System.out.println("nodes SIZE:"+nodes.size());
-            System.out.println("Links SIZE:"+links.size());
+
+            addInterfaces(path);
+
+            /*
+            }//PARSE PLINK
+            if ((line.length() > 5) && (line.substring(0, 5).equals("PLink"))) {
+            StringTokenizer st = new StringTokenizer(line.substring(6, line.length() - 2), ",", false);
+            String src = st.nextToken();
+            String dest = st.nextToken();
+            System.out.println("SRC: " + src);
+            System.out.println("DEST: " + dest);
+
+            double lq = Double.parseDouble(st.nextToken());
+            double nlq = Double.parseDouble(st.nextToken());
+            double etx = Double.parseDouble(st.nextToken());
+
+            System.out.println("lq: " + lq);
+            System.out.println("nlq: " + nlq);
+            System.out.println("etx: " + etx);
+
+
+            src = stripQuotes(src);
+            dest = stripQuotes(dest);
+
+            MapNode nsrc = nodeByName.get(src);
+            MapNode ndest = nodeByName.get(dest);
+
+            if (nsrc == null) {
+            System.err.println(src + " not found.");
+            continue;
+            }
+            if (ndest == null) {
+            System.err.println(dest + " not found.");
+            continue;
+            }
+            links.add(new Link(nsrc, ndest, (float) lq, (float) nlq, false));
+            }
+
+            /*
+            //PARSE LINK
+            if ((line.length() > 4) && (line.substring(0, 4).equals("Link"))) {
+            StringTokenizer stlink = new StringTokenizer(line.substring(5, line.length() - 2), ",", false);
+            String srclink = stlink.nextToken();
+            String destlink = stlink.nextToken();
+            System.out.println("SRCLINK: " + srclink);
+            System.out.println("DESTLINK: " + destlink);
+
+            double lqlink = Double.parseDouble(stlink.nextToken());
+            double nlqlink = Double.parseDouble(stlink.nextToken());
+            double etxlink = Double.parseDouble(stlink.nextToken());
+
+            System.out.println("lqLINK: " + lqlink);
+            System.out.println("nlqLINK: " + nlqlink);
+            System.out.println("etxLINK: " + etxlink);
+
+
+            srclink = stripQuotes(srclink);
+            destlink = stripQuotes(destlink);
+
+            MapNode nsrclink = nodeByName.get(srclink);
+            MapNode ndestlink = nodeByName.get(destlink);
+
+            if (nsrclink == null) {
+            System.err.println(srclink + " not found.");
+            continue;
+            }
+            if (ndestlink == null) {
+            System.err.println(destlink + " not found.");
+            continue;
+            }
+            links.add(new Link(nsrclink, ndestlink, (float) lqlink, (float) nlqlink, (float) etxlink));
+
+            }
+             */
+
+
+            for (int i = 0; i < nodes.size(); i++) {
+                System.out.println("Nodes " + nodes.get(i).name + " has " + nodes.get(i).inter.size() + " interfaces");
+                System.out.println(nodes.get(i).inter.toString());
+            }
+            //System.out.println("nodes SIZE:" + nodes.size());
+            //System.out.println("Links SIZE:" + links.size());
             System.out.println("finished.");
-            config.put(nodes, links);
-            return config;
+            for (int i = 0; i < nodes.size(); i++) {
+                System.out.println("\n");
+                System.out.println("Nodes " + nodes.get(i).name + " has: ");
+                System.out.println("ip:" + nodes.get(i).ip);
+                System.out.println("lat:" + nodes.get(i).lat);
+                System.out.println("lon:" + nodes.get(i).lon);
+                System.out.println("attributes:" + nodes.get(i).attributes);
+                System.out.println("uptime:" + nodes.get(i).uptime);
+                System.out.println("interfaces:" + nodes.get(i).inter.toString());
+            }
+
+
 
         } catch (MalformedURLException mue) {
             System.out.println("failed!");
@@ -263,120 +233,63 @@ public class LatLonJsDataSource implements DataSource {
         return config;
     }
 
-    /*
-    public void init(HashMap<String, Object> configuration) {
-    String sServerURL = null;
-    try {
-    sServerURL = Configurator.getS("url", configuration);
-    //fetchLinks = Configurator.getB("fetchlinks", configuration);
-    fetchLinks = true;
-    System.out.println("Fetch Status Is: " + fetchLinks);
-    System.out.println("fetching data from URL: " + sServerURL);
-    if (!fetchLinks) {
-    System.out.println("NOT fetching link information.");
-    }
-    File f=new File(sServerURL);
-    System.out.print("This may take a while ... ");
-    BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-    while (true) {
-    String line = in.readLine();
-    System.out.println("Line: " + line);
-    if (line == null) {
-    break;//if there aren't string in a file
-    }
-    if ((line.length() > 4) && (line.substring(0, 4).equals("Node"))) {
-    StringTokenizer st = new StringTokenizer(line.substring(5, line.length() - 2), ",", false);
-    String ip = st.nextToken();
-    double lat = Double.parseDouble(st.nextToken());
-    double lon = Double.parseDouble(st.nextToken());
-    int isgateway = Integer.parseInt(st.nextToken());
-    String gatewayip = st.nextToken();
-    String fqid = st.nextToken();
+    public void addInterfaces(String path) {
+        System.out.println("Now take a control if nodes has more than one interface...");
+        String sServerURL = null;
+        try {
+            sServerURL = path;
+            BufferedReader in = new BufferedReader(new InputStreamReader(new URL(sServerURL).openStream()));
+            //PARSE MID
+            while (true) {
+                String line = in.readLine();
+                //System.out.println("Line: " + line);
+                if (line == null || !(line.substring(0, 3).equals("Mid"))) {
+                    break;//if there aren't string in a file
+                }
+                if ((line.length() > 3) && (line.substring(0, 3).equals("Mid"))) {
+                    StringTokenizer stnode = new StringTokenizer(line.substring(4, line.length() - 2), ",", false);
+                    String nodeip = stnode.nextToken();
+                    String nodeip2 = stnode.nextToken();
+                    System.out.println("node " + nodeip + " has also " + nodeip2 + " interfaces");
 
-    ip = stripQuotes(ip); //strip single quotes
-    fqid = stripQuotes(fqid);
-    gatewayip = stripQuotes(gatewayip);
+                    nodeip = stripQuotes(nodeip);
+                    nodeip2 = stripQuotes(nodeip2);
 
-    // Use ip or coordinates as fqid if tooltip is missing
-    if (ip.equals("")) {
-    ip = null;
-    }
-    if (fqid == null) {
-    if (ip == null) {
-    fqid = lat + "," + lon;
-    } else {
-    fqid = ip;
-    }
-    }
-    if (ip == null) { //we need at least one identifier
-    ip = fqid;
-    }
+                    //Search a node in nodes...if there's the interface can be added
+                    //else create e new node
+                    //System.out.println("NodesSize: " + nodes.size());
 
-    MapNode nnode;
-    if ((lat < -90d) || (lat > 90d) || (lon < -180d) || (lon > 180d)) { //obviously bogus. some people do that.
-    nnode = new MapNode(fqid, ip);//create a node with Default positions and with IP as name
-    } else {
-    nnode = new MapNode(ip, fqid, lon, lat); //create a node with lat lon coordinates and with fqid like name
-    }
-    nodes.add(nnode);//add node to Vector "nodes"
-    if (isgateway == 1) { //if node is a Gateway
-    nnode.attributes.put("Gateway", "SELF"); //add attributes ("Gateway", "SELF") or ("Gateway", "OTHER:"+gatewayip) to attributes hash table of Node
-    } else {
-    nnode.attributes.put("Gateway", "OTHER: " + gatewayip);
-    }
-    //System.out.println("nnode.id:"+ nnode.id);
-    //System.out.println("nnode: "+ nnode);
-    nodeByName.put(nnode.id, nnode); //add node to hashmap of nodebyname <String, Node>
-
-    } else if ((fetchLinks) && (line.length() > 5) && (line.substring(0, 5).equals("PLink"))) {
-    StringTokenizer st = new StringTokenizer(line.substring(6, line.length() - 2), ",", false);
-    String src = st.nextToken();
-    String dest = st.nextToken();
-    System.out.println("SRC: " + src);
-    System.out.println("DEST: " + dest);
-
-    double lq = Double.parseDouble(st.nextToken());
-    double nlq = Double.parseDouble(st.nextToken());
-    double etx = Double.parseDouble(st.nextToken());
-
-    System.out.println("lq: " + lq);
-    System.out.println("nlq: " + nlq);
-    System.out.println("etx: " + etx);
-
-
-    src = stripQuotes(src);
-    dest = stripQuotes(dest);
-
-    MapNode nsrc = nodeByName.get(src);
-    MapNode ndest = nodeByName.get(dest);
-
-    if (nsrc == null) {
-    System.err.println(src + " not found.");
-    continue;
-    }
-    if (ndest == null) {
-    System.err.println(dest + " not found.");
-    continue;
+                    int index = getIndex(nodes, nodeip);
+                    if (index == -1) {
+                        System.out.println("Node is not present in Nodes structure! I create it...");
+                        MapNode nnode;
+                        nnode = new MapNode(nodeip, nodeip); //create a node with name=ip and Default Pos
+                        nodes.add(nnode);
+                        System.out.println("Node Added now Nodes Size is: " + nodes.size());
+                    } else {
+                        System.out.println("The node is present in Nodes");
+                        System.out.println("nodes name/interfaces:" + nodes.get(index).ip+"/"+ nodes.get(index).inter.toString());
+                        nodes.get(index).inter.add(nodeip2);
+                    }
+                }
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(LatLonJsDataSource.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ioe) {
+            System.out.println("failed! IOException in LatLonJSDataSource");
+            ioe.printStackTrace();
+        }
     }
 
-    Link link = new Link(nsrc, ndest, (float) lq, (float) nlq, false);
-    links.add(link);
-    }
+    int getIndex(Vector<MapNode> nodes, String nodeip) {
+        for (int i = 0; i < nodes.size(); i++) {
+            if (nodeip.equals(nodes.get(i).ip)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
-
-    System.out.println("finished.");
-
-    } catch (MalformedURLException mue) {
-    System.out.println("failed!");
-    throw new IllegalStateException("Invalid server URL: " + sServerURL);
-    } catch (IOException ioe) {
-    System.out.println("failed! IOException in LatLonJSDataSource");
-    ioe.printStackTrace();
-    log.append(ioe.getMessage());
-    log.append("File for initialization not found");
-    }
-    }*/
     private String stripQuotes(String str) {
         if (str.length() <= 2) {
             return null;
@@ -456,7 +369,6 @@ public class LatLonJsDataSource implements DataSource {
     }
 
     public MapNode getNodeById(String id) {
-        Vector<MapNode> nodebyid = new Vector<MapNode>();
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.elementAt(i).name.equals(id)) {
                 return nodes.elementAt(i);
@@ -468,5 +380,9 @@ public class LatLonJsDataSource implements DataSource {
 
     public Vector<Link> getLinks(long time) {
         return links;
+    }
+
+    public static void main(String[] args) {
+        new LatLonJsDataSource().init("file:///var/run/latlon.js");
     }
 }

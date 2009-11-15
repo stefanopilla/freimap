@@ -101,7 +101,7 @@ public class MysqlDataSource implements DataSource {
         MapNode node = nodes.next();
         nodeList.remove(node);
         nodeList.add(node);
-        nodeByName.put(node.id, node);
+        nodeByName.put(node.name, node);
       }
     } else {
       Statement s = conn.createStatement();
@@ -118,7 +118,7 @@ public class MysqlDataSource implements DataSource {
         MapNode node=new MapNode(ip, lon, lat);
         nodeList.remove(node);
         nodeList.add(node);
-        nodeByName.put(node.id, node);
+        nodeByName.put(node.name, node);
       }
     }
   }
@@ -133,7 +133,7 @@ public class MysqlDataSource implements DataSource {
   public void addNode(MapNode node) {
     nodeList.remove(node); //just in case
     nodeList.add(node);
-    nodeByName.put(node.id, node);
+    nodeByName.put(node.name, node);
   }
   
   public Hashtable<String, Float> getNodeAvailability(long time) {
@@ -307,7 +307,7 @@ public class MysqlDataSource implements DataSource {
       LinkedList<LinkCount> lcp=new LinkedList<LinkCount>();
       try {
         Statement s = conn3.createStatement();
-        ResultSet r = s.executeQuery("select HIGH_PRIORITY unix_timestamp(clock) as time, count(*) as num_links from "+TABLE_LINKS+" where dest='"+node.id+"' group by clock");
+        ResultSet r = s.executeQuery("select HIGH_PRIORITY unix_timestamp(clock) as time, count(*) as num_links from "+TABLE_LINKS+" where dest='"+node.name+"' group by clock");
         while (r.next()) {
           long  clock = r.getLong("time");
           int   links = r.getInt("num_links");
@@ -335,7 +335,7 @@ public class MysqlDataSource implements DataSource {
       LinkedList<LinkData> lp=new LinkedList<LinkData>();
       try {
         Statement s = conn3.createStatement();
-        ResultSet r = s.executeQuery("select HIGH_PRIORITY unix_timestamp(clock) as time, quality from "+TABLE_LINKS+" where src='"+link.source.id+"' and dest='"+link.dest.id+"'");
+        ResultSet r = s.executeQuery("select HIGH_PRIORITY unix_timestamp(clock) as time, quality from "+TABLE_LINKS+" where src='"+link.source.name+"' and dest='"+link.dest.name+"'");
         while (r.next()) {
           long  clock   = r.getLong("time");
           float quality = r.getFloat("quality");

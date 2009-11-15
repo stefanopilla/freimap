@@ -145,6 +145,60 @@ System.out.println("Now Initialing Components....");
 
     }
 
+    public void addNodeOnMap() {
+        //OPEN A DIALOG Where ask lat/lon and eventually icon for the new node!
+    }
+
+    public void findNode() {
+        new FindNode().setVisible(true);
+    }
+
+    public void goHere() {
+        new goHere(mainMap).setVisible(true);
+    }
+
+    public void showNodes() {
+        //Hide-Show All nodes on the map
+    }
+
+    public void showLatLon() {
+        if (ShowLatLon.isSelected()) {
+            latLonLabel.setVisible(false);
+        } else {
+            latLonLabel.setVisible(true);
+        }
+
+    }
+
+    public void showZoomButton() {
+        if (zoomButtonIn.isVisible()) {
+            zoomButtonIn.setVisible(false);
+            zoomButtonOut.setVisible(false);
+        } else {
+            zoomButtonIn.setVisible(true);
+            zoomButtonOut.setVisible(true);
+        }
+
+    }
+
+    public void showSlider() {
+        if (ShowZoomSlider.isSelected()) {
+            setZoomSliderVisible(true);
+        } else {
+            setZoomSliderVisible(false);
+        }
+
+    }
+
+    public void showMiniMap() {
+        if (miniMap.isVisible()) {
+            miniMap.setVisible(false);
+        } else {
+            miniMap.setVisible(true);
+        }
+
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -160,18 +214,29 @@ System.out.println("Now Initialing Components....");
         zoomButtonIn = new javax.swing.JButton();
         zoomButtonOut = new javax.swing.JButton();
         listOfNodes = new javax.swing.JComboBox();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
-        jTabbedPane5 = new javax.swing.JTabbedPane();
-        jTabbedPane6 = new javax.swing.JTabbedPane();
-        jTabbedPane7 = new javax.swing.JTabbedPane();
-        jTabbedPane8 = new javax.swing.JTabbedPane();
         dateInfo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        latLonLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        File = new javax.swing.JMenu();
+        OpenFile = new javax.swing.JMenu();
+        OpenRecent = new javax.swing.JMenu();
+        jSeparator1 = new javax.swing.JSeparator();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JSeparator();
+        Close = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        ShowMiniMap = new javax.swing.JCheckBoxMenuItem();
+        ShowNodes = new javax.swing.JCheckBoxMenuItem();
+        ShowLinks = new javax.swing.JCheckBoxMenuItem();
+        ShowZoomButton = new javax.swing.JCheckBoxMenuItem();
+        ShowZoomSlider = new javax.swing.JCheckBoxMenuItem();
+        ShowLatLon = new javax.swing.JCheckBoxMenuItem();
+        jSeparator2 = new javax.swing.JSeparator();
+        GoHere = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -228,47 +293,153 @@ System.out.println("Now Initialing Components....");
         });
         mainMap.add(zoomButtonOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
 
-        listOfNodes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listOfNodes.setName("listOfNodes"); // NOI18N
 
-        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
-
-        jTabbedPane2.setName("jTabbedPane2"); // NOI18N
-        jTabbedPane1.addTab("Maps", jTabbedPane2);
-
-        jTabbedPane3.setName("jTabbedPane3"); // NOI18N
-        jTabbedPane1.addTab("ListOfNodes", jTabbedPane3);
-
-        jTabbedPane4.setName("jTabbedPane4"); // NOI18N
-        jTabbedPane1.addTab("Links", jTabbedPane4);
-
-        jTabbedPane5.setName("jTabbedPane5"); // NOI18N
-        jTabbedPane1.addTab("Flows", jTabbedPane5);
-
-        jTabbedPane6.setName("jTabbedPane6"); // NOI18N
-
-        jTabbedPane7.setName("jTabbedPane7"); // NOI18N
-        jTabbedPane6.addTab("All", jTabbedPane7);
-
-        jTabbedPane8.setName("jTabbedPane8"); // NOI18N
-        jTabbedPane6.addTab("SD for 1 Node", jTabbedPane8);
-
-        jTabbedPane1.addTab("ServiceDiscovery", jTabbedPane6);
-
         dateInfo.setText(" ");
+        dateInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dateInfo.setName("dateInfo"); // NOI18N
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 280, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+
+        latLonLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        latLonLabel.setText(" ");
+        latLonLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        latLonLabel.setName("latLonLabel"); // NOI18N
 
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
-        jMenu1.setText("File");
-        jMenu1.setName("jMenu1"); // NOI18N
-        jMenuBar1.add(jMenu1);
+        File.setText("File");
+        File.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        File.setName("File"); // NOI18N
+
+        OpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/open.png"))); // NOI18N
+        OpenFile.setText("Open File");
+        OpenFile.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        OpenFile.setName("OpenFile"); // NOI18N
+        File.add(OpenFile);
+
+        OpenRecent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/open.png"))); // NOI18N
+        OpenRecent.setText("Open Recent Files");
+        OpenRecent.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        OpenRecent.setName("OpenRecent"); // NOI18N
+        File.add(OpenRecent);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+        File.add(jSeparator1);
+
+        jMenuItem3.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/setting.png"))); // NOI18N
+        jMenuItem3.setText("Preferences");
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        File.add(jMenuItem3);
+
+        jSeparator3.setName("jSeparator3"); // NOI18N
+        File.add(jSeparator3);
+
+        Close.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        Close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/close.png"))); // NOI18N
+        Close.setText("Exit");
+        Close.setName("Close"); // NOI18N
+        Close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseActionPerformed(evt);
+            }
+        });
+        File.add(Close);
+
+        jMenuBar1.add(File);
 
         jMenu2.setText("Edit");
+        jMenu2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         jMenu2.setName("jMenu2"); // NOI18N
+
+        ShowMiniMap.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowMiniMap.setSelected(true);
+        ShowMiniMap.setText("Show MiniMap");
+        ShowMiniMap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/minimap2.png"))); // NOI18N
+        ShowMiniMap.setName("ShowMiniMap"); // NOI18N
+        jMenu2.add(ShowMiniMap);
+
+        ShowNodes.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowNodes.setSelected(true);
+        ShowNodes.setText("Show Nodes");
+        ShowNodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/wrt.png"))); // NOI18N
+        ShowNodes.setName("ShowNodes"); // NOI18N
+        ShowNodes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowNodesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(ShowNodes);
+
+        ShowLinks.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowLinks.setSelected(true);
+        ShowLinks.setText("Show Links");
+        ShowLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/links.png"))); // NOI18N
+        ShowLinks.setName("ShowLinks"); // NOI18N
+        jMenu2.add(ShowLinks);
+
+        ShowZoomButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowZoomButton.setSelected(true);
+        ShowZoomButton.setText("Show Zoom Button");
+        ShowZoomButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/zoom.png"))); // NOI18N
+        ShowZoomButton.setName("ShowZoomButton"); // NOI18N
+        jMenu2.add(ShowZoomButton);
+
+        ShowZoomSlider.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowZoomSlider.setSelected(true);
+        ShowZoomSlider.setText("Show Zoom Slider");
+        ShowZoomSlider.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/links2.png"))); // NOI18N
+        ShowZoomSlider.setName("ShowZoomSlider"); // NOI18N
+        jMenu2.add(ShowZoomSlider);
+
+        ShowLatLon.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowLatLon.setSelected(true);
+        ShowLatLon.setText("Show Lat Lon Label");
+        ShowLatLon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/latlon.png"))); // NOI18N
+        ShowLatLon.setName("ShowLatLon"); // NOI18N
+        jMenu2.add(ShowLatLon);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        jMenu2.add(jSeparator2);
+
+        GoHere.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        GoHere.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/gohere20.png"))); // NOI18N
+        GoHere.setText("Go Here");
+        GoHere.setName("GoHere"); // NOI18N
+        jMenu2.add(GoHere);
+
+        jMenuItem1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/search.png"))); // NOI18N
+        jMenuItem1.setText("Search");
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenu2.add(jMenuItem1);
+
         jMenuBar1.add(jMenu2);
+
+        jMenu1.setText("About");
+        jMenu1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenu1.setName("jMenu1"); // NOI18N
+
+        jMenuItem2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/about.png"))); // NOI18N
+        jMenuItem2.setText("About Freimap");
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -277,32 +448,36 @@ System.out.println("Now Initialing Components....");
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addComponent(listOfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))
+                        .addContainerGap()
+                        .addComponent(dateInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainMap, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(latLonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 485, Short.MAX_VALUE)
+                        .addComponent(listOfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mainMap, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(listOfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                .addComponent(dateInfo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(listOfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(latLonLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateInfo))
+                    .addComponent(mainMap, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -322,6 +497,14 @@ System.out.println("Now Initialing Components....");
             mainMap.setZoom(zoomSlider.getValue());
         }
     }//GEN-LAST:event_zoomSliderStateChanged
+
+    private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_CloseActionPerformed
+
+    private void ShowNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowNodesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ShowNodesActionPerformed
 
     //MAP COMPONENTS
     public void initMapComponents() {
@@ -696,18 +879,29 @@ System.out.println("Now Initialing Components....");
         throw new UnsupportedOperationException("Not supported yet.");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Close;
+    private javax.swing.JMenu File;
+    private javax.swing.JMenuItem GoHere;
+    private javax.swing.JMenu OpenFile;
+    private javax.swing.JMenu OpenRecent;
+    private javax.swing.JCheckBoxMenuItem ShowLatLon;
+    private javax.swing.JCheckBoxMenuItem ShowLinks;
+    private javax.swing.JCheckBoxMenuItem ShowMiniMap;
+    private javax.swing.JCheckBoxMenuItem ShowNodes;
+    private javax.swing.JCheckBoxMenuItem ShowZoomButton;
+    private javax.swing.JCheckBoxMenuItem ShowZoomSlider;
     private javax.swing.JLabel dateInfo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTabbedPane jTabbedPane5;
-    private javax.swing.JTabbedPane jTabbedPane6;
-    private javax.swing.JTabbedPane jTabbedPane7;
-    private javax.swing.JTabbedPane jTabbedPane8;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel latLonLabel;
     private javax.swing.JComboBox listOfNodes;
     private org.jdesktop.swingx.JXMapViewer mainMap;
     private org.jdesktop.swingx.JXMapViewer miniMap;

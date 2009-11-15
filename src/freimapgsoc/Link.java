@@ -22,6 +22,15 @@ public class Link {
 
     }
 
+     public Link(MapNode source, MapNode dest, float lq, float nlq, float etx) {
+        this.source = source;
+        this.dest = dest;
+        this.lq = lq;
+        this.nlq = nlq;
+        this.etx = etx;
+
+    }
+
     public Link(MapNode source, MapNode dest, float etx) {
         this(source, dest, etx, false);
     }

@@ -1796,27 +1796,22 @@ public class MainLayer implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Action
     public void addNodeOnMap() {
         //OPEN A DIALOG Where ask lat/lon and eventually icon for the new node!
     }
 
-    @Action
     public void findNode() {
         new FindNode().setVisible(true);
     }
 
-    @Action
     public void goHere() {
         new goHere(mainMap).setVisible(true);
     }
 
-    @Action
     public void showNodes() {
         //Hide All nodes on the map
     }
 
-    @Action
     public void showLatLon() {
         if (latLonMenu.isSelected()) {
             latitudeValue.setVisible(false);
@@ -1828,7 +1823,6 @@ public class MainLayer implements DataSource {
 
     }
 
-    @Action
     public void showZoomButton() {
         if (zoomButtonIn.isVisible()) {
             zoomButtonIn.setVisible(false);
@@ -1840,7 +1834,6 @@ public class MainLayer implements DataSource {
 
     }
 
-    @Action
     public void showSlider() {
         if (zoomSMenu.isSelected()) {
             setZoomSliderVisible(true);

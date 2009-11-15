@@ -143,7 +143,7 @@ public class xmlDataSource implements DataSource {
                         nnode.attributes.put("height", new Integer(Integer.parseInt(height)));
                     }
                     nodes.add(nnode);
-                    nodeByName.put(nnode.id, nnode);
+                    nodeByName.put(nnode.name, nnode);
                 }
                 continue;
             }
@@ -152,7 +152,7 @@ public class xmlDataSource implements DataSource {
                 nnode.attributes.put("height", new Integer(Integer.parseInt(height)));
             }
             nodes.add(nnode);
-            nodeByName.put(nnode.id, nnode);
+            nodeByName.put(nnode.name, nnode);
         }
     }
 
@@ -186,7 +186,7 @@ public class xmlDataSource implements DataSource {
     }
 
     public MapNode getNodeByName(String id) {
-        return nodeByName.put("null", new MapNode("prova","Prova","Prova"));
+        return nodeByName.put("null", new MapNode("prova","Prova"));
     }
 
     public void addNode(MapNode node) {

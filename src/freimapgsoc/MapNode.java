@@ -7,6 +7,7 @@ package freimapgsoc;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  *
@@ -24,17 +25,19 @@ public class MapNode implements Comparable, Serializable {
     public MapNode(String ip, String name) {
         this.name = name;
         this.ip = ip;
+        this.lat=DEFAULT_LAT;
+        this.lon=DEFAULT_LON;
     }
 
     public MapNode(String id, double lat, double lon) {
-        this.lat=lat;
-        this.lon=lon;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public MapNode(String ip, String name, double lat, double lon) {
         this.name = name;
-        this.lat=lat;
-        this.lon=lon;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public MapNode(String ip, String name, double uptime) {
@@ -43,6 +46,7 @@ public class MapNode implements Comparable, Serializable {
         this.uptime = uptime;
     }
 
+
     public MapNode(String ip, String name, double uptime, Connections conn) {
         this.name = name;
         this.ip = ip;
@@ -50,7 +54,7 @@ public class MapNode implements Comparable, Serializable {
         this.conn = conn;
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces) {
+    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -58,7 +62,7 @@ public class MapNode implements Comparable, Serializable {
         this.inter = ifaces;
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces, double lat, double lon) {
+    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces, double lat, double lon) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -69,7 +73,7 @@ public class MapNode implements Comparable, Serializable {
 
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces, double lon) {
+    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces, double lon) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -80,7 +84,7 @@ public class MapNode implements Comparable, Serializable {
 
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Interfaces ifaces, double lat, double lon, HashMap<String, Object> attributes) {
+    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -91,8 +95,6 @@ public class MapNode implements Comparable, Serializable {
         this.attributes = attributes;
     }
     MapNode eqo;
-
-
 
     public boolean equals(Object o) {
         if (!(o instanceof MapNode)) {
@@ -116,16 +118,18 @@ public class MapNode implements Comparable, Serializable {
         return name;
     }
 
+    public Vector<String> getInterfaces() {
+        return this.inter;
+    }
+
     public int compareTo(Object o) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    
     public String name;
     public String ip;
     public double uptime;
     public Connections conn;
-    public Interfaces inter;
+    public Vector<String> inter = new Vector<String>();
     public Services services;
     public InetAddress addr;
     public double DEFAULT_LAT = Double.NaN;
@@ -133,6 +137,4 @@ public class MapNode implements Comparable, Serializable {
     public double lat;
     public double lon;
     public HashMap<String, Object> attributes = new HashMap<String, Object>();
-
-
 }

@@ -47,11 +47,11 @@ public class addNode extends javax.swing.JFrame {
         lonField = new javax.swing.JTextField();
         nameField = new javax.swing.JTextField();
         ipField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        addIt = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(addNode.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(addNode.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
 
@@ -95,12 +95,12 @@ public class addNode extends javax.swing.JFrame {
         ipField.setText(resourceMap.getString("ipField.text")); // NOI18N
         ipField.setName("ipField"); // NOI18N
 
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addIt.setIcon(resourceMap.getIcon("addIt.icon")); // NOI18N
+        addIt.setText(resourceMap.getString("addIt.text")); // NOI18N
+        addIt.setName("addIt"); // NOI18N
+        addIt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addItActionPerformed(evt);
             }
         });
 
@@ -134,7 +134,7 @@ public class addNode extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lonField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -148,7 +148,7 @@ public class addNode extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(addIt)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -173,7 +173,7 @@ public class addNode extends javax.swing.JFrame {
                     .addComponent(noRButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(addIt)
                     .addComponent(backButton))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -185,7 +185,7 @@ public class addNode extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_noRButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addItActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItActionPerformed
         String ip = ipField.getText();
         String nname = nameField.getText();
         double lat = Double.valueOf(latField.getText());
@@ -199,7 +199,7 @@ public class addNode extends javax.swing.JFrame {
         nodes.add(new MapNode(ip, nname, lon, lat));
         list.addElement(nname);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addItActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
     this.dispose();        // TODO add your handling code here:
@@ -207,9 +207,9 @@ public class addNode extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup LocatedGroup;
+    private javax.swing.JButton addIt;
     private javax.swing.JButton backButton;
     private javax.swing.JTextField ipField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

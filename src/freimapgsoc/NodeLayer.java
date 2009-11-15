@@ -249,24 +249,12 @@ mainMap.setOverlayPainter(painter);
       */
 
       public void drawNodes(){
-      if (nodes != null)
-            for (int i=0; i<nodes.size(); i++) {
-            MapNode node=(MapNode)nodes.elementAt(i);
-                if (node.equals(uplink)) continue;
-        if (node.unlocated) {
-            addToWayPointsSets(node.lat,node.lon, "Yellow");
-      } else if (availmap!=null) {
-        Object oavail = availmap.get(node.id);
-        if (oavail==null) {
-          addToWayPointsSets(node.lat,node.lon, "White");
-        } else {
-         addToWayPointsSets(node.lat,node.lon, "Red");
-        }
+      
 
         drawAllNode();
       }
-            }
-      }
+            
+      
 
       /*
       double nsize = Math.max(1,Math.min(8,Math.round(0.0003 * scale)));
@@ -566,7 +554,7 @@ mainMap.setOverlayPainter(painter);
        if (selectedNode != null) {
          NodeInfo info=new NodeInfo();
          source.getLinkCountProfile(selectedNode, info);
-         nodeinfo.put(selectedNode.id, info);
+         nodeinfo.put(selectedNode.name, info);
        }
      } else if (selectedLink != null) {
        LinkInfo info=new LinkInfo();
