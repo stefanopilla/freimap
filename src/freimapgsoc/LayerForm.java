@@ -25,6 +25,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -74,13 +77,13 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         initComponents();
         initMapComponents();
         printDateTime();
-
     }
 
     public LayerForm(Layer l1) {
-        this.l=l1;
+        this.l = l1;
         //public TileFactoryInfo(int minimumZoomLevel,int maximumZoomLevel,int totalMapZoom,int tileSize,boolean xr2l,boolean yt2b,String baseURL,String xparam,String yparam,String zparam)(
         TileFactoryInfo info = new TileFactoryInfo(0, maxzoomlevel, totalmapzoom, 256, false, false, "http://tile.openstreetmap.org", "x", "y", "z") {
+
             public String getTileUrl(int x, int y, int zoom) {
                 zoom = maxzoomlevel - zoom;
                 return this.baseURL + "/" + zoom + "/" + x + "/" + y + ".png";
@@ -89,27 +92,29 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
 
         //In a future: possibilty to change this with settings menu parameters; now is in Italy Rome
         tf = new DefaultTileFactory(info);
-System.out.println("Now Initialing Components....");
+        System.out.println("Now Initialing Components....");
         initComponents();
         System.out.println("Now Initialing MAP Components....");
         initMapComponents();
         System.out.println("Now PRINT DATE....");
         printDateTime();
-        System.out.println(l1.nodes.size());
-        System.out.println(l1.links.size());
+        layercount++;
         initData(l1);
+        System.out.println();
+        System.out.println(l1.currentDs.getNodeList().size());
+
     }
 
+    public void initData(Layer l1) {
 
-    public void initData(Layer l1){
+        for (int i = 0; i < l1.currentDs.getNodeList().size(); i++) {
+            System.out.println("node name:" + l1.currentDs.getNodeList().elementAt(i));
+            listOfNodes.addItem(l1.currentDs.getNodeList().elementAt(i));
+        }
 
-        for (int i = 0; i < l1.nodes.size(); i++) {
-           System.out.println("node name:" + l1.nodes.get(i).name);
-            listOfNodes.addItem(l1.nodes.get(i).name);
-}
         for (int i = 0; i < l1.links.size(); i++) {
             System.out.println("____________________________");
-            System.out.println("LINK FROM: " + l1.links.get(i).source.ip + "TO: "+l1.links.get(i).dest.ip);
+            System.out.println("LINK FROM: " + l1.links.get(i).source.ip + "TO: " + l1.links.get(i).dest.ip);
 
             System.out.println("HNA:" + l1.links.get(i).HNA);
             System.out.println("ETX:" + l1.links.get(i).etx);
@@ -121,19 +126,20 @@ System.out.println("Now Initialing Components....");
             System.out.println("ICMP:" + l1.links.get(i).icmp);
             System.out.println("OTHER:" + l1.links.get(i).other);
             System.out.println("SOURCE:" + l1.links.get(i).source.name);
-            System.out.println("DEST:"+l1.links.get(i).dest.name);
+            System.out.println("DEST:" + l1.links.get(i).dest.name);
             System.out.println("BYTES:" + l1.links.get(i).bytes);
-}
+        }
         for (int i = 0; i < l1.nodes.size(); i++) {
             System.out.println("____________________");
-            System.out.println("ID:" +l1.nodes.get(i).name);
-            System.out.println("IP:" +l1.nodes.get(i).ip);
-            System.out.println("NAME:" +l1.nodes.get(i).name);
-            System.out.println("LAT:" +l1.nodes.get(i).lat);
-            System.out.println("LON:" +l1.nodes.get(i).lon);
+            System.out.println("ID:" + l1.nodes.get(i).name);
+            System.out.println("IP:" + l1.nodes.get(i).ip);
+            System.out.println("NAME:" + l1.nodes.get(i).name);
+            System.out.println("LAT:" + l1.nodes.get(i).lat);
+            System.out.println("LON:" + l1.nodes.get(i).lon);
 
         }
     }
+
     public void printDateTime() {
         Format formatter = new SimpleDateFormat("EEE, dd/MM/yyyy");
         String today = formatter.format(new Date());
@@ -215,8 +221,12 @@ System.out.println("Now Initialing Components....");
         zoomButtonOut = new javax.swing.JButton();
         listOfNodes = new javax.swing.JComboBox();
         dateInfo = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        leftPanel = new javax.swing.JPanel();
+        takescrshtButton = new javax.swing.JButton();
+        addNodeButton = new javax.swing.JButton();
         latLonLabel = new javax.swing.JLabel();
+        xValue = new javax.swing.JLabel();
+        yValue = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         OpenFile = new javax.swing.JMenu();
@@ -244,6 +254,11 @@ System.out.println("Now Initialing Components....");
         mainMap.setName("mainMap"); // NOI18N
         mainMap.setTileFactory(tf
         );
+        mainMap.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                mainMapMouseMoved(evt);
+            }
+        });
         mainMap.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         miniMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -299,18 +314,44 @@ System.out.println("Now Initialing Components....");
         dateInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dateInfo.setName("dateInfo"); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setName("jPanel1"); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        leftPanel.setName("leftPanel"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
+        takescrshtButton.setText("Take ScreenShot");
+        takescrshtButton.setName("takescrshtButton"); // NOI18N
+        takescrshtButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                takescrshtButtonActionPerformed(evt);
+            }
+        });
+
+        addNodeButton.setText("Add Node");
+        addNodeButton.setName("addNodeButton"); // NOI18N
+        addNodeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNodeButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
+        leftPanel.setLayout(leftPanelLayout);
+        leftPanelLayout.setHorizontalGroup(
+            leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftPanelLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(addNodeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(takescrshtButton, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+        leftPanelLayout.setVerticalGroup(
+            leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                .addContainerGap(278, Short.MAX_VALUE)
+                .addComponent(addNodeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(takescrshtButton)
+                .addGap(198, 198, 198))
         );
 
         latLonLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
@@ -318,21 +359,29 @@ System.out.println("Now Initialing Components....");
         latLonLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         latLonLabel.setName("latLonLabel"); // NOI18N
 
+        xValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        xValue.setText(" ");
+        xValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        xValue.setName("xValue"); // NOI18N
+
+        yValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        yValue.setText(" ");
+        yValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        yValue.setName("yValue"); // NOI18N
+
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
         File.setText("File");
-        File.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        File.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         File.setName("File"); // NOI18N
 
-        OpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/open.png"))); // NOI18N
         OpenFile.setText("Open File");
-        OpenFile.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        OpenFile.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         OpenFile.setName("OpenFile"); // NOI18N
         File.add(OpenFile);
 
-        OpenRecent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/open.png"))); // NOI18N
         OpenRecent.setText("Open Recent Files");
-        OpenRecent.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        OpenRecent.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         OpenRecent.setName("OpenRecent"); // NOI18N
         File.add(OpenRecent);
 
@@ -340,7 +389,6 @@ System.out.println("Now Initialing Components....");
         File.add(jSeparator1);
 
         jMenuItem3.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/setting.png"))); // NOI18N
         jMenuItem3.setText("Preferences");
         jMenuItem3.setName("jMenuItem3"); // NOI18N
         File.add(jMenuItem3);
@@ -349,7 +397,6 @@ System.out.println("Now Initialing Components....");
         File.add(jSeparator3);
 
         Close.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        Close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/close.png"))); // NOI18N
         Close.setText("Exit");
         Close.setName("Close"); // NOI18N
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -362,20 +409,18 @@ System.out.println("Now Initialing Components....");
         jMenuBar1.add(File);
 
         jMenu2.setText("Edit");
-        jMenu2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenu2.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenu2.setName("jMenu2"); // NOI18N
 
         ShowMiniMap.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         ShowMiniMap.setSelected(true);
         ShowMiniMap.setText("Show MiniMap");
-        ShowMiniMap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/minimap2.png"))); // NOI18N
         ShowMiniMap.setName("ShowMiniMap"); // NOI18N
         jMenu2.add(ShowMiniMap);
 
         ShowNodes.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         ShowNodes.setSelected(true);
         ShowNodes.setText("Show Nodes");
-        ShowNodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/wrt.png"))); // NOI18N
         ShowNodes.setName("ShowNodes"); // NOI18N
         ShowNodes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,28 +432,24 @@ System.out.println("Now Initialing Components....");
         ShowLinks.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         ShowLinks.setSelected(true);
         ShowLinks.setText("Show Links");
-        ShowLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/links.png"))); // NOI18N
         ShowLinks.setName("ShowLinks"); // NOI18N
         jMenu2.add(ShowLinks);
 
         ShowZoomButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         ShowZoomButton.setSelected(true);
         ShowZoomButton.setText("Show Zoom Button");
-        ShowZoomButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/zoom.png"))); // NOI18N
         ShowZoomButton.setName("ShowZoomButton"); // NOI18N
         jMenu2.add(ShowZoomButton);
 
         ShowZoomSlider.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         ShowZoomSlider.setSelected(true);
         ShowZoomSlider.setText("Show Zoom Slider");
-        ShowZoomSlider.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/links2.png"))); // NOI18N
         ShowZoomSlider.setName("ShowZoomSlider"); // NOI18N
         jMenu2.add(ShowZoomSlider);
 
         ShowLatLon.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         ShowLatLon.setSelected(true);
         ShowLatLon.setText("Show Lat Lon Label");
-        ShowLatLon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/latlon.png"))); // NOI18N
         ShowLatLon.setName("ShowLatLon"); // NOI18N
         jMenu2.add(ShowLatLon);
 
@@ -416,13 +457,11 @@ System.out.println("Now Initialing Components....");
         jMenu2.add(jSeparator2);
 
         GoHere.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        GoHere.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/gohere20.png"))); // NOI18N
         GoHere.setText("Go Here");
         GoHere.setName("GoHere"); // NOI18N
         jMenu2.add(GoHere);
 
         jMenuItem1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/search.png"))); // NOI18N
         jMenuItem1.setText("Search");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         jMenu2.add(jMenuItem1);
@@ -430,11 +469,10 @@ System.out.println("Now Initialing Components....");
         jMenuBar1.add(jMenu2);
 
         jMenu1.setText("About");
-        jMenu1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenu1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenu1.setName("jMenu1"); // NOI18N
 
         jMenuItem2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/about.png"))); // NOI18N
         jMenuItem2.setText("About Freimap");
         jMenuItem2.setName("jMenuItem2"); // NOI18N
         jMenu1.add(jMenuItem2);
@@ -454,14 +492,19 @@ System.out.println("Now Initialing Components....");
                         .addComponent(dateInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
                         .addComponent(latLonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 485, Short.MAX_VALUE)
+                        .addGap(64, 64, 64)
+                        .addComponent(xValue, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(yValue, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                         .addComponent(listOfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mainMap, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE))
+                    .addComponent(mainMap, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -470,14 +513,16 @@ System.out.println("Now Initialing Components....");
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(listOfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(latLonLabel))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(latLonLabel)
+                        .addComponent(xValue)
+                        .addComponent(yValue)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateInfo))
-                    .addComponent(mainMap, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mainMap, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+                    .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dateInfo)
                 .addContainerGap())
         );
 
@@ -505,6 +550,35 @@ System.out.println("Now Initialing Components....");
     private void ShowNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowNodesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ShowNodesActionPerformed
+
+    private void takescrshtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takescrshtButtonActionPerformed
+        try {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Point p = new Point(mainMap.getLocationOnScreen());
+            Dimension d = new Dimension(mainMap.getSize());
+            Rectangle mapPosition = new Rectangle(p, d);
+            Robot robot = new Robot();
+            BufferedImage image = robot.createScreenCapture(mapPosition);
+            ImageIO.write(image, "jpg", new File("/tmp/freimapSnapShot.jpg"));
+            new InfoPopUp("Screenshot is in /tmp/ directory", "APPROVE").setVisible(true);
+        } catch (Exception e) {
+            log.append(e.getMessage());
+        }
+    }//GEN-LAST:event_takescrshtButtonActionPerformed
+
+    private void addNodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNodeButtonActionPerformed
+        new addNode(l).setVisible(true);
+        initData(l);
+    }//GEN-LAST:event_addNodeButtonActionPerformed
+
+    private void mainMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMapMouseMoved
+        GeoPosition gp = mainMap.convertPointToGeoPosition(new Point2D.Double(evt.getX(), evt.getY()));
+        DecimalFormat fmt = new DecimalFormat("#00.00000");
+        latLonLabel.setText(fmt.format(gp.getLatitude()) + "/" + fmt.format(gp.getLongitude()));
+        xValue.setText(String.format("%.3f", mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom()).getX()));
+        yValue.setText(String.format("%.3f", mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom()).getY()));
+
+    }//GEN-LAST:event_mainMapMouseMoved
 
     //MAP COMPONENTS
     public void initMapComponents() {
@@ -814,7 +888,7 @@ System.out.println("Now Initialing Components....");
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new LayerForm(new Layer(new LatLonJsDataSource().init("file:///var/run/latlon.js"))).setVisible(true);
+                new LayerForm(new Layer(new LatLonJsDataSource("file:///var/run/latlon.js"))).setVisible(true);
             }
         });
     }
@@ -890,6 +964,7 @@ System.out.println("Now Initialing Components....");
     private javax.swing.JCheckBoxMenuItem ShowNodes;
     private javax.swing.JCheckBoxMenuItem ShowZoomButton;
     private javax.swing.JCheckBoxMenuItem ShowZoomSlider;
+    private javax.swing.JButton addNodeButton;
     private javax.swing.JLabel dateInfo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -897,14 +972,17 @@ System.out.println("Now Initialing Components....");
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel latLonLabel;
+    private javax.swing.JPanel leftPanel;
     private javax.swing.JComboBox listOfNodes;
     private org.jdesktop.swingx.JXMapViewer mainMap;
     private org.jdesktop.swingx.JXMapViewer miniMap;
+    private javax.swing.JButton takescrshtButton;
+    private javax.swing.JLabel xValue;
+    private javax.swing.JLabel yValue;
     private javax.swing.JButton zoomButtonIn;
     private javax.swing.JButton zoomButtonOut;
     private javax.swing.JSlider zoomSlider;
@@ -912,4 +990,10 @@ System.out.println("Now Initialing Components....");
     private final int maxzoomlevel = 14;
     private final int totalmapzoom = 14;
     private Layer l;
+    private int layercount = 0;
+    private Vector<Layer> layers = new Vector<Layer>();
+
+    public MapNode getNodeByIp(String ip) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

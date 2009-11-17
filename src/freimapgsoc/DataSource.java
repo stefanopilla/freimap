@@ -140,6 +140,8 @@ public interface DataSource {
 
     public MapNode getNodeById(String id);
 
+    public MapNode getNodeByIp(String ip);
+
     public Vector<Link> getLinks(long time);
 
     /** @param 	dsl	A DataSourceListener listening on events from this DataSource */

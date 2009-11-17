@@ -64,7 +64,7 @@ public class Layer {
     public double id;
     public Vector<MapNode> nodes = new Vector<MapNode>();
     public Vector<Link> links = new Vector<Link>();
-    public DataSource currentDs;
+    public DataSource currentDs =null;
     public HashMap<Vector<MapNode>, Vector<Link>> datasources;
     public HashMap<Double, String> sources;
 }

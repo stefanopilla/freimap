@@ -46,6 +46,14 @@ public class MapNode implements Comparable, Serializable {
         this.uptime = uptime;
     }
 
+    public MapNode(String ip, String name, double lat, double lon, Vector<String> ifaces){
+        this.name=name;
+                this.ip=ip;
+                this.lat=lat;
+                this.lon=lon;
+                this.inter=ifaces;
+    }
+
 
     public MapNode(String ip, String name, double uptime, Connections conn) {
         this.name = name;
