@@ -89,7 +89,7 @@ public class MysqlDataSource implements DataSource {
   
   private void updateNodeList() throws SQLException{
     if ((nodeSource == null) && (sNodeSource != null)) {
-      nodeSource=MainLayer.sources.get(sNodeSource);
+     // nodeSource=MainLayer.get(sNodeSource);
       if (nodeSource==null) System.err.println("Could not identify NodeSource in MysqlDataSource.");
       sNodeSource = null;
     }
@@ -291,6 +291,31 @@ public class MysqlDataSource implements DataSource {
     }
 
     public Vector<Link> getLinksFromDest(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public MapNode getNodeByIp(String ip) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getCurrentID() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

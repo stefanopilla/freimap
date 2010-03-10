@@ -33,7 +33,6 @@ import javax.swing.JList;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.jdesktop.application.Action;
 
 /**
  *
@@ -95,7 +94,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         initComponents();
         InetAddress address = null;
         try {
-            this.jmdns = JmDNS.create(address.getByName(from.id));
+            this.jmdns = JmDNS.create(address.getByName(from.ip));
             jmdns.addServiceTypeListener(this);
             infoNode(from);
         } catch (IOException ex) {
@@ -145,7 +144,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         this.link = link;
         aboutNodes();
 
-        n1Ip.setText(from.id);
+        n1Ip.setText(from.ip);
 
     }
 
@@ -193,10 +192,10 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     }
 
     public void infoNode(MapNode node) {
-        n1Ip.setText(node.id);
+        n1Ip.setText(node.ip);
         n1Name.setText(node.toString());
         n1LatLon.setText(node.lat + " / " + node.lon);
-        n1Avail.setText(node.fqid);
+        n1Avail.setText(node.ip);
         //System.out.println(node.attributes.values());
         Set i = node.attributes.entrySet();
         Set keySet = node.attributes.keySet();
@@ -208,7 +207,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
     }
 
     public void aboutNodes() {
-        n1Ip.setText(from.id);
+        n1Ip.setText(from.ip);
         if (from.lat == 0 || from.lat == 0) {
             n1LatLon.setText(from.DEFAULT_LAT + "/" + from.DEFAULT_LON);
         }
@@ -402,7 +401,7 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         liveServicesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getResourceMap(PopUp.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PopUp.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setAlwaysOnTop(true);
         setLocationByPlatform(true);
@@ -545,12 +544,11 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
 
         jLabel3.setName("jLabel3"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(freimapgsoc.FreimapGSoCApp.class).getContext().getActionMap(PopUp.class, this);
-        addServicesButton.setAction(actionMap.get("addServices")); // NOI18N
         addServicesButton.setText(resourceMap.getString("addServicesButton.text")); // NOI18N
         addServicesButton.setActionCommand(resourceMap.getString("addServicesButton.actionCommand")); // NOI18N
         addServicesButton.setName("addServicesButton"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(PopUp.class, this);
         ReloadServicesButton.setAction(actionMap.get("reloadServices")); // NOI18N
         ReloadServicesButton.setText(resourceMap.getString("reloadServices.text")); // NOI18N
         ReloadServicesButton.setName("reloadServices"); // NOI18N
@@ -667,14 +665,12 @@ public class PopUp extends javax.swing.JFrame implements ServiceListener, Servic
         });
     }
 
-    @Action
     public void addServices() {
         new addServices(types, jmdns).setVisible(true);
         // jmdns.registerServiceType(types.lastElement().toString());
 
     }
 
-    @Action
     public void reloadServices() {
         try {
             sdLog.append("All Services Reloaded...\n");

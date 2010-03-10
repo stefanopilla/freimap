@@ -402,9 +402,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="addServicesButton">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="PopUp.PopUp" id="addServices" methodName="addServices"/>
-            </Property>
             <Property name="text" type="java.lang.String" resourceKey="addServicesButton.text"/>
             <Property name="actionCommand" type="java.lang.String" resourceKey="addServicesButton.actionCommand"/>
             <Property name="name" type="java.lang.String" value="addServicesButton" noResource="true"/>

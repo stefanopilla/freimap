@@ -21,6 +21,10 @@ import org.jdesktop.swingx.JXMapViewer;
  */
 public class LatLonJsDataSource implements DataSource {
 
+    public LatLonJsDataSource(){
+
+    }
+
     public LatLonJsDataSource(String path){
         this.init(path);
     }
@@ -53,15 +57,15 @@ public class LatLonJsDataSource implements DataSource {
                 addInterfaces(path);
             }
         } catch (MalformedURLException mue) {
-            System.out.println("failed!");
-            throw new IllegalStateException("Invalid server URL: " + sServerURL);
+            System.out.println("failed! Invalid server URL: " + sServerURL);
         } catch (IOException ioe) {
             System.out.println("failed! IOException in LatLonJSDataSource");
             ioe.printStackTrace();
         }
         addInterfaces(path);
         config.put(nodes, links);
-
+        Layer l=new Layer(this);
+        l.createLayer();
         return config;
     }
 
@@ -407,5 +411,25 @@ public class LatLonJsDataSource implements DataSource {
     public Vector<Link> links = new Vector<Link>();
     public HashMap<String, MapNode> nodeByName = new HashMap<String, MapNode>();
     public long initTime = System.currentTimeMillis() / 1000;
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getCurrentID() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 }

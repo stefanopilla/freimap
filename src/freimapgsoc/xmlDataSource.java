@@ -235,5 +235,30 @@ public class xmlDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public MapNode getNodeByIp(String ip) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getCurrentID() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 }

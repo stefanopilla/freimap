@@ -83,7 +83,7 @@ public class OlsrdDataSource implements DataSource {
   public Vector<MapNode> getNodeList() {
    if ((nodeSource == null) && (sNodeSource != null)) {
       System.out.println("nodeSource in OlsrdDataSource.java:"+ nodeSource);
-     nodeSource=MainLayer.sources.get(sNodeSource);
+     //nodeSource=.get(sNodeSource);
       sNodeSource = null;
     }
 
@@ -94,7 +94,7 @@ public class OlsrdDataSource implements DataSource {
       }
 
       for (int i=0;i<nodes.size();i++) { 
-        knownNodes.put(nodes.elementAt(i).id, nodes.elementAt(i));
+        knownNodes.put(nodes.elementAt(i).ip, nodes.elementAt(i));
       }
       return nodes;
     } else {
@@ -103,7 +103,7 @@ public class OlsrdDataSource implements DataSource {
         Vector<MapNode> nodes = (Vector<MapNode>)ois.readObject();
         ois.close();
         for (int i=0;i<nodes.size();i++) { 
-          knownNodes.put(nodes.elementAt(i).id, nodes.elementAt(i));
+          knownNodes.put(nodes.elementAt(i).ip, nodes.elementAt(i));
         }
         return nodes;
       } catch (Exception ex) {
@@ -233,6 +233,31 @@ public class OlsrdDataSource implements DataSource {
     }
 
     public Vector<Link> getLinksFromDest(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public MapNode getNodeByIp(String ip) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getCurrentID() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

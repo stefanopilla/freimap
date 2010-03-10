@@ -46,58 +46,14 @@ extend the available time range or add new nodes.
  */
 public interface DataSource {
 
- /*   public DataSource(int dataid);{
-        createNewDataSource(dataid);
-    }*/
-
-
-    /*public void createNewDataSource(int dataid) {
-
-        if (dataid == 0000) {
-            OlsrdDataSource olsr = new OlsrdDataSource();
-            if (!currentID.equals("00000")) {
-                currentID = String.valueOf(dataid) + String.valueOf(i);
-            } else {
-                i = 0;
-                currentID = String.valueOf(dataid) + String.valueOf(i);
-            }
-            //OLSR DATASOURCE
-            }
-        if (dataid == 0001) {
-            LatLonJsDataSource latlon = new LatLonJsDataSource();
-            if (!currentID.equals("00010")) {
-                currentID = String.valueOf(dataid) + String.valueOf(i);
-            } else {
-                i = 0;
-                currentID = String.valueOf(dataid) + String.valueOf(i);
-            }
-            //NAMESERVICE
-            }
-        if (dataid == 0010) {
-            MysqlDataSource mysql = new MysqlDataSource();
-            if (!currentID.equals("00100")) {
-                currentID = String.valueOf(dataid) + String.valueOf(i);
-            } else {
-                i = 0;
-                currentID = String.valueOf(dataid) + String.valueOf(i);
-            }
-            //MYSQL
-            }
-
-    }
-     * */
+    public void init();
 
     /** Initialize this data source with its configuration parameters. **/
-  //  public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
-    //}
+   public HashMap<String, Object> read_conf(HashMap<String, Object> configuration);
 
-    /*public String getId() {
-        return this.id;
-    }
+    public String getId();
 
-    public String getCurrentID(){
-        return this.currentID;
-    }*/
+    public String getCurrentID();
 
     /** Initialize this data source with path file. **/
     //public void init(String path);
@@ -164,12 +120,5 @@ public interface DataSource {
     public void getLinkCountProfile(MapNode node, NodeInfo info);
 
 
-    //public String id=null;
-    //public int i = 0;
-    //String currentID;
-    //String currentIDolsr;
-    //String currentIDmysql;
-    //String currentIDnameservice;
-    //String currentIDfile;
 }
 

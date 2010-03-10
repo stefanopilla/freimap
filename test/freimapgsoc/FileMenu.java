@@ -5,6 +5,9 @@
 
 package FileMngmt;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 /**
@@ -12,15 +15,14 @@ import javax.swing.JMenuItem;
  * @author stefanopilla
  */
 public class FileMenu {
-    public FileMenu(){
-
+    public FileMenu(String path){
+      addRecentFile(String path);
     }
 
-    public void addRecentFile() {
-        freimapgsoc.MainLayer.recentMenuItem = null;
+
+    public void addRecentFile(String path) {
         if (verifyRecentFile()) {
-            recentFilesMenu.setEnabled(true);
-            String path = recentFile.getPath();
+           recentMenuItem.setEnabled(true);
             try {
                 FileReader fr = new FileReader(path);
                 BufferedReader reader = new BufferedReader(fr);
@@ -29,14 +31,14 @@ public class FileMenu {
                 while ((line = reader.readLine()) != null) {
                     final String[] result = line.split(",");
                     for (i = 0; i < result.length; i = i + 2) {
-                        recentMenuItem = new JMenuItem(result[i]);
-                        recentMenuItem.setToolTipText(result[i + 1]);
-                        recentFilesMenu.add(recentMenuItem, i);
-                        recentFilePath = result[i + 1];
-                        recentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                        freimapgsoc.LayerForm.recentMenuItem = new JMenuItem(result[i]);
+                        freimapgsoc.LayerForm.recentMenuItem.setToolTipText(result[i + 1]);
+                        freimapgsoc.LayerForm.recentMenuItem.add(freimapgsoc.LayerForm.recentMenuItem, i);
+                        path = result[i + 1];
+                        freimapgsoc.LayerForm.recentMenuItem.addActionListener(new java.awt.event.ActionListener() {
 
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                newRecentFileActionPerformed(evt, recentFilePath);
+                                freimapgsoc.newRecentFileActionPerformed(evt, path);
                             }
                         });
 
@@ -52,6 +54,7 @@ public class FileMenu {
         }
     }
 
+    /*
     public void addRecentFile(final String path, String name) {
         try {
             if (verifyRecentFile()) {
@@ -87,9 +90,11 @@ public class FileMenu {
         } catch (IOException io) {
             io.getMessage();
         }
-    }
+    }*/
 
     private boolean verifyRecentFile() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    private JMenu recentMenu;
 }

@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import javax.swing.event.MouseInputAdapter;
 import org.jdesktop.swingx.JXMapViewer;
@@ -230,7 +231,7 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         jMenuBar1 = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         OpenFile = new javax.swing.JMenu();
-        OpenRecent = new javax.swing.JMenu();
+        recentFileMenu = new javax.swing.JMenu();
         jSeparator1 = new javax.swing.JSeparator();
         jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JSeparator();
@@ -347,24 +348,24 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(278, Short.MAX_VALUE)
+                .addContainerGap(280, Short.MAX_VALUE)
                 .addComponent(addNodeButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(takescrshtButton)
                 .addGap(198, 198, 198))
         );
 
-        latLonLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        latLonLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         latLonLabel.setText(" ");
         latLonLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         latLonLabel.setName("latLonLabel"); // NOI18N
 
-        xValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        xValue.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         xValue.setText(" ");
         xValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         xValue.setName("xValue"); // NOI18N
 
-        yValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        yValue.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         yValue.setText(" ");
         yValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         yValue.setName("yValue"); // NOI18N
@@ -380,15 +381,15 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         OpenFile.setName("OpenFile"); // NOI18N
         File.add(OpenFile);
 
-        OpenRecent.setText("Open Recent Files");
-        OpenRecent.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        OpenRecent.setName("OpenRecent"); // NOI18N
-        File.add(OpenRecent);
+        recentFileMenu.setText("Open Recent Files");
+        recentFileMenu.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        recentFileMenu.setName("recentFileMenu"); // NOI18N
+        File.add(recentFileMenu);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         File.add(jSeparator1);
 
-        jMenuItem3.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenuItem3.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenuItem3.setText("Preferences");
         jMenuItem3.setName("jMenuItem3"); // NOI18N
         File.add(jMenuItem3);
@@ -396,7 +397,7 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         jSeparator3.setName("jSeparator3"); // NOI18N
         File.add(jSeparator3);
 
-        Close.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        Close.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         Close.setText("Exit");
         Close.setName("Close"); // NOI18N
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -412,13 +413,13 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         jMenu2.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenu2.setName("jMenu2"); // NOI18N
 
-        ShowMiniMap.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowMiniMap.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ShowMiniMap.setSelected(true);
         ShowMiniMap.setText("Show MiniMap");
         ShowMiniMap.setName("ShowMiniMap"); // NOI18N
         jMenu2.add(ShowMiniMap);
 
-        ShowNodes.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowNodes.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ShowNodes.setSelected(true);
         ShowNodes.setText("Show Nodes");
         ShowNodes.setName("ShowNodes"); // NOI18N
@@ -429,25 +430,25 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         });
         jMenu2.add(ShowNodes);
 
-        ShowLinks.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowLinks.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ShowLinks.setSelected(true);
         ShowLinks.setText("Show Links");
         ShowLinks.setName("ShowLinks"); // NOI18N
         jMenu2.add(ShowLinks);
 
-        ShowZoomButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowZoomButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ShowZoomButton.setSelected(true);
         ShowZoomButton.setText("Show Zoom Button");
         ShowZoomButton.setName("ShowZoomButton"); // NOI18N
         jMenu2.add(ShowZoomButton);
 
-        ShowZoomSlider.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowZoomSlider.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ShowZoomSlider.setSelected(true);
         ShowZoomSlider.setText("Show Zoom Slider");
         ShowZoomSlider.setName("ShowZoomSlider"); // NOI18N
         jMenu2.add(ShowZoomSlider);
 
-        ShowLatLon.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ShowLatLon.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ShowLatLon.setSelected(true);
         ShowLatLon.setText("Show Lat Lon Label");
         ShowLatLon.setName("ShowLatLon"); // NOI18N
@@ -456,12 +457,12 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         jSeparator2.setName("jSeparator2"); // NOI18N
         jMenu2.add(jSeparator2);
 
-        GoHere.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        GoHere.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         GoHere.setText("Go Here");
         GoHere.setName("GoHere"); // NOI18N
         jMenu2.add(GoHere);
 
-        jMenuItem1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenuItem1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenuItem1.setText("Search");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         jMenu2.add(jMenuItem1);
@@ -472,7 +473,7 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         jMenu1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenu1.setName("jMenu1"); // NOI18N
 
-        jMenuItem2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jMenuItem2.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jMenuItem2.setText("About Freimap");
         jMenuItem2.setName("jMenuItem2"); // NOI18N
         jMenu1.add(jMenuItem2);
@@ -957,7 +958,6 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
     private javax.swing.JMenu File;
     private javax.swing.JMenuItem GoHere;
     private javax.swing.JMenu OpenFile;
-    private javax.swing.JMenu OpenRecent;
     private javax.swing.JCheckBoxMenuItem ShowLatLon;
     private javax.swing.JCheckBoxMenuItem ShowLinks;
     private javax.swing.JCheckBoxMenuItem ShowMiniMap;
@@ -980,6 +980,7 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
     private javax.swing.JComboBox listOfNodes;
     private org.jdesktop.swingx.JXMapViewer mainMap;
     private org.jdesktop.swingx.JXMapViewer miniMap;
+    private javax.swing.JMenu recentFileMenu;
     private javax.swing.JButton takescrshtButton;
     private javax.swing.JLabel xValue;
     private javax.swing.JLabel yValue;
@@ -992,8 +993,29 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
     private Layer l;
     private int layercount = 0;
     private Vector<Layer> layers = new Vector<Layer>();
+    public static JMenuItem recentMenuItem;
 
     public MapNode getNodeByIp(String ip) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getCurrentID() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

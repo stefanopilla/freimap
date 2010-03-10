@@ -25,13 +25,13 @@
                 <Property name="name" type="java.lang.String" value="OpenFile" noResource="true"/>
               </Properties>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="OpenRecent">
+            <Menu class="javax.swing.JMenu" name="recentFileMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Open Recent Files"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="12" style="0"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="OpenRecent" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="recentFileMenu" noResource="true"/>
               </Properties>
             </Menu>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator1">
@@ -41,7 +41,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Preferences"/>
@@ -55,7 +55,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Close">
               <Properties>
-                <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exit"/>
@@ -78,7 +78,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="ShowMiniMap">
               <Properties>
-                <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="12" style="0"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
@@ -155,7 +155,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
-                <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search"/>
@@ -175,7 +175,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
-                <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="About Freimap"/>
@@ -406,7 +406,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="278" max="32767" attributes="0"/>
+                  <EmptySpace pref="280" max="32767" attributes="0"/>
                   <Component id="addNodeButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="takescrshtButton" min="-2" max="-2" attributes="0"/>
@@ -438,7 +438,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="latLonLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="10" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value=" "/>
@@ -452,7 +452,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="xValue">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="10" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value=" "/>
@@ -466,7 +466,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="yValue">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="10" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value=" "/>

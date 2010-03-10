@@ -177,7 +177,7 @@ public class Start extends javax.swing.JFrame {
 //                                new Layer(new xmlDataSource().init(null));
                             }
                             if (extension.equals(Utils.js)){
-                             new Layer(new LatLonJsDataSource().init(file.getPath()));
+                             new Layer(new LatLonJsDataSource().init("file://"+file.getPath()));
                             }
                 // FileMenu fm=new FileMenu();
                  //fm.addRecentFile(file.getPath(), file.getName());

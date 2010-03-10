@@ -16,6 +16,7 @@ public class Layer {
 
     public Layer(DataSource datasource){
         this.currentDs=datasource;
+        new MainLayer(currentDs).setVisible(true);
     }
 
     public Layer(HashMap<Vector<MapNode>, Vector<Link>> datasources) {
@@ -40,9 +41,8 @@ public class Layer {
         return false;
     }
 
-    /*
+    
     public void createLayer() {
-        currentDs = new DataSource();
         try {
             sources.put(this.id, currentDs.getCurrentID());
             Iterator<Double> j = sources.keySet().iterator();
@@ -55,10 +55,9 @@ public class Layer {
             return;
         }
     }
-*/
 
     public void initLayout() {
-
+            new MainLayer(currentDs).setVisible(true);
     }
 
     public double id;
