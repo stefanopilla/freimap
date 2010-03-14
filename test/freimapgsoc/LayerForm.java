@@ -1009,13 +1009,4 @@ public class LayerForm extends javax.swing.JFrame implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public String getId() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String getCurrentID() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

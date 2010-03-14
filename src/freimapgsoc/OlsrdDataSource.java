@@ -252,14 +252,10 @@ public class OlsrdDataSource implements DataSource {
     }
 
     @Override
-    public String getId() {
+    public Vector<Link> getLinks() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public String getCurrentID() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
 
   //Listener Of DotDraw Plugin

@@ -1,1 +1,1 @@
-XML Broken. Not Valid.
+Problem with loading components in MainLayer.java: e.getmessage()

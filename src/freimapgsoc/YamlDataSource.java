@@ -337,14 +337,11 @@ public class YamlDataSource implements DataSource {
     }
 
     @Override
-    public String getId() {
+    public Vector<Link> getLinks() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public String getCurrentID() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+   
   
   class TimeStampFetcher implements Runnable { //use an own connection for concurrency!
     private final static int OFFSET = 1000;

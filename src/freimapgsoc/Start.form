@@ -36,10 +36,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="openFileButton" alignment="0" pref="265" max="32767" attributes="1"/>
-                          <Component id="mySQLButton" alignment="0" pref="265" max="32767" attributes="1"/>
-                          <Component id="olsrdButton" alignment="0" pref="265" max="32767" attributes="1"/>
-                          <Component id="nameServiceButton" alignment="0" pref="265" max="32767" attributes="1"/>
+                          <Component id="openFileButton" alignment="0" pref="253" max="32767" attributes="1"/>
+                          <Component id="mySQLButton" alignment="0" pref="253" max="32767" attributes="1"/>
+                          <Component id="olsrdButton" alignment="0" pref="253" max="32767" attributes="1"/>
+                          <Component id="nameServiceButton" alignment="0" pref="253" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -48,6 +48,11 @@
                       <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                   </Group>
               </Group>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="openExampleFile" pref="253" max="32767" attributes="1"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -68,7 +73,9 @@
               <Component id="mySQLButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="openFileButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="44" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="openExampleFile" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -134,6 +141,16 @@
         <Property name="text" type="java.lang.String" resourceKey="secondLabel.text"/>
         <Property name="name" type="java.lang.String" value="secondLabel" noResource="true"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="openExampleFile">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="openExampleFile.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="openExampleFile.text"/>
+        <Property name="name" type="java.lang.String" value="openExampleFile" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openExampleFileActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

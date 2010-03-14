@@ -51,10 +51,6 @@ public interface DataSource {
     /** Initialize this data source with its configuration parameters. **/
    public HashMap<String, Object> read_conf(HashMap<String, Object> configuration);
 
-    public String getId();
-
-    public String getCurrentID();
-
     /** Initialize this data source with path file. **/
     //public void init(String path);
     /** @return	A Vector of Nodes to be displayed. */
@@ -98,7 +94,7 @@ public interface DataSource {
 
     public MapNode getNodeByIp(String ip);
 
-    public Vector<Link> getLinks(long time);
+    public Vector<Link> getLinks();
 
     /** @param 	dsl	A DataSourceListener listening on events from this DataSource */
     public Vector<Link> getLinksFromSource(String id);

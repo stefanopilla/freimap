@@ -14,21 +14,23 @@ import java.util.Vector;
  */
 public class Layer {
 
-    public Layer(DataSource datasource){
-        this.currentDs=datasource;
-        new MainLayer(currentDs).setVisible(true);
+    public Layer(HashMap<Vector<MapNode>, Vector<Link>> config,DataSource datasource) {
+        this.currentDS=datasource;
+        this.data = config;
+        this.id=generateNewID();
+        createLayer(data,id);
     }
 
-    public Layer(HashMap<Vector<MapNode>, Vector<Link>> datasources) {
-        this.datasources = datasources;
+    public int getCurrentLayer() {
+        return this.id;
     }
 
-    public DataSource getCurrentDataSource() {
-        return this.currentDs;
+    public HashMap<Vector<MapNode>, Vector<Link>> getData(){
+        return this.data;
     }
 
-    public HashMap<Double, String> getDataSources() {
-        return this.sources;
+    public HashMap<Integer, HashMap<Vector<MapNode>, Vector<Link>>> getLayers() {
+        return this.layers;
     }
 
     /**
@@ -41,31 +43,66 @@ public class Layer {
         return false;
     }
 
-    
-    public void createLayer() {
+    public void createLayer(HashMap<Vector<MapNode>, Vector<Link>> data, int id) {
         try {
-            sources.put(this.id, currentDs.getCurrentID());
-            Iterator<Double> j = sources.keySet().iterator();
-            while (j.hasNext()) {
-                Double id = j.next();
-                String source = sources.get(id);
-            }
+            //query al mysql per inserire i dati
+            initLayout();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             return;
         }
     }
 
-    public void initLayout() {
-            new MainLayer(currentDs).setVisible(true);
+    public void UpdateLayer(HashMap<Vector<MapNode>, Vector<Link>> data, int id) {
+        //se sono uguali non aggiornare ma semplicemente crea aggiungi un id alle info già nel db
+        try {
+            layers.put(id, data);
+            initLayout();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
     }
 
-    public double id;
+    public Vector<MapNode> getCurrentNodes(){
+      return currentDS.getNodeList();
+    }
+
+    public MapNode getNodeByName(String name) {
+        try{
+        for (int i = 0; i < currentDS.getNodeList().size(); i++) {
+            if (currentDS.getNodeList().elementAt(i).name.equals(name)) {
+                return currentDS.getNodeList().elementAt(i);
+            }
+        }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+                return null;
+
+        }
+
+
+    public Vector<Link> getCurrentLinks(){
+        return currentDS.getLinks();
+    }
+
+    public void initLayout() {
+            new MainLayer(this).setVisible(true);
+    }
+
+    public int generateNewID(){
+        return id++;
+    }
+
+    public int id;
     public Vector<MapNode> nodes = new Vector<MapNode>();
     public Vector<Link> links = new Vector<Link>();
-    public DataSource currentDs =null;
-    public HashMap<Vector<MapNode>, Vector<Link>> datasources;
-    public HashMap<Double, String> sources;
+    public HashMap<Vector<MapNode>, Vector<Link>> data=null;
+    public DataSource currentDS=null;
+    public HashMap<Integer, HashMap<Vector<MapNode>, Vector<Link>>> layers=null;
 }
 
 

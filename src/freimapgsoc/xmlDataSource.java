@@ -251,12 +251,7 @@ public class xmlDataSource implements DataSource {
     }
 
     @Override
-    public String getId() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String getCurrentID() {
+    public Vector<Link> getLinks() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

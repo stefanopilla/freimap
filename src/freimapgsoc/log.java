@@ -9,7 +9,7 @@ public class log {
 
     public static void append(String message) {
 
-        String path = "/Users/stefanopilla/Desktop/FreimapGSoC/src/Data/log.txt";
+        String path = "/Users/Stefano/Desktop/FreimapSte/Freimap/hg/src/Data/log.txt";
             File file = new File(path);
         try {
 

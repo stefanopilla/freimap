@@ -8,7 +8,6 @@
  *
  * Created on 9-nov-2009, 19.44.22
  */
-
 package freimapgsoc;
 
 import java.io.File;
@@ -23,19 +22,18 @@ public class Start extends javax.swing.JFrame {
     /** Creates new form Start */
     public Start() {
         initComponents();
-        CheckActiveDataSource check=new CheckActiveDataSource();
-        if(check.mySql){
-           mySQLButton.setEnabled(true);
+        CheckActiveDataSource check = new CheckActiveDataSource();
+        if (check.mySql) {
+            mySQLButton.setEnabled(true);
         }
-        if(check.nameservice){
+        if (check.nameservice) {
             nameServiceButton.setEnabled(true);
         }
-        if(check.olsr){
+        if (check.olsr) {
             olsrdButton.setEnabled(true);
         }
-        if(!check.mySql&&!check.nameservice&&!check.olsr){
+        if (!check.mySql && !check.nameservice && !check.olsr) {
             firstLabel.setText("There aren't Live DataSources");
-            secondLabel.setText("please choose a file.");
         }
     }
 
@@ -55,6 +53,7 @@ public class Start extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         firstLabel = new javax.swing.JLabel();
         secondLabel = new javax.swing.JLabel();
+        openExampleFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -106,6 +105,15 @@ public class Start extends javax.swing.JFrame {
         secondLabel.setText(resourceMap.getString("secondLabel.text")); // NOI18N
         secondLabel.setName("secondLabel"); // NOI18N
 
+        openExampleFile.setFont(resourceMap.getFont("openExampleFile.font")); // NOI18N
+        openExampleFile.setText(resourceMap.getString("openExampleFile.text")); // NOI18N
+        openExampleFile.setName("openExampleFile"); // NOI18N
+        openExampleFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openExampleFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,14 +129,18 @@ public class Start extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(openFileButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                            .addComponent(mySQLButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                            .addComponent(olsrdButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                            .addComponent(nameServiceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
+                            .addComponent(openFileButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(mySQLButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(olsrdButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(nameServiceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(secondLabel)
                         .addGap(88, 88, 88))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(openExampleFile, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +159,9 @@ public class Start extends javax.swing.JFrame {
                 .addComponent(mySQLButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(openFileButton)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(openExampleFile)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,51 +174,59 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_olsrdButtonActionPerformed
 
     private void nameServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameServiceButtonActionPerformed
-    new Layer(new LatLonJsDataSource().init("/var/run/latlon.js"));
+        //new Layer(new LatLonJsDataSource().init("/var/run/latlon.js"));
     }//GEN-LAST:event_nameServiceButtonActionPerformed
 
     private void openFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileButtonActionPerformed
-    JFileChooser fc= new JFileChooser();
-            fc.addChoosableFileFilter(new xmlFileFilter());
-            fc.addChoosableFileFilter(new jsFileFilter());
-            //fc.addChoosableFileFilter(new FmpFileFilter());
-            fc.setAcceptAllFileFilterUsed(false);
-            int returnVal = fc.showOpenDialog(fc);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                String extension = Utils.getExtension(file);
-                            if (extension.equals(Utils.xml)){
+        JFileChooser fc = new JFileChooser();
+        fc.addChoosableFileFilter(new xmlFileFilter());
+        fc.addChoosableFileFilter(new jsFileFilter());
+        //fc.addChoosableFileFilter(new FmpFileFilter());
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showOpenDialog(fc);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            String extension = Utils.getExtension(file);
+            if (extension.equals(Utils.xml)) {
 //                                new Layer(new xmlDataSource().init(null));
-                            }
-                            if (extension.equals(Utils.js)){
-                             new Layer(new LatLonJsDataSource().init("file://"+file.getPath()));
-                            }
-                // FileMenu fm=new FileMenu();
-                 //fm.addRecentFile(file.getPath(), file.getName());
-            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Open command cancelled by user." + "\n");
-            }        // TODO add your handling code here:
+            }
+            if (extension.equals(Utils.js)) {
+                new LatLonJsDataSource().init("file://" + file.getPath());
+                this.dispose();
+
+            }
+            // FileMenu fm=new FileMenu();
+            //fm.addRecentFile(file.getPath(), file.getName());
+        } else if (returnVal == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Open command cancelled by user." + "\n");
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_openFileButtonActionPerformed
 
+    private void openExampleFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openExampleFileActionPerformed
+        new LatLonJsDataSource().init("file:///Users/Stefano/Desktop/FreimapSte/Freimap/hg/src/data/latlon.js");
+        this.dispose();
+
+    }//GEN-LAST:event_openExampleFileActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Start().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel firstLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton mySQLButton;
     private javax.swing.JButton nameServiceButton;
     private javax.swing.JButton olsrdButton;
+    private javax.swing.JButton openExampleFile;
     private javax.swing.JButton openFileButton;
     private javax.swing.JLabel secondLabel;
     // End of variables declaration//GEN-END:variables
-
 }

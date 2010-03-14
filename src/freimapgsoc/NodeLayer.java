@@ -529,7 +529,8 @@ mainMap.setOverlayPainter(painter);
    long adjusted=source.getClosestUpdateTime(crtTime);
    //FIXME: if the interval between crtTime and the closest Display time is too high, display nothing.
    if (adjusted != this.crtTime) {
-     links = source.getLinks(this.crtTime);
+       links= source.getLinks();
+     
      this.crtTime = adjusted;
      return true;
    }
