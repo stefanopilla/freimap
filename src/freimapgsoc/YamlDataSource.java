@@ -57,7 +57,7 @@ public class YamlDataSource implements DataSource {
   public void init(HashMap<String, Object> conf) {
     yamlURL = Configurator.getS("url", conf);    
     
-    if (useMysqlSource) mysqlSource=new MysqlDataSource("localhost", "root", "", "freiberlin", true);
+    //if (useMysqlSource) mysqlSource=new MysqlDataSource("localhost", "root", "", "freiberlin", true);
     
     try {
         Object yaml=getYAML(yamlURL+"/uptime/yaml/state/overview/", nullParms);
@@ -192,9 +192,9 @@ public class YamlDataSource implements DataSource {
 
   
   
-  public Hashtable<String, Float> getNodeAvailability(long time) {
+  public HashMap<String, Float> getNodeAvailability(long time) {
     System.err.println("Not available: getNodeAvailability");
-    return new Hashtable<String, Float>();
+    return new HashMap<String, Float>();
   }
   public long getLastUpdateTime() {
     return lastUpdateTime;

@@ -60,7 +60,7 @@ public interface DataSource {
     @param	time	ignored in current implementations.
     @return	A Hashtable mapping Node IDs to a float value between 0 and 1.
      */
-    public Hashtable<String, Float> getNodeAvailability(long time);// {
+    public HashMap<String, Float> getNodeAvailability(long time);// {
    //     return null;
    // }
 

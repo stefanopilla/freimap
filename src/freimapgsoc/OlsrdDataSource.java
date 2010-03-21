@@ -123,11 +123,11 @@ public class OlsrdDataSource implements DataSource {
     else return generatedNodes.get(id);
   }
   
-  public Hashtable<String, Float> getNodeAvailability(long time) {
+  public HashMap<String, Float> getNodeAvailability(long time) {
     if (nodeSource!=null) {
       return nodeSource.getNodeAvailability(time);
     } else {
-      return new Hashtable<String, Float>(); //empty
+      return new HashMap<String, Float>(); //empty
     }
   }
   public long getLastUpdateTime() {

@@ -13,13 +13,19 @@ public class Link {
     public Link() {
     }
 
+    public Link(String sourceIP, String destIP, float lq, float nlq) {
+        this.sourceIP = sourceIP;
+        this.destIP = destIP;
+        this.lq = lq;
+        this.nlq = nlq;
+    }
+
     public Link(MapNode source, MapNode dest, float lq, float nlq, boolean HNA) {
         this.source = source;
         this.dest = dest;
         this.lq = lq;
         this.nlq = nlq;
         this.HNA = HNA;
-
     }
 
     public Link(MapNode source, MapNode dest){
@@ -70,6 +76,9 @@ public class Link {
     public String toString() {
         return source + " -> " + dest;
     }
+
+    public String sourceIP;
+    public String destIP;
     public MapNode source;
     public MapNode dest;
     public boolean HNA;

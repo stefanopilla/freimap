@@ -38,7 +38,7 @@ public class NodeLayer implements DataSourceListener {
 
   Vector<MapNode> nodes; //vector of known nodes
   Vector<Link> links; //vector of currently displayed links
-  Hashtable<String, Float> availmap; //node availability in percent (0f-1f)
+  HashMap<String, Float> availmap; //node availability in percent (0f-1f)
   Hashtable<String, NodeInfo> nodeinfo=new Hashtable<String, NodeInfo>(); //stores nodeinfo upon right click
   Hashtable<Link, LinkInfo> linkinfo=new Hashtable<Link, LinkInfo>(); //stores linkinfo upon right click
 

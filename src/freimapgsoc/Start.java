@@ -33,7 +33,7 @@ public class Start extends javax.swing.JFrame {
             olsrdButton.setEnabled(true);
         }
         if (!check.mySql && !check.nameservice && !check.olsr) {
-            firstLabel.setText("There aren't Live DataSources");
+            firstLabel.setText("There aren't DataSources");
         }
     }
 
@@ -73,6 +73,11 @@ public class Start extends javax.swing.JFrame {
         mySQLButton.setText(resourceMap.getString("mySQLButton.text")); // NOI18N
         mySQLButton.setEnabled(false);
         mySQLButton.setName("mySQLButton"); // NOI18N
+        mySQLButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mySQLButtonActionPerformed(evt);
+            }
+        });
 
         nameServiceButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
         nameServiceButton.setText(resourceMap.getString("nameServiceButton.text")); // NOI18N
@@ -207,6 +212,11 @@ public class Start extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_openExampleFileActionPerformed
+
+    private void mySQLButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mySQLButtonActionPerformed
+        new CredentialRequired().setVisible(true);
+            this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_mySQLButtonActionPerformed
 
     /**
      * @param args the command line arguments

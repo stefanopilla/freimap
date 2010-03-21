@@ -40,7 +40,7 @@ public class MapNode implements Comparable, Serializable {
         this.lon = lon;
     }
 
-    public MapNode(String ip, String name, double uptime) {
+    public MapNode(String ip, String name, String uptime) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -55,14 +55,14 @@ public class MapNode implements Comparable, Serializable {
     }
 
 
-    public MapNode(String ip, String name, double uptime, Connections conn) {
+    public MapNode(String ip, String name, String uptime, Connections conn) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
         this.conn = conn;
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces) {
+    public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -70,7 +70,7 @@ public class MapNode implements Comparable, Serializable {
         this.inter = ifaces;
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces, double lat, double lon) {
+    public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces, double lat, double lon) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -81,7 +81,7 @@ public class MapNode implements Comparable, Serializable {
 
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces, double lon) {
+    public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces, double lon) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
@@ -92,11 +92,21 @@ public class MapNode implements Comparable, Serializable {
 
     }
 
-    public MapNode(String ip, String name, double uptime, Connections conn, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
+    public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
         this.name = name;
         this.ip = ip;
         this.uptime = uptime;
         this.conn = conn;
+        this.inter = ifaces;
+        this.lat = lat;
+        this.lon = lon;
+        this.attributes = attributes;
+    }
+
+    public MapNode(String ip, String name, String uptime, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
+        this.name = name;
+        this.ip = ip;
+        this.uptime = uptime;
         this.inter = ifaces;
         this.lat = lat;
         this.lon = lon;
@@ -135,7 +145,7 @@ public class MapNode implements Comparable, Serializable {
     }
     public String name;
     public String ip;
-    public double uptime;
+    public String uptime;
     public Connections conn;
     public Vector<String> inter = new Vector<String>();
     public Services services;

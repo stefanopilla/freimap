@@ -391,9 +391,9 @@ public class LatLonJsDataSource implements DataSource {
         info.setLinkProfile(new LinkedList<LinkData>());
     }
 
-    public Hashtable<String, Float> getNodeAvailability(long time) {
+    public HashMap<String, Float> getNodeAvailability(long time) {
         // TODO: Implement me.
-        return new Hashtable<String, Float>();
+        return new HashMap<String, Float>();
     }
 
     public Vector<Link> getLinksFromSource(String sourceid) {

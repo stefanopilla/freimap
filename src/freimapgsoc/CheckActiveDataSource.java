@@ -4,21 +4,12 @@
  */
 package freimapgsoc;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.ResultSet;
-import com.mysql.jdbc.Statement;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.UnknownHostException;
-import java.sql.DriverManager;
 
 /**
  *
@@ -39,10 +30,24 @@ public class CheckActiveDataSource {
     }
 
     public boolean check_mysql() {
+    try {
+        InetAddress addr = InetAddress.getByName("localhost");
+        int port = 3306;
 
+        // This constructor will block until the connection succeeds
+        Socket socket = new Socket(addr, port);
+        if (socket.isConnected()){
+            return true;
+            }else if (!socket.isConnected()){
+             return false;
+            }
 
-        return true;
+    } catch (UnknownHostException e) {
+    } catch (IOException io){
+
     }
+        return false;
+      }
 
     public boolean check_olsr() {
       
@@ -90,12 +95,12 @@ public class CheckActiveDataSource {
     }
 
     public String[] ActiveDataSources;
-
+/*
     public static void main(String arg[]) {
         CheckActiveDataSource check = new CheckActiveDataSource();
         System.out.println(check.check_olsr());
        System.out.println(check.check_nameservice());
     }
-
+*/
 }
 

@@ -210,9 +210,9 @@ public class xmlDataSource implements DataSource {
         return new Vector<Link>();
     }
 
-    public Hashtable<String, Float> getNodeAvailability(long time) {
+    public HashMap<String, Float> getNodeAvailability(long time) {
         // TODO: Implement me.
-        return new Hashtable<String, Float>();
+        return new HashMap<String, Float>();
     }
 
     public Vector<MapNode> getNodeList() {

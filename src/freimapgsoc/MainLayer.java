@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,7 @@ import java.util.Vector;
 import org.jdesktop.application.Action;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -116,6 +118,7 @@ public class MainLayer extends javax.swing.JFrame {
                 System.out.println(l.getCurrentNodes().elementAt(i).toString());
                 listOfNodes.add(i, l.getCurrentNodes().elementAt(i).toString());
                 MouseListener mouseListener = new MouseAdapter() {
+
                     public void mouseClicked(MouseEvent mouseEvent) {
                         JList nodeList = (JList) mouseEvent.getSource();
                         if (mouseEvent.getClickCount() == 2) {
@@ -131,7 +134,7 @@ public class MainLayer extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            log.append(dateInfo.getText()+": Problem with loading components in MainLayer.java: "+ e.getMessage());
+            log.append(dateInfo.getText() + ": Problem with loading components in MainLayer.java: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -147,7 +150,7 @@ public class MainLayer extends javax.swing.JFrame {
             System.out.println("Lon: " + selectedNode.lon);
             latitudeValue.setText(Double.toString(selectedNode.lat));
             longitudeValue.setText(Double.toString(selectedNode.lon));
-            upTimeValue.setText(Double.toString(selectedNode.uptime));
+           upTimeValue.setText(selectedNode.uptime);
             ipComboBox.removeAllItems();
             ipComboBox.insertItemAt(selectedNode.ip, 0);
             for (int i = 0; i < selectedNode.inter.size(); i++) {
@@ -170,7 +173,6 @@ public class MainLayer extends javax.swing.JFrame {
             latlon.put(latlon2, nodes.elementAt(i).toString());
         }
     }
-
 
     public void drawNodes(Vector<MapNode> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
@@ -298,12 +300,22 @@ public class MainLayer extends javax.swing.JFrame {
     public void drawLinks(Vector<Link> links) {
         for (int i = 0; i < links.size(); i++) {
             GeoPosition posFrom = new GeoPosition(links.elementAt(i).source.lat, links.elementAt(i).source.lon);
+            System.out.println("LinksSourceLAT:" + links.elementAt(i).source.lat);
+            System.out.println("LinksSourceLON:" + links.elementAt(i).source.lon);
+
             GeoPosition posTo = new GeoPosition(links.elementAt(i).dest.lat, links.elementAt(i).dest.lon);
+            System.out.println("LinksDestLAT:" + links.elementAt(i).dest.lat);
+            System.out.println("LinksDestLON:" + links.elementAt(i).dest.lon);
             final Point2D ptFrom = mainMap.getTileFactory().geoToPixel(posFrom, mainMap.getZoom());
             final Point2D ptTo = mainMap.getTileFactory().geoToPixel(posTo, mainMap.getZoom());
+            System.out.println("PtFrom:" + ptFrom);
+            System.out.println("PtTo:" + ptTo);
             Rectangle rect = mainMap.getViewportBounds();
+
             final Point pt_gpFrom = new Point((int) ptFrom.getX() - rect.x, (int) ptFrom.getY() - rect.y);
             final Point pt_gpTo = new Point((int) ptTo.getX() - rect.x, (int) ptTo.getY() - rect.y);
+            System.out.println("pt_gpFrom:" + pt_gpFrom);
+            System.out.println("pt_gpTo:" + pt_gpTo);
             linkwaypoints.add(new Waypoint(posFrom));
             linkwaypoints.add(new Waypoint(posTo));
             painter = new WaypointPainter();
@@ -311,13 +323,19 @@ public class MainLayer extends javax.swing.JFrame {
             painter.setRenderer(new WaypointRenderer() {
 
                 public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-                    g.setColor(Color.RED);
+
+                    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g.setPaint(Color.RED);                   
+                    g.draw(new Line2D.Double(pt_gpFrom.getX(), pt_gpTo.getY(), 5.0, 5.0));
+                     //    g.setColor(Color.RED);
                     //System.out.println("ptFrom: " + pt_gpFrom.getX());
                     //System.out.println("ptFrom: " + pt_gpFrom.getY());
                     //System.out.println("ptTo:" + pt_gpTo.getX());
                     //System.out.println("ptTo:" + pt_gpTo.getY());
-                    g.setStroke(new BasicStroke(1.5f));
-                    g.drawLine((int) ptFrom.getX(), (int) ptFrom.getY(), (int) ptTo.getX(), (int) ptTo.getY());
+                    //g.setStroke(new BasicStroke(3.0f));
+
+                    //g.drawLine((int) ptFrom.getX(), (int) ptFrom.getY(), (int) ptTo.getX(), (int) ptTo.getY());
+                    //g.draw(null);
                     return true;
                 }
             });
@@ -441,6 +459,7 @@ public class MainLayer extends javax.swing.JFrame {
         zoomSlider = new javax.swing.JSlider();
         zoomButtonIn = new javax.swing.JButton();
         zoomButtonOut = new javax.swing.JButton();
+        hoverLabel = new javax.swing.JLabel();
         dateInfo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
@@ -542,12 +561,11 @@ public class MainLayer extends javax.swing.JFrame {
         contestMenuNode.add(SNMP);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1252, 700));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        longitudeValue.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        longitudeValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         longitudeValue.setText(" ");
         longitudeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         longitudeValue.setName("longitudeValue"); // NOI18N
@@ -582,7 +600,7 @@ public class MainLayer extends javax.swing.JFrame {
         xPos1.setText("X Position:");
         xPos1.setName("xPos1"); // NOI18N
 
-        latitudeValue.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        latitudeValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         latitudeValue.setText(" ");
         latitudeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         latitudeValue.setName("latitudeValue"); // NOI18N
@@ -600,10 +618,10 @@ public class MainLayer extends javax.swing.JFrame {
         ipLabel.setText("Ip Address:");
         ipLabel.setName("ipLabel"); // NOI18N
 
-        ipComboBox.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ipComboBox.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         ipComboBox.setName("ipComboBox"); // NOI18N
 
-        locatedLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        locatedLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         locatedLabel1.setText("Uptime:");
         locatedLabel1.setName("locatedLabel1"); // NOI18N
 
@@ -612,7 +630,7 @@ public class MainLayer extends javax.swing.JFrame {
         upTimeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         upTimeValue.setName("upTimeValue"); // NOI18N
 
-        fqidValue.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        fqidValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         fqidValue.setText(" ");
         fqidValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fqidValue.setName("fqidValue"); // NOI18N
@@ -623,35 +641,35 @@ public class MainLayer extends javax.swing.JFrame {
 
         jSeparator4.setName("jSeparator4"); // NOI18N
 
-        rtLat.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtLat.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtLat.setText("Latitute:");
         rtLat.setName("rtLat"); // NOI18N
 
-        rtLogitude.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtLogitude.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtLogitude.setText("Logitude:");
         rtLogitude.setName("rtLogitude"); // NOI18N
 
-        rtxPos.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtxPos.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtxPos.setText("X:");
         rtxPos.setName("rtxPos"); // NOI18N
 
-        rtxPosValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtxPosValue.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtxPosValue.setText("V");
         rtxPosValue.setName("rtxPosValue"); // NOI18N
 
-        rtyPos.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtyPos.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtyPos.setText("Y:");
         rtyPos.setName("rtyPos"); // NOI18N
 
-        rtyPosValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtyPosValue.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtyPosValue.setText("V");
         rtyPosValue.setName("rtyPosValue"); // NOI18N
 
-        rtLatValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtLatValue.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtLatValue.setText("V");
         rtLatValue.setName("rtLatValue"); // NOI18N
 
-        rtLonValue.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        rtLonValue.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         rtLonValue.setText("V");
         rtLonValue.setName("rtLonValue"); // NOI18N
 
@@ -780,7 +798,7 @@ public class MainLayer extends javax.swing.JFrame {
         mapPanel.setName("mapPanel"); // NOI18N
 
         mainMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        mainMap.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        mainMap.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         mainMap.setName("mainMap"); // NOI18N
         mainMap.setTileFactory(tf);
         mainMap.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -796,7 +814,7 @@ public class MainLayer extends javax.swing.JFrame {
         mainMap.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         miniMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        miniMap.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        miniMap.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         miniMap.setName("miniMap"); // NOI18N
         miniMap.setTileFactory(tf);
         miniMap.setZoom(13);
@@ -816,7 +834,7 @@ public class MainLayer extends javax.swing.JFrame {
         mainMap.add(miniMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, 160, 140));
 
         zoomSlider.setMaximum(14);
-        zoomSlider.setOrientation(1);
+        zoomSlider.setOrientation(javax.swing.JSlider.VERTICAL);
         zoomSlider.setValue(13);
         zoomSlider.setInverted(true);
         zoomSlider.setName("zoomSlider"); // NOI18N
@@ -847,6 +865,11 @@ public class MainLayer extends javax.swing.JFrame {
         });
         mainMap.add(zoomButtonOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
+        hoverLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        hoverLabel.setText(" ");
+        hoverLabel.setName("hoverLabel"); // NOI18N
+        mainMap.add(hoverLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, -1, -1));
+
         org.jdesktop.layout.GroupLayout mapPanelLayout = new org.jdesktop.layout.GroupLayout(mapPanel);
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
@@ -864,7 +887,7 @@ public class MainLayer extends javax.swing.JFrame {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        dateInfo.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        dateInfo.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         dateInfo.setText(" ");
         dateInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dateInfo.setName("dateInfo"); // NOI18N
@@ -1181,10 +1204,26 @@ public class MainLayer extends javax.swing.JFrame {
         rtLonValue.setText(fmt.format(gp.getLongitude()));
         rtxPosValue.setText(String.format("%.3f", mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom()).getX()));
         rtyPosValue.setText(String.format("%.3f", mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom()).getY()));        // TODO add your handling code here:
+
+
+        //convert to world bitmap
+        Point2D gp_pt = mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom());
+        //convert to screen
+        Rectangle rect = mainMap.getViewportBounds();
+        Point converted_gp_pt = new Point((int)gp_pt.getX()-rect.x,
+                                          (int)gp_pt.getY()-rect.y);
+        //check if near the mouse
+        if(converted_gp_pt.distance(evt.getPoint()) < 10) {
+            hoverLabel.setLocation(converted_gp_pt);
+            hoverLabel.setVisible(true);
+        } else {
+            hoverLabel.setVisible(false);
+        }
+
     }//GEN-LAST:event_mainMapMouseMoved
 
     private void mainMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMapMouseClicked
-         GeoPosition posNode = mainMap.convertPointToGeoPosition(new Point2D.Double(evt.getX(), evt.getY()));
+        GeoPosition posNode = mainMap.convertPointToGeoPosition(new Point2D.Double(evt.getX(), evt.getY()));
         Point2D gp_pt = mainMap.getTileFactory().geoToPixel(posNode, mainMap.getZoom());
         //convert to screen
         Rectangle rect = mainMap.getViewportBounds();
@@ -1195,16 +1234,17 @@ public class MainLayer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mainMapMouseClicked
 
-    public boolean isNearNode(GeoPosition posNode){
-        for(int i=0; i<l.getCurrentNodes().size();i++){
-            if(l.getCurrentNodes().elementAt(i).lat == posNode.getLatitude()+10 && l.getCurrentNodes().elementAt(i).lon == posNode.getLongitude()+10){
+    public boolean isNearNode(GeoPosition posNode) {
+        for (int i = 0; i < l.getCurrentNodes().size(); i++) {
+            if (l.getCurrentNodes().elementAt(i).lat == posNode.getLatitude() + 10 && l.getCurrentNodes().elementAt(i).lon == posNode.getLongitude() + 10) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-            }
-            return false;
+        }
+        return false;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -1855,6 +1895,7 @@ public class MainLayer extends javax.swing.JFrame {
     private javax.swing.JMenuItem goToDefaultPos;
     private javax.swing.JMenuItem goToDefaultPosition;
     private javax.swing.JMenuItem guideItem;
+    private javax.swing.JLabel hoverLabel;
     private javax.swing.JComboBox ipComboBox;
     private javax.swing.JLabel ipLabel;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
