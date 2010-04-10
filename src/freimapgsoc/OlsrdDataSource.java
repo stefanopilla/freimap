@@ -48,13 +48,13 @@ public class OlsrdDataSource implements DataSource {
 
 
   public void init(HashMap<String, Object> conf) {
-    String host = Configurator.getS("host", conf);
-    int port = Configurator.getI("port", conf);
+  String host = "localhost";
+    int port = 2004;
 
-    nodefile = Configurator.getS("nodefile", conf);
+   // nodefile = Configurator.getS("nodefile", conf);
     //System.out.println("nodefile = "+nodefile);
 
-    sNodeSource = Configurator.getS("nodesource", conf);
+    //sNodeSource = Configurator.getS("nodesource", conf);
 
     if (port==-1) {
       System.err.println("invalid port parameter "+port);
@@ -62,22 +62,24 @@ public class OlsrdDataSource implements DataSource {
     }
     dot = new DotPluginListener(host, port, this);
   }
-  /*
-  public void init(HashMap<String, Object> conf) {
-    String host = Configurator.getS("host", conf);
-    int port = Configurator.getI("port", conf);
-
-    nodefile = Configurator.getS("nodefile", conf);
-    //System.out.println("nodefile = "+nodefile);
-
-    sNodeSource = Configurator.getS("nodesource", conf);
-
-    if (port==-1) { 
-      System.err.println("invalid port parameter "+port);
-      System.exit(1);
-    }
-    dot = new DotPluginListener(host, port, this);
-  }*/
+  /**
+	 * public void init(HashMap<String, Object> conf) {
+	 * String host = Configurator.getS("host", conf);
+	 * int port = Configurator.getI("port", conf);
+	 * 
+	 * nodefile = Configurator.getS("nodefile", conf);
+	 * //System.out.println("nodefile = "+nodefile);
+	 * 
+	 * sNodeSource = Configurator.getS("nodesource", conf);
+	 * 
+	 * if (port==-1) {
+	 * System.err.println("invalid port parameter "+port);
+	 * System.exit(1);
+	 * }
+	 * dot = new DotPluginListener(host, port, this);
+	 * }
+	 * @return 
+	 */
   
   @SuppressWarnings("unchecked")
   public Vector<MapNode> getNodeList() {
@@ -236,22 +238,40 @@ public class OlsrdDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @param ip
+	 * @return 
+	 */
+	@Override
     public MapNode getNodeByIp(String ip) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public void init() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @param configuration
+	 * @return 
+	 */
+	@Override
     public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public Vector<Link> getLinks() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

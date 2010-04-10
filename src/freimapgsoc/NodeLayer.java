@@ -63,7 +63,7 @@ JXMapViewer mainMap;
 
   long crtTime;
 
-  boolean hideUnlocated = Configurator.getB(new String[]{"display", "hideUnlocated"});
+  //boolean hideUnlocated = Configurator.getB(new String[]{"display", "hideUnlocated"});
 
   public NodeLayer(DataSource source) {
         this.source=source;
@@ -567,7 +567,7 @@ mainMap.setOverlayPainter(painter);
 
 
  public void hideUnlocatedNodes(boolean hide) {
-   hideUnlocated = hide;
+//   hideUnlocated = hide;
  }
 
 

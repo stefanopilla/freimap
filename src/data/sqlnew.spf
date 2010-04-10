@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>pinco</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-563484802</string>
+			<key>name</key>
+			<string>root@127.0.0.1</string>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>latin1</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {688, 455}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>table</key>
+			<string>Layer</string>
+			<key>view</key>
+			<string>SP_VIEW_STRUCTURE</string>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>CREATE DATABASE IF NOT EXISTS freimap;
+use freimap;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS nodes;
+DROP TABLE IF EXISTS flow;
+DROP TABLE IF EXISTS nodes;
+CREATE TABLE nodes (
+  lon float DEFAULT '12.5535',
+  lat float DEFAULT '41.8638',
+  ip varchar(32) NOT NULL,
+  name varchar(32) NOT NULL,
+  isGateway binary(1) NOT NULL,
+  gatewayIp varchar(32) NOT NULL,
+  uptime time DEFAULT NULL,
+  interfaces varchar(50) DEFAULT NULL,
+  PRIMARY KEY (name),
+  KEY ip (ip)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE links (
+  clock timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  src varchar(32) NOT NULL DEFAULT '',
+  dest varchar(32) NOT NULL DEFAULT '',
+  lq float DEFAULT NULL,
+  nlq float DEFAULT NULL,
+  etx float DEFAULT NULL,
+  PRIMARY KEY (clock,src,dest),
+  KEY src (src),
+  KEY dest (dest),
+  CONSTRAINT links_ibfk_2 FOREIGN KEY (dest) REFERENCES nodes (ip),
+  CONSTRAINT links_ibfk_1 FOREIGN KEY (src) REFERENCES nodes (ip)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE Layer (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  srcnode varchar(32) NOT NULL,
+  clock timestamp NULL DEFAULT NULL,
+  destnode varchar(32) NOT NULL,
+  PRIMARY KEY (id),
+  KEY srcnode (srcnode),
+  KEY destnode (destnode),
+  CONSTRAINT layer_ibfk_1 FOREIGN KEY (srcnode) REFERENCES links (src),
+  CONSTRAINT layer_ibfk_2 FOREIGN KEY (destnode) REFERENCES links (dest)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE FLOWS (
+  RECNUM bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  PROBE varchar(16) NOT NULL DEFAULT '',
+  TIME_RECEIVED datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  FLOW_VERSION tinyint(4) NOT NULL DEFAULT '0',
+  SEQUENCE bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',
+  SOURCE_IP varchar(16) NOT NULL DEFAULT '',
+  SOURCE_PORT int(11) NOT NULL DEFAULT '0',
+  DEST_IP varchar(16) NOT NULL DEFAULT '',
+  DEST_PORT int(11) NOT NULL DEFAULT '0',
+  NEXT_HOP varchar(16) NOT NULL DEFAULT '',
+  PROTOCOL int(11) NOT NULL DEFAULT '0',
+  TCP_FLAGS int(11) NOT NULL DEFAULT '0',
+  TOS int(11) NOT NULL DEFAULT '0',
+  BYTES bigint(20) unsigned NOT NULL DEFAULT '0',
+  PACKETS bigint(20) unsigned NOT NULL DEFAULT '0',
+  FLOW_BEGIN datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+ FLOW_END datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  SOURCE_AS int(11) NOT NULL DEFAULT '0',
+  DEST_AS int(11) NOT NULL DEFAULT '0',
+  SOURCE_MASK smallint(6) NOT NULL DEFAULT '0',
+  DEST_MASK smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (RECNUM),
+  KEY k_begin (FLOW_BEGIN),
+  KEY k_end (FLOW_END),
+  KEY k_time (TIME_RECEIVED),
+  KEY k_src (SOURCE_IP),
+  KEY k_dst (DEST_IP)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+		<string>CREATE DATABASE IF NOT EXISTS freimap;
+DROP TABLE IF EXISTS layer</string>
+		<string>CREATE SCHEMA IF NOT EXISTS freimap2;
+use freimap2;
+CREATE SCHEMA IF NOT EXISTS freimap2;
+use freimap2;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS nodes;
+DROP TABLE IF EXISTS flow;
+CREATE TABLE nodes1 (lon float DEFAULT '12.5535',lat float DEFAULT '41.8638',ip varchar(32) NOT NULL,name varchar(32) NOT NULL,isGateway binary(1) NOT NULL,gatewayIp varchar(32) NOT NULL,uptime time DEFAULT NULL,interfaces varchar(50) DEFAULT NULL,PRIMARY KEY (name),KEY ip (ip)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE links1 (clock timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',src varchar(32) NOT NULL DEFAULT '',dest varchar(32) NOT NULL DEFAULT '',lq float DEFAULT NULL,nlq float DEFAULT NULL,etx float DEFAULT NULL,PRIMARY KEY (clock,src,dest),KEY src (src),KEY dest (dest),CONSTRAINT links_ibfk_2 FOREIGN KEY (dest) REFERENCES nodes (ip),CONSTRAINT links_ibfk_1 FOREIGN KEY (src) REFERENCES nodes (ip)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE Layer1 (id int(11) NOT NULL AUTO_INCREMENT,srcnode varchar(32) NOT NULL,clock timestamp NULL DEFAULT NULL,destnode varchar(32) NOT NULL,PRIMARY KEY (id),KEY srcnode (srcnode),KEY destnode (destnode),CONSTRAINT layer_ibfk_1 FOREIGN KEY (srcnode) REFERENCES links (src),CONSTRAINT layer_ibfk_2 FOREIGN KEY (destnode) REFERENCES links (dest)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE FLOWS (RECNUM bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,PROBE varchar(16) NOT NULL DEFAULT '',TIME_RECEIVED datetime NOT NULL DEFAULT '0000-00-00 00:00:00',FLOW_VERSION tinyint(4) NOT NULL DEFAULT '0',SEQUENCE bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',SOURCE_IP varchar(16) NOT NULL DEFAULT '',SOURCE_PORT int(11) NOT NULL DEFAULT '0',DEST_IP varchar(16) NOT NULL DEFAULT '',DEST_PORT int(11) NOT NULL DEFAULT '0',NEXT_HOP varchar(16) NOT NULL DEFAULT '',PROTOCOL int(11) NOT NULL DEFAULT '0',TCP_FLAGS int(11) NOT NULL DEFAULT '0',TOS int(11) NOT NULL DEFAULT '0',BYTES bigint(20) unsigned NOT NULL DEFAULT '0',PACKETS bigint(20) unsigned NOT NULL DEFAULT '0',FLOW_BEGIN datetime NOT NULL DEFAULT '0000-00-00 00:00:00',FLOW_END datetime NOT NULL DEFAULT '0000-00-00 00:00:00',SOURCE_AS int(11) NOT NULL DEFAULT '0',DEST_AS int(11) NOT NULL DEFAULT '0',SOURCE_MASK smallint(6) NOT NULL DEFAULT '0',DEST_MASK smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (RECNUM),KEY k_begin (FLOW_BEGIN),KEY k_end (FLOW_END),KEY k_time (TIME_RECEIVED),KEY k_src (SOURCE_IP),KEY k_dst (DEST_IP)) ENGINE=MyISAM DEFAULT CHARSET=latin1DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS nodes;
+DROP TABLE IF EXISTS flow;
+CREATE TABLE nodes (lon float DEFAULT '12.5535',lat float DEFAULT '41.8638',ip varchar(32) NOT NULL,name varchar(32) NOT NULL,isGateway binary(1) NOT NULL,gatewayIp varchar(32) NOT NULL,uptime time DEFAULT NULL,interfaces varchar(50) DEFAULT NULL,PRIMARY KEY (name),KEY ip (ip)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE links (clock timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',src varchar(32) NOT NULL DEFAULT '',dest varchar(32) NOT NULL DEFAULT '',lq float DEFAULT NULL,nlq float DEFAULT NULL,etx float DEFAULT NULL,PRIMARY KEY (clock,src,dest),KEY src (src),KEY dest (dest),CONSTRAINT links_ibfk_2 FOREIGN KEY (dest) REFERENCES nodes (ip),CONSTRAINT links_ibfk_1 FOREIGN KEY (src) REFERENCES nodes (ip)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE Layer (id int(11) NOT NULL AUTO_INCREMENT,srcnode varchar(32) NOT NULL,clock timestamp NULL DEFAULT NULL,destnode varchar(32) NOT NULL,PRIMARY KEY (id),KEY srcnode (srcnode),KEY destnode (destnode),CONSTRAINT layer_ibfk_1 FOREIGN KEY (srcnode) REFERENCES links (src),CONSTRAINT layer_ibfk_2 FOREIGN KEY (destnode) REFERENCES links (dest)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE FLOWS (RECNUM bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,PROBE varchar(16) NOT NULL DEFAULT '',TIME_RECEIVED datetime NOT NULL DEFAULT '0000-00-00 00:00:00',FLOW_VERSION tinyint(4) NOT NULL DEFAULT '0',SEQUENCE bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',SOURCE_IP varchar(16) NOT NULL DEFAULT '',SOURCE_PORT int(11) NOT NULL DEFAULT '0',DEST_IP varchar(16) NOT NULL DEFAULT '',DEST_PORT int(11) NOT NULL DEFAULT '0',NEXT_HOP varchar(16) NOT NULL DEFAULT '',PROTOCOL int(11) NOT NULL DEFAULT '0',TCP_FLAGS int(11) NOT NULL DEFAULT '0',TOS int(11) NOT NULL DEFAULT '0',BYTES bigint(20) unsigned NOT NULL DEFAULT '0',PACKETS bigint(20) unsigned NOT NULL DEFAULT '0',FLOW_BEGIN datetime NOT NULL DEFAULT '0000-00-00 00:00:00',FLOW_END datetime NOT NULL DEFAULT '0000-00-00 00:00:00',SOURCE_AS int(11) NOT NULL DEFAULT '0',DEST_AS int(11) NOT NULL DEFAULT '0',SOURCE_MASK smallint(6) NOT NULL DEFAULT '0',DEST_MASK smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (RECNUM),KEY k_begin (FLOW_BEGIN),KEY k_end (FLOW_END),KEY k_time (TIME_RECEIVED),KEY k_src (SOURCE_IP),KEY k_dst (DEST_IP)) ENGINE=MyISAM DEFAULT CHARSET=latin1</string>
+		<string>CREATE SCHEMA IF NOT EXISTS freimap2;
+use freimap2;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS nodes;
+DROP TABLE IF EXISTS flow;
+CREATE TABLE nodes (lon float DEFAULT '12.5535',lat float DEFAULT '41.8638',ip varchar(32) NOT NULL,name varchar(32) NOT NULL,isGateway binary(1) NOT NULL,gatewayIp varchar(32) NOT NULL,uptime time DEFAULT NULL,interfaces varchar(50) DEFAULT NULL,PRIMARY KEY (name),KEY ip (ip)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE links (clock timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',src varchar(32) NOT NULL DEFAULT '',dest varchar(32) NOT NULL DEFAULT '',lq float DEFAULT NULL,nlq float DEFAULT NULL,etx float DEFAULT NULL,PRIMARY KEY (clock,src,dest),KEY src (src),KEY dest (dest),CONSTRAINT links_ibfk_2 FOREIGN KEY (dest) REFERENCES nodes (ip),CONSTRAINT links_ibfk_1 FOREIGN KEY (src) REFERENCES nodes (ip)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE Layer (id int(11) NOT NULL AUTO_INCREMENT,srcnode varchar(32) NOT NULL,clock timestamp NULL DEFAULT NULL,destnode varchar(32) NOT NULL,PRIMARY KEY (id),KEY srcnode (srcnode),KEY destnode (destnode),CONSTRAINT layer_ibfk_1 FOREIGN KEY (srcnode) REFERENCES links (src),CONSTRAINT layer_ibfk_2 FOREIGN KEY (destnode) REFERENCES links (dest)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE FLOWS (RECNUM bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,PROBE varchar(16) NOT NULL DEFAULT '',TIME_RECEIVED datetime NOT NULL DEFAULT '0000-00-00 00:00:00',FLOW_VERSION tinyint(4) NOT NULL DEFAULT '0',SEQUENCE bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',SOURCE_IP varchar(16) NOT NULL DEFAULT '',SOURCE_PORT int(11) NOT NULL DEFAULT '0',DEST_IP varchar(16) NOT NULL DEFAULT '',DEST_PORT int(11) NOT NULL DEFAULT '0',NEXT_HOP varchar(16) NOT NULL DEFAULT '',PROTOCOL int(11) NOT NULL DEFAULT '0',TCP_FLAGS int(11) NOT NULL DEFAULT '0',TOS int(11) NOT NULL DEFAULT '0',BYTES bigint(20) unsigned NOT NULL DEFAULT '0',PACKETS bigint(20) unsigned NOT NULL DEFAULT '0',FLOW_BEGIN datetime NOT NULL DEFAULT '0000-00-00 00:00:00',FLOW_END datetime NOT NULL DEFAULT '0000-00-00 00:00:00',SOURCE_AS int(11) NOT NULL DEFAULT '0',DEST_AS int(11) NOT NULL DEFAULT '0',SOURCE_MASK smallint(6) NOT NULL DEFAULT '0',DEST_MASK smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (RECNUM),KEY k_begin (FLOW_BEGIN),KEY k_end (FLOW_END),KEY k_time (TIME_RECEIVED),KEY k_src (SOURCE_IP),KEY k_dst (DEST_IP)) ENGINE=MyISAM DEFAULT CHARSET=latin1</string>
+		<string>CREATE SCHEMA IF NOT EXISTS pinco;
+use pinco;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS Flow;
+DROP TABLE IF EXISTS nodes;
+CREATE TABLE `nodes` (`lon` float DEFAULT '12.5535',`lat` float DEFAULT '41.8638',`ip` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`isGateway` binary(1) NOT NULL,`gatewayIp` varchar(32) NOT NULL,`uptime` time DEFAULT NULL,`interfaces` varchar(50) DEFAULT NULL,PRIMARY KEY (`name`),KEY `ip` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `FLOWS` (`RECNUM` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,`PROBE` varchar(16) NOT NULL DEFAULT '',`TIME_RECEIVED` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_VERSION` tinyint(4) NOT NULL DEFAULT '0',`SEQUENCE` bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',`SOURCE_IP` varchar(16) NOT NULL DEFAULT '',`SOURCE_PORT` int(11) NOT NULL DEFAULT '0',`DEST_IP` varchar(16) NOT NULL DEFAULT '',`DEST_PORT` int(11) NOT NULL DEFAULT '0',`NEXT_HOP` varchar(16) NOT NULL DEFAULT '',`PROTOCOL` int(11) NOT NULL DEFAULT '0',`TCP_FLAGS` int(11) NOT NULL DEFAULT '0',`TOS` int(11) NOT NULL DEFAULT '0',`BYTES` bigint(20) unsigned NOT NULL DEFAULT '0',`PACKETS` bigint(20) unsigned NOT NULL DEFAULT '0',`FLOW_BEGIN` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_END` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`SOURCE_AS` int(11) NOT NULL DEFAULT '0',`DEST_AS` int(11) NOT NULL DEFAULT '0',`SOURCE_MASK` smallint(6) NOT NULL DEFAULT '0',`DEST_MASK` smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (`RECNUM`),KEY `k_begin` (`FLOW_BEGIN`),KEY `k_end` (`FLOW_END`),KEY `k_time` (`TIME_RECEIVED`),KEY `k_src` (`SOURCE_IP`),KEY `k_dst` (`DEST_IP`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `links` (`clock` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',`src` varchar(32) NOT NULL DEFAULT '',`dest` varchar(32) NOT NULL DEFAULT '',`lq` float DEFAULT NULL,`nlq` float DEFAULT NULL,`etx` float DEFAULT NULL,PRIMARY KEY (`clock`,`src`,`dest`),KEY `src` (`src`),KEY `dest` (`dest`),CONSTRAINT `links_ibfk_2` FOREIGN KEY (`dest`) REFERENCES `nodes` (`ip`),CONSTRAINT `links_ibfk_1` FOREIGN KEY (`src`) REFERENCES `nodes` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `Layer` (`id` int(11) NOT NULL AUTO_INCREMENT,`srcnode` varchar(32) DEFAULT NULL,`clock` timestamp NULL DEFAULT NULL,`destnode` varchar(32) DEFAULT NULL,PRIMARY KEY (`id`),KEY `srcnode` (`srcnode`),KEY `destnode` (`destnode`),CONSTRAINT `layer_ibfk_2` FOREIGN KEY (`destnode`) REFERENCES `links` (`dest`),CONSTRAINT `layer_ibfk_1` FOREIGN KEY (`srcnode`) REFERENCES `links` (`src`)) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+		<string>CREATE SCHEMA IF NOT EXISTS pinco;
+use freimap;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS Flow;
+DROP TABLE IF EXISTS nodes;
+CREATE TABLE `nodes` (`lon` float DEFAULT '12.5535',`lat` float DEFAULT '41.8638',`ip` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`isGateway` binary(1) NOT NULL,`gatewayIp` varchar(32) NOT NULL,`uptime` time DEFAULT NULL,`interfaces` varchar(50) DEFAULT NULL,PRIMARY KEY (`name`),KEY `ip` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `FLOWS` (`RECNUM` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,`PROBE` varchar(16) NOT NULL DEFAULT '',`TIME_RECEIVED` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_VERSION` tinyint(4) NOT NULL DEFAULT '0',`SEQUENCE` bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',`SOURCE_IP` varchar(16) NOT NULL DEFAULT '',`SOURCE_PORT` int(11) NOT NULL DEFAULT '0',`DEST_IP` varchar(16) NOT NULL DEFAULT '',`DEST_PORT` int(11) NOT NULL DEFAULT '0',`NEXT_HOP` varchar(16) NOT NULL DEFAULT '',`PROTOCOL` int(11) NOT NULL DEFAULT '0',`TCP_FLAGS` int(11) NOT NULL DEFAULT '0',`TOS` int(11) NOT NULL DEFAULT '0',`BYTES` bigint(20) unsigned NOT NULL DEFAULT '0',`PACKETS` bigint(20) unsigned NOT NULL DEFAULT '0',`FLOW_BEGIN` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_END` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`SOURCE_AS` int(11) NOT NULL DEFAULT '0',`DEST_AS` int(11) NOT NULL DEFAULT '0',`SOURCE_MASK` smallint(6) NOT NULL DEFAULT '0',`DEST_MASK` smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (`RECNUM`),KEY `k_begin` (`FLOW_BEGIN`),KEY `k_end` (`FLOW_END`),KEY `k_time` (`TIME_RECEIVED`),KEY `k_src` (`SOURCE_IP`),KEY `k_dst` (`DEST_IP`)) ENGINE=MyISAM DEFAULT CHARSET=latin1</string>
+		<string>CREATE SCHEMA IF NOT EXISTS freimap;
+use freimap;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS Flow;
+DROP TABLE IF EXISTS nodes;
+CREATE TABLE `nodes` (`lon` float DEFAULT '12.5535',`lat` float DEFAULT '41.8638',`ip` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`isGateway` binary(1) NOT NULL,`gatewayIp` varchar(32) NOT NULL,`uptime` time DEFAULT NULL,`interfaces` varchar(50) DEFAULT NULL,PRIMARY KEY (`name`),KEY `ip` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `FLOWS` (`RECNUM` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,`PROBE` varchar(16) NOT NULL DEFAULT '',`TIME_RECEIVED` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_VERSION` tinyint(4) NOT NULL DEFAULT '0',`SEQUENCE` bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',`SOURCE_IP` varchar(16) NOT NULL DEFAULT '',`SOURCE_PORT` int(11) NOT NULL DEFAULT '0',`DEST_IP` varchar(16) NOT NULL DEFAULT '',`DEST_PORT` int(11) NOT NULL DEFAULT '0',`NEXT_HOP` varchar(16) NOT NULL DEFAULT '',`PROTOCOL` int(11) NOT NULL DEFAULT '0',`TCP_FLAGS` int(11) NOT NULL DEFAULT '0',`TOS` int(11) NOT NULL DEFAULT '0',`BYTES` bigint(20) unsigned NOT NULL DEFAULT '0',`PACKETS` bigint(20) unsigned NOT NULL DEFAULT '0',`FLOW_BEGIN` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_END` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`SOURCE_AS` int(11) NOT NULL DEFAULT '0',`DEST_AS` int(11) NOT NULL DEFAULT '0',`SOURCE_MASK` smallint(6) NOT NULL DEFAULT '0',`DEST_MASK` smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (`RECNUM`),KEY `k_begin` (`FLOW_BEGIN`),KEY `k_end` (`FLOW_END`),KEY `k_time` (`TIME_RECEIVED`),KEY `k_src` (`SOURCE_IP`),KEY `k_dst` (`DEST_IP`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `links` (`clock` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',`src` varchar(32) NOT NULL DEFAULT '',`dest` varchar(32) NOT NULL DEFAULT '',`lq` float DEFAULT NULL,`nlq` float DEFAULT NULL,`etx` float DEFAULT NULL,PRIMARY KEY (`clock`,`src`,`dest`),KEY `src` (`src`),KEY `dest` (`dest`),CONSTRAINT `links_ibfk_2` FOREIGN KEY (`dest`) REFERENCES `nodes` (`ip`),CONSTRAINT `links_ibfk_1` FOREIGN KEY (`src`) REFERENCES `nodes` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `Layer` (`id` int(11) NOT NULL AUTO_INCREMENT,`srcnode` varchar(32) DEFAULT NULL,`clock` timestamp NULL DEFAULT NULL,`destnode` varchar(32) DEFAULT NULL,PRIMARY KEY (`id`),KEY `srcnode` (`srcnode`),KEY `destnode` (`destnode`),CONSTRAINT `layer_ibfk_2` FOREIGN KEY (`destnode`) REFERENCES `links` (`dest`),CONSTRAINT `layer_ibfk_1` FOREIGN KEY (`srcnode`) REFERENCES `links` (`src`)) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+		<string>CREATE SCHEMA IF NOT EXISTS freimap;
+use freimap;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS Flow;
+DROP TABLE IF EXISTS nodes;
+DROP TABLE IF EXISTS `nodes`;
+CREATE TABLE `nodes` (`lon` float DEFAULT '12.5535',`lat` float DEFAULT '41.8638',`ip` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`isGateway` binary(1) NOT NULL,`gatewayIp` varchar(32) NOT NULL,`uptime` time DEFAULT NULL,`interfaces` varchar(50) DEFAULT NULL,PRIMARY KEY (`name`),KEY `ip` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `FLOWS`;
+CREATE TABLE `FLOWS` (`RECNUM` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,`PROBE` varchar(16) NOT NULL DEFAULT '',`TIME_RECEIVED` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_VERSION` tinyint(4) NOT NULL DEFAULT '0',`SEQUENCE` bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',`SOURCE_IP` varchar(16) NOT NULL DEFAULT '',`SOURCE_PORT` int(11) NOT NULL DEFAULT '0',`DEST_IP` varchar(16) NOT NULL DEFAULT '',`DEST_PORT` int(11) NOT NULL DEFAULT '0',`NEXT_HOP` varchar(16) NOT NULL DEFAULT '',`PROTOCOL` int(11) NOT NULL DEFAULT '0',`TCP_FLAGS` int(11) NOT NULL DEFAULT '0',`TOS` int(11) NOT NULL DEFAULT '0',`BYTES` bigint(20) unsigned NOT NULL DEFAULT '0',`PACKETS` bigint(20) unsigned NOT NULL DEFAULT '0',`FLOW_BEGIN` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_END` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`SOURCE_AS` int(11) NOT NULL DEFAULT '0',`DEST_AS` int(11) NOT NULL DEFAULT '0',`SOURCE_MASK` smallint(6) NOT NULL DEFAULT '0',`DEST_MASK` smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (`RECNUM`),KEY `k_begin` (`FLOW_BEGIN`),KEY `k_end` (`FLOW_END`),KEY `k_time` (`TIME_RECEIVED`),KEY `k_src` (`SOURCE_IP`),KEY `k_dst` (`DEST_IP`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `links`;
+CREATE TABLE `links` (`clock` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',`src` varchar(32) NOT NULL DEFAULT '',`dest` varchar(32) NOT NULL DEFAULT '',`lq` float DEFAULT NULL,`nlq` float DEFAULT NULL,`etx` float DEFAULT NULL,PRIMARY KEY (`clock`,`src`,`dest`),KEY `src` (`src`),KEY `dest` (`dest`),CONSTRAINT `links_ibfk_2` FOREIGN KEY (`dest`) REFERENCES `nodes` (`ip`),CONSTRAINT `links_ibfk_1` FOREIGN KEY (`src`) REFERENCES `nodes` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `Layer`;
+CREATE TABLE `Layer` (`id` int(11) NOT NULL AUTO_INCREMENT,`srcnode` varchar(32) DEFAULT NULL,`clock` timestamp NULL DEFAULT NULL,`destnode` varchar(32) DEFAULT NULL,PRIMARY KEY (`id`),KEY `srcnode` (`srcnode`),KEY `destnode` (`destnode`),CONSTRAINT `layer_ibfk_2` FOREIGN KEY (`destnode`) REFERENCES `links` (`dest`),CONSTRAINT `layer_ibfk_1` FOREIGN KEY (`srcnode`) REFERENCES `links` (`src`)) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+		<string>use freimap;
+DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS Flow;
+DROP TABLE IF EXISTS nodes;
+CREATE SCHEMA IF NOT EXISTS freimap;
+DROP TABLE IF EXISTS `nodes`;
+CREATE TABLE `nodes` (`lon` float DEFAULT '12.5535',`lat` float DEFAULT '41.8638',`ip` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`isGateway` binary(1) NOT NULL,`gatewayIp` varchar(32) NOT NULL,`uptime` time DEFAULT NULL,`interfaces` varchar(50) DEFAULT NULL,PRIMARY KEY (`name`),KEY `ip` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `links`;
+CREATE TABLE `links` (`clock` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',`src` varchar(32) NOT NULL DEFAULT '',`dest` varchar(32) NOT NULL DEFAULT '',`lq` float DEFAULT NULL,`nlq` float DEFAULT NULL,`etx` float DEFAULT NULL,PRIMARY KEY (`clock`,`src`,`dest`),KEY `src` (`src`),KEY `dest` (`dest`),CONSTRAINT `links_ibfk_2` FOREIGN KEY (`dest`) REFERENCES `nodes` (`ip`),CONSTRAINT `links_ibfk_1` FOREIGN KEY (`src`) REFERENCES `nodes` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `Layer`;
+DROP TABLE IF EXISTS `FLOWS`;
+CREATE TABLE `FLOWS` (`RECNUM` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,`PROBE` varchar(16) NOT NULL DEFAULT '',`TIME_RECEIVED` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_VERSION` tinyint(4) NOT NULL DEFAULT '0',`SEQUENCE` bigint(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000',`SOURCE_IP` varchar(16) NOT NULL DEFAULT '',`SOURCE_PORT` int(11) NOT NULL DEFAULT '0',`DEST_IP` varchar(16) NOT NULL DEFAULT '',`DEST_PORT` int(11) NOT NULL DEFAULT '0',`NEXT_HOP` varchar(16) NOT NULL DEFAULT '',`PROTOCOL` int(11) NOT NULL DEFAULT '0',`TCP_FLAGS` int(11) NOT NULL DEFAULT '0',`TOS` int(11) NOT NULL DEFAULT '0',`BYTES` bigint(20) unsigned NOT NULL DEFAULT '0',`PACKETS` bigint(20) unsigned NOT NULL DEFAULT '0',`FLOW_BEGIN` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`FLOW_END` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',`SOURCE_AS` int(11) NOT NULL DEFAULT '0',`DEST_AS` int(11) NOT NULL DEFAULT '0',`SOURCE_MASK` smallint(6) NOT NULL DEFAULT '0',`DEST_MASK` smallint(6) NOT NULL DEFAULT '0',PRIMARY KEY (`RECNUM`),KEY `k_begin` (`FLOW_BEGIN`),KEY `k_end` (`FLOW_END`),KEY `k_time` (`TIME_RECEIVED`),KEY `k_src` (`SOURCE_IP`),KEY `k_dst` (`DEST_IP`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `Layer` (`id` int(11) NOT NULL AUTO_INCREMENT,`srcnode` varchar(32) DEFAULT NULL,`clock` timestamp NULL DEFAULT NULL,`destnode` varchar(32) DEFAULT NULL,PRIMARY KEY (`id`),KEY `srcnode` (`srcnode`),KEY `destnode` (`destnode`),CONSTRAINT `layer_ibfk_2` FOREIGN KEY (`destnode`) REFERENCES `links` (`dest`),CONSTRAINT `layer_ibfk_1` FOREIGN KEY (`srcnode`) REFERENCES `links` (`src`)) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+		<string>DROP TABLE IF EXISTS layer;
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS Flow;
+DROP TABLE IF EXISTS nodes</string>
+		<string>use freimap;
+CREATE SCHEMA IF NOT EXISTS freimap;
+DROP TABLE IF EXISTS `nodes`</string>
+		<string>create schema if not exists prova</string>
+		<string>use mysql</string>
+		<string>schema mysql</string>
+		<string>database mysql</string>
+		<string>select mysql</string>
+		<string>select schema mysql</string>
+		<string>select database mysql</string>
+		<string>DROP TABLE IF EXISTS `nodes`;
+CREATE TABLE `nodes` (`lon` float DEFAULT '12.5535',`lat` float DEFAULT '41.8638',`ip` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`isGateway` binary(1) NOT NULL,`gatewayIp` varchar(32) NOT NULL,`uptime` time DEFAULT NULL,`interfaces` varchar(50) DEFAULT NULL,PRIMARY KEY (`name`),KEY `ip` (`ip`)) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+		<string>DROP TABLE IF EXISTS Layer;
+CREATE TABLE `Layer` (`id` int(11) NOT NULL AUTO_INCREMENT,`srcnode` varchar(32) DEFAULT NULL,`clock` timestamp NULL DEFAULT NULL,`destnode` varchar(32) DEFAULT NULL,PRIMARY KEY (`id`),KEY `srcnode` (`srcnode`),KEY `destnode` (`destnode`),CONSTRAINT `layer_ibfk_2` FOREIGN KEY (`destnode`) REFERENCES `links` (`dest`),CONSTRAINT `layer_ibfk_1` FOREIGN KEY (`srcnode`) REFERENCES `links` (`src`)) ENGINE=InnoDB DEFAULT CHARSET=latin1</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.1.44</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

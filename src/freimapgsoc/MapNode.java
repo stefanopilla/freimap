@@ -27,17 +27,21 @@ public class MapNode implements Comparable, Serializable {
         this.ip = ip;
         this.lat=DEFAULT_LAT;
         this.lon=DEFAULT_LON;
+        this.uptime="00:00:00";
     }
 
     public MapNode(String id, double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
+                this.uptime="00:00:00";
+
     }
 
     public MapNode(String ip, String name, double lat, double lon) {
         this.name = name;
         this.lat = lat;
         this.lon = lon;
+        this.uptime="00:00:00";
     }
 
     public MapNode(String ip, String name, String uptime) {
@@ -52,6 +56,7 @@ public class MapNode implements Comparable, Serializable {
                 this.lat=lat;
                 this.lon=lon;
                 this.inter=ifaces;
+                this.uptime="00:00:00";
     }
 
 

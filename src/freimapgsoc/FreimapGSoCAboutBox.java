@@ -14,7 +14,11 @@ public class FreimapGSoCAboutBox extends javax.swing.JDialog {
         getRootPane().setDefaultButton(closeButton);
     }
 
-    @Action public void closeAboutBox() {
+    /**
+	 * 
+	 * @return 
+	 */
+	@Action public void closeAboutBox() {
         dispose();
     }
 

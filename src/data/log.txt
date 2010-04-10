@@ -1,1 +1,1 @@
-Problem with loading components in MainLayer.java: e.getmessage()
+PopUp Message: There aren't input file to draw! Open a file from File -> Open menu  

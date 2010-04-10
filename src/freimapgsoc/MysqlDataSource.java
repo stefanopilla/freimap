@@ -78,26 +78,28 @@ public class MysqlDataSource implements DataSource {
                 stmt = (Statement) conn.createStatement();//create Statmente fror conn connection
                 rss = stmt.executeQuery("SELECT * FROM nodes"); //Excute Query
                 rss.beforeFirst();
-                while (rss.next()) {
-                    String nodeIp = rss.getString("ip");
-                    System.out.println(nodeIp);
-                    Statement stmt2 = conn.createStatement();
-                    ResultSet rss2 = stmt2.executeQuery("SELECT * FROM interfaces WHERE mainIp=" + "\""+nodeIp+"\"");
-                    System.out.println("SELECT * FROM interfaces WHERE mainip=" + "\""+nodeIp+"\"");
-                    rss2.beforeFirst();
-                    while (rss2.next()) {
-                        iface.add(rss2.getString(2));
-                        interfaces.put(rss2.getString(1), rss.getString(2));
-                    }
+                while (rss.next()) { 
+                String nodeIp = rss.getString("ip"); //prendo l'ip della prima riga
+                System.out.println(nodeIp);
+                Statement stmt2 = conn.createStatement();
+                ResultSet rss2 = stmt2.executeQuery("SELECT * FROM interfaces WHERE mainIp=" + "\"" + nodeIp + "\"");
+                System.out.println("SELECT * FROM interfaces WHERE mainip=" + "\"" + nodeIp + "\"");
+                rss2.beforeFirst();
+                //tiro fuori tutte le interfacce di quel nodo...!
+                while (rss2.next()) {
+                    iface.removeAllElements();
+                    iface.add(rss2.getString("intip"));
+                    interfaces.put(rss2.getString("mainip"), rss2.getString("intip"));
+                }
                     if (rss.getBoolean("isGateway") == true) {
                         attributes.put("Gateway", "SELF");
                     } else if (rss.getBoolean("isGateway") == false) {
                         attributes.put("Gateway", "Other:" + rss.getString("gatewayIp"));
                     }
-                        MapNode node = new MapNode(rss.getString("ip"), rss.getString("name"), rss.getString("uptime"), iface, rss.getDouble("lat"), rss.getDouble("lon"), attributes);
-                        nodeList.add(node);
-                        nodeByName.put(rss.getString("name"), node);
-                        nodeByIp.put(rss.getString("ip"), node);
+                    MapNode node = new MapNode(rss.getString("ip"), rss.getString("name"), rss.getString("uptime"), iface, rss.getDouble("lat"), rss.getDouble("lon"), attributes);
+                    nodeList.add(node);
+                    nodeByName.put(rss.getString("name"), node);
+                    nodeByIp.put(rss.getString("ip"), node);
                 }
 
             }
@@ -138,7 +140,11 @@ public class MysqlDataSource implements DataSource {
         }
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public void init() {
         try {
             System.out.println("Fetching data from Database: " + db);
@@ -397,12 +403,22 @@ public class MysqlDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @param ip
+	 * @return 
+	 */
+	@Override
     public MapNode getNodeById(String ip) {
         return nodeByIp.get(ip);
     }
 
-    @Override
+    /**
+	 * 
+	 * @param id
+	 * @return 
+	 */
+	@Override
     public Vector<Link> getLinksFromSource(String id) {
         Vector<Link> linkFromSrc = new Vector<Link>();
         for (int i = 0; i < linkBySrc.size(); i++) {
@@ -411,8 +427,13 @@ public class MysqlDataSource implements DataSource {
         return linkFromSrc;
     }
 
-    @Override
-    @SuppressWarnings("element-type-mismatch")
+    /**
+	 * 
+	 * @param id
+	 * @return 
+	 */
+	@Override
+	@SuppressWarnings("element-type-mismatch")
     public Vector<Link> getLinksFromDest(String id) {
         Vector<Link> linkFromDest = new Vector<Link>();
         for (int i = 0; i < linkByDest.size(); i++) {
@@ -421,18 +442,32 @@ public class MysqlDataSource implements DataSource {
         return linkFromDest;
     }
 
-    @Override
+    /**
+	 * 
+	 * @param ip
+	 * @return 
+	 */
+	@Override
     public MapNode getNodeByIp(String ip) {
         return nodeByIp.get(ip);
     }
 
-    @Override
+    /**
+	 * 
+	 * @param configuration
+	 * @return 
+	 */
+	@Override
     public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
         throw new UnsupportedOperationException("Not supported yet.");
 
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public Vector<Link> getLinks() {
         return linkList;
     }

@@ -177,7 +177,12 @@ public class LinkInfo {
     status = STATUS_AVAILABLE;
   }
 
-  @SuppressWarnings("unchecked")
+  /**
+	 * 
+	 * @param plot
+	 * @return 
+	 */
+	@SuppressWarnings("unchecked")
   private void sexupPlot(Plot plot) {
     if (plot instanceof CombinedDomainXYPlot) {
       List<Plot> subs = (List<Plot>)(((CombinedDomainXYPlot)plot).getSubplots());

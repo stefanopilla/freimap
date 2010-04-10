@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Robot;
@@ -118,7 +119,6 @@ public class MainLayer extends javax.swing.JFrame {
                 System.out.println(l.getCurrentNodes().elementAt(i).toString());
                 listOfNodes.add(i, l.getCurrentNodes().elementAt(i).toString());
                 MouseListener mouseListener = new MouseAdapter() {
-
                     public void mouseClicked(MouseEvent mouseEvent) {
                         JList nodeList = (JList) mouseEvent.getSource();
                         if (mouseEvent.getClickCount() == 2) {
@@ -175,20 +175,18 @@ public class MainLayer extends javax.swing.JFrame {
     }
 
     public void drawNodes(Vector<MapNode> nodes) {
+
         for (int i = 0; i < nodes.size(); i++) {
             final GeoPosition posNode = new GeoPosition(nodes.elementAt(i).lat, nodes.elementAt(i).lon);
             final JButton waynode = new JButton(nodes.elementAt(i).toString());
             waynode.addActionListener(new ActionListener() {
-
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("The test2 button was clicked");
                 }
             });
             waypoints.add(new SwingWaypoint(waynode, posNode));
             painter.setRenderer(new WaypointRenderer() {
-
                 public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
-
                     g.setColor(Color.ORANGE);
                     JComponent component = ((SwingWaypoint) wp).getComponent();
                     Point2D gp_pt = map.getTileFactory().geoToPixel(wp.getPosition(), map.getZoom());
@@ -216,24 +214,22 @@ public class MainLayer extends javax.swing.JFrame {
                         g.draw(new Ellipse2D.Double(-7.0, -7.0, 20.0, 20.0));
                     }
                     return true;
-
                 }
             });
-
             painter.setWaypoints(waypoints);
             mainMap.setOverlayPainter(painter);
 
         }
-    }
+        }
+    //}
 
-    public void drawNodes(Vector<MapNode> nodes, Double lat, Double lon) {
+    /*public void drawNodes(Vector<MapNode> nodes, Double lat, Double lon) {
         for (int i = 0; i < nodes.size(); i++) {
             GeoPosition posNode = new GeoPosition(nodes.elementAt(i).lat, nodes.elementAt(i).lon);
             if (nodes.elementAt(i).lat == lat && nodes.elementAt(i).lon == lon) {
                 waypoints.add(new Waypoint(posNode));
                 painter.setWaypoints(waypoints);
                 painter.setRenderer(new WaypointRenderer() {
-
                     public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
                         g.setColor(Color.ORANGE);
                         if (mainMap.getZoom() < 17 && mainMap.getZoom() > 7) {
@@ -295,6 +291,8 @@ public class MainLayer extends javax.swing.JFrame {
         mainMap.setOverlayPainter(painter);
 
     }
+     *
+     */
 
     //TO IMPLEMENT IT DOESN'T WORK
     public void drawLinks(Vector<Link> links) {
@@ -302,7 +300,6 @@ public class MainLayer extends javax.swing.JFrame {
             GeoPosition posFrom = new GeoPosition(links.elementAt(i).source.lat, links.elementAt(i).source.lon);
             System.out.println("LinksSourceLAT:" + links.elementAt(i).source.lat);
             System.out.println("LinksSourceLON:" + links.elementAt(i).source.lon);
-
             GeoPosition posTo = new GeoPosition(links.elementAt(i).dest.lat, links.elementAt(i).dest.lon);
             System.out.println("LinksDestLAT:" + links.elementAt(i).dest.lat);
             System.out.println("LinksDestLON:" + links.elementAt(i).dest.lon);
@@ -364,11 +361,9 @@ public class MainLayer extends javax.swing.JFrame {
                         countPop = 1;
                     }
                 } else if (nodes.size() != 0) {
-
                     //Draw Nodes and Links
                     drawLinks(links);
                     drawNodes(nodes);
-
                 }
             }
 
@@ -427,13 +422,10 @@ public class MainLayer extends javax.swing.JFrame {
         SNMP = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         longitudeValue = new javax.swing.JLabel();
-        locatedLabel = new javax.swing.JLabel();
         lonLabel = new javax.swing.JLabel();
         latLabel = new javax.swing.JLabel();
         xValue1 = new javax.swing.JLabel();
         yValue = new javax.swing.JLabel();
-        xValue = new javax.swing.JLabel();
-        xPos1 = new javax.swing.JLabel();
         latitudeValue = new javax.swing.JLabel();
         locatedNodes = new javax.swing.JScrollPane();
         nodeList = new JList(listOfNodes);
@@ -443,7 +435,6 @@ public class MainLayer extends javax.swing.JFrame {
         locatedLabel1 = new javax.swing.JLabel();
         upTimeValue = new javax.swing.JLabel();
         fqidValue = new javax.swing.JLabel();
-        locatedLabel2 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         rtLat = new javax.swing.JLabel();
         rtLogitude = new javax.swing.JLabel();
@@ -453,6 +444,10 @@ public class MainLayer extends javax.swing.JFrame {
         rtyPosValue = new javax.swing.JLabel();
         rtLatValue = new javax.swing.JLabel();
         rtLonValue = new javax.swing.JLabel();
+        connectionValue = new javax.swing.JLabel();
+        osLabel = new javax.swing.JLabel();
+        ConnectionLabel = new javax.swing.JLabel();
+        osValue = new javax.swing.JLabel();
         mapPanel = new javax.swing.JPanel();
         mainMap = new org.jdesktop.swingx.JXMapViewer();
         miniMap = new org.jdesktop.swingx.JXMapViewer();
@@ -461,6 +456,9 @@ public class MainLayer extends javax.swing.JFrame {
         zoomButtonOut = new javax.swing.JButton();
         hoverLabel = new javax.swing.JLabel();
         dateInfo = new javax.swing.JLabel();
+        jSlider1 = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
         openMenu = new javax.swing.JMenu();
@@ -570,10 +568,6 @@ public class MainLayer extends javax.swing.JFrame {
         longitudeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         longitudeValue.setName("longitudeValue"); // NOI18N
 
-        locatedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        locatedLabel.setText("Located:");
-        locatedLabel.setName("locatedLabel"); // NOI18N
-
         lonLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         lonLabel.setText("Longitude:");
         lonLabel.setName("lonLabel"); // NOI18N
@@ -583,22 +577,13 @@ public class MainLayer extends javax.swing.JFrame {
         latLabel.setName("latLabel"); // NOI18N
 
         xValue1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        xValue1.setText("Y Position:");
+        xValue1.setText("HNA:");
         xValue1.setName("xValue1"); // NOI18N
 
         yValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         yValue.setText(" ");
         yValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         yValue.setName("yValue"); // NOI18N
-
-        xValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        xValue.setText(" ");
-        xValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        xValue.setName("xValue"); // NOI18N
-
-        xPos1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        xPos1.setText("X Position:");
-        xPos1.setName("xPos1"); // NOI18N
 
         latitudeValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         latitudeValue.setText(" ");
@@ -635,10 +620,6 @@ public class MainLayer extends javax.swing.JFrame {
         fqidValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fqidValue.setName("fqidValue"); // NOI18N
 
-        locatedLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        locatedLabel2.setText("EXT:");
-        locatedLabel2.setName("locatedLabel2"); // NOI18N
-
         jSeparator4.setName("jSeparator4"); // NOI18N
 
         rtLat.setFont(new java.awt.Font("Lucida Grande", 0, 10));
@@ -673,6 +654,24 @@ public class MainLayer extends javax.swing.JFrame {
         rtLonValue.setText("V");
         rtLonValue.setName("rtLonValue"); // NOI18N
 
+        connectionValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        connectionValue.setText(" ");
+        connectionValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        connectionValue.setName("connectionValue"); // NOI18N
+
+        osLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        osLabel.setText("OS:");
+        osLabel.setName("osLabel"); // NOI18N
+
+        ConnectionLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        ConnectionLabel.setText("Connection:");
+        ConnectionLabel.setName("ConnectionLabel"); // NOI18N
+
+        osValue.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        osValue.setText(" ");
+        osValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        osValue.setName("osValue"); // NOI18N
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -701,7 +700,6 @@ public class MainLayer extends javax.swing.JFrame {
                                 .add(rtLogitude)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(rtLonValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                    .add(locatedLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel1Layout.createSequentialGroup()
@@ -713,27 +711,27 @@ public class MainLayer extends javax.swing.JFrame {
                                 .add(47, 47, 47)
                                 .add(fqidValue, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
                             .add(jPanel1Layout.createSequentialGroup()
-                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(xPos1)
-                                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                        .add(org.jdesktop.layout.GroupLayout.LEADING, locatedLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .add(org.jdesktop.layout.GroupLayout.LEADING, xValue1)))
-                                .add(18, 18, 18)
-                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                        .add(org.jdesktop.layout.GroupLayout.LEADING, xValue, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .add(yValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(upTimeValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                            .add(jPanel1Layout.createSequentialGroup()
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                                     .add(latLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .add(lonLabel))
                                 .add(18, 18, 18)
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                                     .add(longitudeValue, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                                    .add(latitudeValue, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))))
+                                    .add(latitudeValue, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)))
+                            .add(jPanel1Layout.createSequentialGroup()
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(osLabel)
+                                    .add(ConnectionLabel)
+                                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                        .add(locatedLabel1)
+                                        .add(xValue1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(yValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(upTimeValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(osValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(connectionValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                         .add(4, 4, 4))
-                    .add(locatedLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 215, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, locatedNodes, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                     .add(jSeparator4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
                 .addContainerGap())
@@ -759,25 +757,25 @@ public class MainLayer extends javax.swing.JFrame {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(lonLabel)
                     .add(longitudeValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(locatedLabel1)
-                            .add(upTimeValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(locatedLabel1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 12, Short.MAX_VALUE)
                         .add(xValue1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(xPos1))
+                        .add(osLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 12, Short.MAX_VALUE)
+                        .add(ConnectionLabel))
                     .add(jPanel1Layout.createSequentialGroup()
+                        .add(upTimeValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(yValue)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(xValue)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(locatedLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(locatedLabel2)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(osValue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(connectionValue)))
+                .add(38, 38, 38)
                 .add(jSeparator4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -865,7 +863,7 @@ public class MainLayer extends javax.swing.JFrame {
         });
         mainMap.add(zoomButtonOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
-        hoverLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        hoverLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         hoverLabel.setText(" ");
         hoverLabel.setName("hoverLabel"); // NOI18N
         mainMap.add(hoverLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, -1, -1));
@@ -891,6 +889,14 @@ public class MainLayer extends javax.swing.JFrame {
         dateInfo.setText(" ");
         dateInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dateInfo.setName("dateInfo"); // NOI18N
+
+        jSlider1.setName("jSlider1"); // NOI18N
+
+        jLabel1.setText("Now");
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jLabel2.setText("Beginning");
+        jLabel2.setName("jLabel2"); // NOI18N
 
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
@@ -1136,14 +1142,23 @@ public class MainLayer extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+            .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(dateInfo, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(mapPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(57, 57, 57))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(dateInfo, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(mapPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(57, 57, 57))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .add(jLabel1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jSlider1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 702, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel2)
+                        .add(131, 131, 131))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1154,7 +1169,12 @@ public class MainLayer extends javax.swing.JFrame {
                     .add(mapPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(dateInfo)
-                .add(113, 113, 113))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jSlider1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel1)
+                    .add(jLabel2))
+                .add(79, 79, 79))
         );
 
         pack();
@@ -1198,13 +1218,15 @@ public class MainLayer extends javax.swing.JFrame {
     }//GEN-LAST:event_zoomButtonOutActionPerformed
 
     private void mainMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMapMouseMoved
+
+        System.out.println(waypoints);
+
         GeoPosition gp = mainMap.convertPointToGeoPosition(new Point2D.Double(evt.getX(), evt.getY()));
-        DecimalFormat fmt = new DecimalFormat("#00.00000");
+        DecimalFormat fmt = new DecimalFormat("#00.000000");
         rtLatValue.setText(fmt.format(gp.getLatitude()));
         rtLonValue.setText(fmt.format(gp.getLongitude()));
         rtxPosValue.setText(String.format("%.3f", mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom()).getX()));
         rtyPosValue.setText(String.format("%.3f", mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom()).getY()));        // TODO add your handling code here:
-
 
         //convert to world bitmap
         Point2D gp_pt = mainMap.getTileFactory().geoToPixel(gp, mainMap.getZoom());
@@ -1870,6 +1892,7 @@ public class MainLayer extends javax.swing.JFrame {
     private HashMap<Vector, String> latlon;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AppendMenu;
+    private javax.swing.JLabel ConnectionLabel;
     private javax.swing.JMenu EditMenu;
     private javax.swing.JMenu FileMenu;
     private javax.swing.JMenu HelpMenu;
@@ -1883,6 +1906,7 @@ public class MainLayer extends javax.swing.JFrame {
     private javax.swing.JMenuItem applyFilter;
     private javax.swing.JMenuItem centerMap;
     private javax.swing.JMenuItem closeItem;
+    private javax.swing.JLabel connectionValue;
     private javax.swing.JPopupMenu contestMenu;
     private javax.swing.JPopupMenu contestMenuNode;
     private javax.swing.JLabel dateInfo;
@@ -1899,12 +1923,15 @@ public class MainLayer extends javax.swing.JFrame {
     private javax.swing.JComboBox ipComboBox;
     private javax.swing.JLabel ipLabel;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JMenuItem jsAppendMenu;
     private javax.swing.JMenuItem jsOpenMenu;
     private javax.swing.JMenuItem jsSaveMenu;
@@ -1914,9 +1941,7 @@ public class MainLayer extends javax.swing.JFrame {
     private javax.swing.JLabel latitudeValue;
     private javax.swing.JCheckBoxMenuItem linksMenu;
     private javax.swing.JCheckBoxMenuItem listCheck;
-    private javax.swing.JLabel locatedLabel;
     private javax.swing.JLabel locatedLabel1;
-    private javax.swing.JLabel locatedLabel2;
     private javax.swing.JScrollPane locatedNodes;
     private javax.swing.JLabel lonLabel;
     private javax.swing.JLabel longitudeValue;
@@ -1928,6 +1953,8 @@ public class MainLayer extends javax.swing.JFrame {
     private static javax.swing.JList nodeList;
     private javax.swing.JCheckBoxMenuItem nodesCheck;
     private javax.swing.JMenu openMenu;
+    private javax.swing.JLabel osLabel;
+    private javax.swing.JLabel osValue;
     private javax.swing.JMenuItem preferencesItem;
     private javax.swing.JMenu recentFilesMenu;
     private javax.swing.JLabel rtLat;
@@ -1949,8 +1976,6 @@ public class MainLayer extends javax.swing.JFrame {
     private javax.swing.JMenuItem txtSaveMenu;
     private javax.swing.JMenuItem txtSaveSelMenu;
     private javax.swing.JLabel upTimeValue;
-    private javax.swing.JLabel xPos1;
-    private javax.swing.JLabel xValue;
     private javax.swing.JLabel xValue1;
     private javax.swing.JMenuItem xmlAppendMenu;
     private javax.swing.JMenuItem xmlOpenMenu;

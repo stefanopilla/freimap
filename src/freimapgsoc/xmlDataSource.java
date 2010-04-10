@@ -31,7 +31,7 @@ public class xmlDataSource implements DataSource {
     public void init(HashMap<String, Object> configuration) {
         String sServerURL = null;
         try {
-            sServerURL = Configurator.getS("url", configuration);
+          //  sServerURL = Configurator.getS("url", configuration);
             URL serverURL = new URL(sServerURL);
 
             System.out.println("fetching node data from URL: " + serverURL);
@@ -235,22 +235,40 @@ public class xmlDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @param ip
+	 * @return 
+	 */
+	@Override
     public MapNode getNodeByIp(String ip) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public void init() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @param configuration
+	 * @return 
+	 */
+	@Override
     public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public Vector<Link> getLinks() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

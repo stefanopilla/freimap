@@ -414,19 +414,32 @@ public class LatLonJsDataSource implements DataSource {
         return linksfd;
     }
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public Vector<MapNode> getNodeList() {
         return nodes;
     }
 
 
 
-    @Override
+    /**
+	 * 
+	 * @return 
+	 */
+	@Override
     public void init() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
+    /**
+	 * 
+	 * @param configuration
+	 * @return 
+	 */
+	@Override
     public HashMap<String, Object> read_conf(HashMap<String, Object> configuration) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
