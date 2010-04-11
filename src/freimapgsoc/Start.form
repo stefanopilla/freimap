@@ -33,14 +33,13 @@
                       <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="olsrdButton" alignment="0" max="32767" attributes="1"/>
-                          <Component id="nameServiceButton" alignment="0" max="32767" attributes="1"/>
                           <Component id="mySQLButton" alignment="0" max="32767" attributes="1"/>
                           <Component id="openExampleFile" alignment="0" max="32767" attributes="1"/>
-                          <Component id="openFileButton" alignment="0" min="-2" pref="230" max="-2" attributes="1"/>
+                          <Component id="openFileButton" alignment="0" pref="230" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                       <Component id="secondLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -58,14 +57,12 @@
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="olsrdButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="nameServiceButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Component id="mySQLButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="openFileButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="openExampleFile" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,7 +72,6 @@
       <Properties>
         <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
         <Property name="text" type="java.lang.String" resourceKey="olsrdButton.text"/>
-        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="olsrdButton" noResource="true"/>
       </Properties>
       <Events>
@@ -86,22 +82,10 @@
       <Properties>
         <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
         <Property name="text" type="java.lang.String" resourceKey="mySQLButton.text"/>
-        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="mySQLButton" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mySQLButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="nameServiceButton">
-      <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="nameServiceButton.font"/>
-        <Property name="text" type="java.lang.String" resourceKey="nameServiceButton.text"/>
-        <Property name="enabled" type="boolean" value="false"/>
-        <Property name="name" type="java.lang.String" value="nameServiceButton" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameServiceButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="openFileButton">

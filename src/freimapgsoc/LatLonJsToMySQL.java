@@ -850,14 +850,8 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         if (str.length() <= 2) {
             return null;
 
-
-
-
         }
         return str.substring(1, str.length() - 1);
-
-
-
 
     }
 

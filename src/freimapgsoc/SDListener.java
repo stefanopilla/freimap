@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package PopUp;
+package freimapgsoc;
 
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceTypeListener;
@@ -12,7 +12,7 @@ import javax.jmdns.ServiceTypeListener;
  *
  * @author stefano
  */
-public class ServiceListener {
+public class SDListener {
 
     static class SListener implements ServiceTypeListener {
 

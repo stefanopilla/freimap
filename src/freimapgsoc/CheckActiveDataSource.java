@@ -7,9 +7,16 @@ package freimapgsoc;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,8 +32,6 @@ public class CheckActiveDataSource {
     public CheckActiveDataSource() {
         mySql = check_mysql();
         olsr = check_olsr();
-        nameservice = check_nameservice();
-
     }
 
     public boolean check_mysql() {
@@ -49,13 +54,43 @@ public class CheckActiveDataSource {
         return false;
       }
 
+
+     private String selectIpAddress() {
+        try {
+            Object[] poss = null;
+            Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+            Vector<InetAddress> v = new Vector<InetAddress>();
+            Enumeration<InetAddress> inetAddresses;
+            for (NetworkInterface netint : Collections.list(nets)) {
+                inetAddresses = netint.getInetAddresses();
+                for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+                    if (inetAddress.isReachable(2000)) {
+                        v.add(inetAddress);
+                    }
+                }
+            }
+            poss = new Object[v.size()];
+            v.copyInto(poss);
+
+            for (int i = 0; i < v.size(); i++) {
+                String tmp = v.elementAt(i).toString().substring(1);
+                poss[i] = tmp;
+            }
+            String s = (String) JOptionPane.showInputDialog(null, "Please elect interface connected to OLSR Network: ", "Interface Selection", JOptionPane.PLAIN_MESSAGE, null, poss, poss[0]);
+            if ((s != null) && (s.length() > 0)) {
+                return s;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "127.0.0.1";
+    }
+
     public boolean check_olsr() {
-      
        // Create a socket without a timeout
     try {
-        InetAddress addr = InetAddress.getByName("localhost");
+        InetAddress addr = InetAddress.getByName(selectIpAddress());
         int port = 2004;
-
         // This constructor will block until the connection succeeds
         Socket socket = new Socket(addr, port);
         if (socket.isConnected()){

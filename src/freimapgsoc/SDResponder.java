@@ -17,7 +17,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-package PopUp;
+package freimapgsoc;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,12 +36,12 @@ import javax.jmdns.ServiceInfo;
  * @author	Arthur van Hoff
  * @version 	%I%, %G%
  */
-public class Responder
+public class SDResponder
 {
     /**
      * Constructor.
      */
-    public Responder(JmDNS jmdns, String file) throws IOException
+    public SDResponder(JmDNS jmdns, String file) throws IOException
     {
 	BufferedReader in = new BufferedReader(new FileReader(file));
 	try {
@@ -79,7 +79,7 @@ public class Responder
      */
     public static void main(String argv[]) throws IOException
     {
-	new Responder(JmDNS.create(), (argv.length > 0) ? argv[0] : "services.txt");
+	new SDResponder(JmDNS.create(), (argv.length > 0) ? argv[0] : "services.txt");
     }
 }
 

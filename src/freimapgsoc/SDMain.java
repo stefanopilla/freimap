@@ -3,18 +3,15 @@
  * and open the template in the editor.
  */
 
-package PopUp;
+package freimapgsoc;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Hashtable;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 import javax.jmdns.ServiceTypeListener;
 
@@ -22,7 +19,7 @@ import javax.jmdns.ServiceTypeListener;
  *
  * @author stefano
  */
-public class PopUpMain {
+public class SDMain {
 static class SampleListener implements ServiceListener, ServiceTypeListener {
         public void serviceAdded(ServiceEvent event) {
             System.out.println("ADD: " + event.getDNS().getServiceInfo(event.getType(), event.getName(), 3*1000));
@@ -45,13 +42,13 @@ static class SampleListener implements ServiceListener, ServiceTypeListener {
     public static void main(String[] args) throws UnknownHostException, IOException {
        int argc = args.length;
         boolean debug = false;
-        String ip="10.0.1.29";
+        String ip="127.0.0.1";
          InetAddress add=null;
          
         try {
             add = InetAddress.getByName("127.0.0.1");
         } catch (UnknownHostException ex) {
-            Logger.getLogger(PopUpMain.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SDMain.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -76,7 +73,7 @@ static class SampleListener implements ServiceListener, ServiceTypeListener {
         }
 */
         
-        new PopUp(JmDNS.create(add)).setVisible(true);
+        new ServiceDiscovery(JmDNS.create(add)).setVisible(true);
 /*
         if ((argc == 0) || ((argc >= 1) && "-browse".equals(args[0]))) {
             new ServiceDiscovery(jmdns);
