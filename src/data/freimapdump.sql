@@ -1,10 +1,10 @@
-﻿# Sequel Pro dump
+# Sequel Pro dump
 # Version 1630
 # http://code.google.com/p/sequel-pro
 #
 # Host: 127.0.0.1 (MySQL 5.1.44)
 # Database: pinco
-# Generation Time: 2010-03-20 22:56:25 +0100
+# Generation Time: 2010-06-18 22:56:25 +0100
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -111,10 +111,6 @@ CREATE TABLE `nodes` (
   PRIMARY KEY (`name`),
   KEY `ip` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
