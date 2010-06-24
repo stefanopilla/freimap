@@ -103,8 +103,7 @@ public class ServiceDiscovery extends javax.swing.JFrame implements ServiceListe
         initComponents();
         this.jmdns = jmdns;
         //  jmdns.addServiceTypeListener(this);
-        for (int i = 0; i
-                < list.length; i++) {
+        for (int i = 0; i< list.length; i++) {
             jmdns.registerServiceType(list[i]);
         }
     }

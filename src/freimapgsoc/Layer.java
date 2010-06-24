@@ -45,7 +45,8 @@ public class Layer {
 
     public void createLayer(HashMap<Vector<MapNode>, Vector<Link>> data, int id) {
         try {
-            //query al mysql per inserire i dati
+            //Query to the MySql Server to store the data
+
             initLayout();
 
         } catch (Exception ex) {

@@ -1632,7 +1632,7 @@ public class MainLayer extends javax.swing.JFrame {
                 Logger.getLogger(MainLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (UnknownHostException ex) {
-            Logger.getLogger(SDMain.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(MainLayer.class.getName()).log(Level.SEVERE, null, ex);
         }        // TODO add your handling code here:
     }
 

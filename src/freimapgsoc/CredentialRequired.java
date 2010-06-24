@@ -261,6 +261,8 @@ public class CredentialRequired extends javax.swing.JFrame {
         } catch (Exception ex) {
             logLabel.setForeground(Color.red);
             logLabel.setText(ex.getMessage());
+            System.out.println(ex.getMessage());
+            System.out.println(ex.getCause());
             Logger.getLogger(CredentialRequired.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -319,6 +321,7 @@ public class CredentialRequired extends javax.swing.JFrame {
                 }
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             logLabel.setForeground(Color.red);
             logLabel.setText(ex.getMessage());
         }
@@ -343,7 +346,7 @@ public class CredentialRequired extends javax.swing.JFrame {
             }
         });
     }
-    Connection c = null;
+     Connection c = null;
     Statement stmt = null;
     ResultSet rss = null;
     String host;

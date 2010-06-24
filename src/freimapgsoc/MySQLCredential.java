@@ -45,10 +45,10 @@ import javax.swing.JOptionPane;
  *
  * @author Stefano
  */
-public class LatLonJsToMySQL extends javax.swing.JFrame {
+public class MySQLCredential extends javax.swing.JFrame {
 
     /** Creates new form LatLonJsToMySQL */
-    public LatLonJsToMySQL() {
+    public MySQLCredential() {
         initComponents();
     }
 
@@ -67,7 +67,6 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         ;
         scrollPane = new javax.swing.JScrollPane();
         errorsLog = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         passwordText = new javax.swing.JPasswordField();
         userText = new javax.swing.JTextField();
@@ -76,19 +75,18 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         hostText = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
-        copyButton = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
         logLabel = new javax.swing.JLabel();
         checkconnButton = new javax.swing.JButton();
-        pathText = new javax.swing.JTextField();
-        chooseButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         showLog = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         portText = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        exampleButton = new javax.swing.JButton();
         dbText = new javax.swing.JComboBox();
         newDb = new javax.swing.JCheckBox();
         newDbText = new javax.swing.JTextField();
+        continueButton = new javax.swing.JButton();
 
         confirmPane.setMessage("If you continue your current data in the Database will be destroyed. \n Are you sure that you want to continue?.\n");
         confirmPane.setFont(new java.awt.Font("Lucida Grande", 1, 10));
@@ -113,11 +111,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         scrollPane.setViewportView(errorsLog);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Js to MySql Utility");
-
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jLabel1.setText("Source File:");
-        jLabel1.setName("jLabel1"); // NOI18N
+        setTitle("MySQL Credentials");
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         jLabel2.setText("Password:");
@@ -137,7 +131,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         jLabel5.setText("Host:");
         jLabel5.setName("jLabel5"); // NOI18N
 
-        hostText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        hostText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         hostText.setName("hostText"); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 10));
@@ -153,12 +147,12 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
             }
         });
 
-        copyButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        copyButton.setText("Copy All");
-        copyButton.setName("copyButton"); // NOI18N
-        copyButton.addActionListener(new java.awt.event.ActionListener() {
+        startButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        startButton.setText("Copy All");
+        startButton.setName("startButton"); // NOI18N
+        startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyButtonActionPerformed(evt);
+                startButtonActionPerformed(evt);
             }
         });
 
@@ -166,7 +160,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         logLabel.setText(" ");
         logLabel.setName("logLabel"); // NOI18N
 
-        checkconnButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        checkconnButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         checkconnButton.setText("Load Avaible Database");
         checkconnButton.setName("checkconnButton"); // NOI18N
         checkconnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -175,21 +169,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
             }
         });
 
-        pathText.setEditable(false);
-        pathText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        pathText.setToolTipText("Js File Path");
-        pathText.setName("pathText"); // NOI18N
-
-        chooseButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        chooseButton.setText("Choose File");
-        chooseButton.setName("chooseButton"); // NOI18N
-        chooseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("With this utility you can add your LatLon.js data into a mysql Database.");
+        jLabel7.setText("Insert MySQL credential to store the data of the Mesh Network:");
         jLabel7.setName("jLabel7"); // NOI18N
 
         showLog.setFont(new java.awt.Font("Lucida Grande", 0, 12));
@@ -208,16 +188,16 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         portText.setText("3306");
         portText.setName("portText"); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        jButton1.setText("Example");
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        exampleButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        exampleButton.setText("Example");
+        exampleButton.setName("exampleButton"); // NOI18N
+        exampleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                exampleButtonActionPerformed(evt);
             }
         });
 
-        dbText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        dbText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         dbText.setName("dbText"); // NOI18N
 
         newDb.setFont(new java.awt.Font("Lucida Grande", 0, 10));
@@ -233,33 +213,40 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         newDbText.setEnabled(false);
         newDbText.setName("newDbText"); // NOI18N
 
+        continueButton.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        continueButton.setText("Continue without store data");
+        continueButton.setName("continueButton"); // NOI18N
+        continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(41, 41, 41)
-                .add(jLabel7)
-                .addContainerGap(54, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
-                .add(106, 106, 106)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(78, 78, 78)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(16, 16, 16)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createSequentialGroup()
-                                .add(81, 81, 81)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, checkconnButton)))
-                            .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 315, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(layout.createSequentialGroup()
-                                .add(newDb)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(newDbText)))
-                        .addContainerGap())
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(layout.createSequentialGroup()
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                    .add(layout.createSequentialGroup()
+                                        .add(81, 81, 81)
+                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                                            .add(org.jdesktop.layout.GroupLayout.LEADING, exampleButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .add(org.jdesktop.layout.GroupLayout.LEADING, checkconnButton)
+                                            .add(continueButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 177, Short.MAX_VALUE)))
+                                    .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 315, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(layout.createSequentialGroup()
+                                        .add(newDb)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(newDbText)))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
@@ -275,32 +262,23 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
                                     .add(layout.createSequentialGroup()
                                         .add(5, 5, 5)
                                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                            .add(copyButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .add(startButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .add(showLog, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                                             .add(cancelButton)))
                                     .add(layout.createSequentialGroup()
                                         .add(jLabel6)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(portText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                            .add(layout.createSequentialGroup()
-                                .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(pathText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 191, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(5, 5, 5)
-                                .add(chooseButton)))
-                        .add(77, 77, 77))))
+                                        .add(portText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                .add(11, 11, 11))))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel7))
+                .add(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(34, 34, 34)
+                .add(24, 24, 24)
                 .add(jLabel7)
-                .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1)
-                    .add(chooseButton)
-                    .add(pathText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(4, 4, 4)
+                .add(26, 26, 26)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -321,7 +299,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
                             .add(jLabel4)
                             .add(dbText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                     .add(layout.createSequentialGroup()
-                        .add(copyButton)
+                        .add(startButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(showLog)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -334,9 +312,11 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
                 .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(checkconnButton)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 11, Short.MAX_VALUE)
-                .add(jButton1)
-                .addContainerGap())
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(exampleButton)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(continueButton)
+                .add(13, 13, 13))
         );
 
         pack();
@@ -347,7 +327,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         this.dispose();
 }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         host = hostText.getText();
         port = portText.getText();
         username = userText.getText();
@@ -362,6 +342,8 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         if (i == 0) {
             try {
                 createTables();
+                Thread.sleep(3000);
+                new OlsrdDataSource(host,port,username,password).init();
             } catch (ClassNotFoundException ex) {
                 logLabel.setText(ex.getMessage());
                 Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -374,7 +356,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         } else {
             confirmPane.setVisible(false);
         }
-}//GEN-LAST:event_copyButtonActionPerformed
+}//GEN-LAST:event_startButtonActionPerformed
 
     private void checkconnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkconnButtonActionPerformed
         try {
@@ -389,7 +371,6 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
                 logLabel.setForeground(Color.red);
                 logLabel.setText("Add host address and port number!");
             } else {
-
                 logLabel.setText("Getting connection...");
                 Thread.sleep(1000);
                 Class.forName("com.mysql.jdbc.Driver");
@@ -551,6 +532,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
 
     }
 
+   
 
     private void showLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogActionPerformed
         scrollPane.setSize(398, 298);
@@ -570,13 +552,11 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_showLogActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pathText.setEditable(true);
-        pathText.setText("/Users/Stefano/Desktop/FreimapSte/Freimap/hg/src/data/latlon.js");
+    private void exampleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exampleButtonActionPerformed
         userText.setText("root");
         passwordText.setText("CiscoSte5785");
         hostText.setText("127.0.0.1");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_exampleButtonActionPerformed
 
     private void confirmPanePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_confirmPanePropertyChange
         System.out.println("PopUp3");
@@ -595,11 +575,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
                     logLabel.setForeground(Color.green);
                     logLabel.setText("Connected!");
                     createTables();
-                    parseFile(
-                            pathText.getText());
                     Thread.sleep(3000);
-
-
                 }
             } catch (Exception ex) {
                 logLabel.setText(ex.getMessage());
@@ -630,220 +606,10 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_newDbItemStateChanged
 
-    private void chooseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseButtonActionPerformed
-        JFileChooser fcjs = new JFileChooser();
-        fcjs.addChoosableFileFilter(new jsFileFilter());
-        fcjs.setAcceptAllFileFilterUsed(false);
-        fcjs.setFileFilter(new jsFileFilter());
-
-
-        int returnVal = fcjs.showOpenDialog(fcjs);
-
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fcjs.getSelectedFile();
-            System.out.println("FILE JS OPENED");
-            System.out.println("Opening: " + file.getName() + ".\n");
-            pathText.setText(file.getPath());
-            path = "file://" + pathText.getText();
-
-
-        } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-            System.out.println("Open command cancelled by user." + "\n");
-
-
-        }
-}//GEN-LAST:event_chooseButtonActionPerformed
-
-     public void parseFile(String path) throws SQLException, InterruptedException {
-        System.out.println("Now Parse Node and Links");
-        errors.put("PARSE FILE:", "Now Parse Node and Links...\n");
-        parseNode(path);
-        Thread.sleep(3000);
-        parseLink(path);
-        Thread.sleep(3000);
-        parseInterfaces(path);
-        logLabel.setText("OK, ALL DONE! SEE LOG FOR ERRORS");
-        System.out.println("OK, ALL DONE! SEE LOG FOR ERRORS!");
-        errors.put("JSTOMYSQL", "FINISHED!!\n");
-    }
-
-    public void parseInterfaces(String path) {
-        logLabel.setText("Now control if nodes has more than one interface...");
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new URL(path).openStream()));
-            //PARSE MID
-            while (true) {
-                line = in.readLine();
-                //System.out.println("Line: " + line);
-                if (line == null) {
-                    break;//if there aren't string in a file
-                }
-                if ((line.length() > 3) && (line.substring(0, 3).equals("Mid"))) {
-                    StringTokenizer stnode = new StringTokenizer(line.substring(4, line.length() - 2), ",", false);
-                    String nodeip = stnode.nextToken();
-                    String nodeip2 = stnode.nextToken();
-                    System.out.println("node " + nodeip + " has also " + nodeip2 + " interfaces");
-                    errors.put(nodeip, "This node has also " + nodeip2 + " interfaces");
-                    nodeip = stripQuotes(nodeip);
-                    nodeip2 = stripQuotes(nodeip2);
-
-                    c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-                    stmt = (Statement) c.createStatement();
-                    String query = "INSERT INTO interfaces VALUES (" + "\"" + nodeip + "\"" + "," + "\"" + nodeip2 + "\"" + ");";
-                    System.out.println(query);
-                    stmt.executeUpdate(query);
-                    System.out.println(query);
-                    errors.put("DATABASE_QUERY:", query + "\n");
-                    c.close();
-                }
-
-            }
-
-
-        } catch (Exception ex) {
-            Logger.getLogger(LatLonJsDataSource.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-
-    }
-
-    public void parseNode(String path) throws SQLException {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new URL(path).openStream()));
-            while (true) {
-                line = in.readLine();
-                //System.out.println("Line: " + line);
-
-
-                if (line == null) {
-                    break;//if there aren't string in a file
-
-
-                } //if substring is Node then add a node
-                if ((line.length() > 4) && (line.substring(0, 4).equals("Node"))) {
-
-                    //PARSE NODE
-                    StringTokenizer st = new StringTokenizer(line.substring(5, line.length() - 2), ",", false);
-                    String ip = st.nextToken();
-                    double lat = Double.parseDouble(st.nextToken());
-                    double lon = Double.parseDouble(st.nextToken());
-                    int isgateway = Integer.parseInt(st.nextToken());
-                    String gatewayip = st.nextToken();
-                    String name = st.nextToken();
-                    ip = stripQuotes(ip); //strip single quotes
-                    name = stripQuotes(name);
-                    gatewayip = stripQuotes(gatewayip);
-
-                    System.out.println("IP Address: " + ip);
-                    System.out.println("lat:" + lat);
-                    System.out.println("lon:" + lon);
-                    System.out.println("isgateway:" + isgateway);
-                    System.out.println("gatewayip:" + gatewayip);
-                    System.out.println("name:" + name);
-
-                    // Use ip or coordinates as fqid if tooltip is missing
-                    if (ip == null) { //i not need this but....! :-D
-                        ip = null;
-                    }
-
-                    if (name == null) {
-                        errors.put(name, "This node has no name!\n");
-                        if (ip == null) {
-                            errors.put(name, "This node has also no ip! I use (lat,lon) as name!\n");
-                            name = lat + "," + lon;
-                        } else {
-                            errors.put(name, "I use IP Address as name!\n");
-                            name = ip;
-
-                        }
-                    }
-                    if (ip == null) { //we need at least one identifier
-                        ip = name;
-                    }
-
-                    c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-                    stmt = (Statement) c.createStatement();
-                    String query = "INSERT INTO nodes VALUES (" + lat + "," + lon + "," + "\"" + ip + "\"" + "," + "\"" + name + "\"" + "," + isgateway + "," + "\"" + gatewayip + "\"" + "," + "\"" + "00:00:00" + "\"" + ", NULL);";
-                    System.out.println(query + "\n");
-                    stmt.executeUpdate(query);
-                    errors.put("DATABASE_QUERY:", query + "\n");
-                    c.close();
-
-
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-
-        }
-    }
-
-    public void parseLink(String path) throws SQLException {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new URL(path).openStream()));
-
-
-            while (true) {
-                line = in.readLine();
-                if (line == null) {
-                    break;//if there aren't string in a file
-                }
-                if ((line.length() > 5) && (line.substring(0, 4).equals("Link"))) {
-                    //PARSE LINK
-                    StringTokenizer stlink = new StringTokenizer(line.substring(5, line.length() - 2), ",", false);
-                    String srclink = stlink.nextToken();
-                    String destlink = stlink.nextToken();
-
-                    double lqlink = Double.parseDouble(stlink.nextToken());
-                    double nlqlink = Double.parseDouble(stlink.nextToken());
-                    double etxlink = Double.parseDouble(stlink.nextToken());
-
-                    srclink = stripQuotes(srclink);
-                    destlink = stripQuotes(destlink);
-
-                    c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-                    stmt = (Statement) c.createStatement();
-                    String query = "INSERT INTO links VALUES (" + "\"" + "0000-00-00 00:00:00" + "\"" + "," + "\"" + srclink + "\"" + "," + "\"" + destlink + "\"" + "," + (float) lqlink + "," + (float) nlqlink + "," + (float) etxlink + ");";
-                    stmt.executeUpdate(query);
-                    errors.put("DATABASE_QUERY:", query + "\n");
-
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-
-        } finally {
-            c.close();
-
-
-        }
-    }
-
-    public String addSlashes(String str) {
-        if (str == null) {
-            return "";
-
-
-        }
-        StringBuffer s = new StringBuffer((String) str);
-
-
-        for (int i = 0; i
-                < s.length(); i++) {
-            if (s.charAt(i) == '\"') {
-                s.insert(i++, '\\');
-
-
-            }
-        }
-        return s.toString();
-
-
-    }
+    private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
+         OlsrdDataSource noStore=new OlsrdDataSource();
+            noStore.init();
+    }//GEN-LAST:event_continueButtonActionPerformed
 
     private String stripQuotes(String str) {
         if (str.length() <= 2) {
@@ -889,14 +655,12 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton checkconnButton;
-    private javax.swing.JButton chooseButton;
     private javax.swing.JOptionPane confirmPane;
-    private javax.swing.JButton copyButton;
+    private javax.swing.JButton continueButton;
     private javax.swing.JComboBox dbText;
     private javax.swing.JTextArea errorsLog;
+    private javax.swing.JButton exampleButton;
     private javax.swing.JTextField hostText;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -907,10 +671,10 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
     private javax.swing.JCheckBox newDb;
     private javax.swing.JTextField newDbText;
     private javax.swing.JPasswordField passwordText;
-    private javax.swing.JTextField pathText;
     private javax.swing.JTextField portText;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JButton showLog;
+    private javax.swing.JButton startButton;
     private javax.swing.JTextField userText;
     // End of variables declaration//GEN-END:variables
 }

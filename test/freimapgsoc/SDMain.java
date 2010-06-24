@@ -5,6 +5,7 @@
 
 package freimapgsoc;
 
+import freimapgsoc.ServiceDiscovery;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

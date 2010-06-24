@@ -307,39 +307,38 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 162));
 
-        jLabel7.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        jLabel7.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        jLabel8.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        jLabel8.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
         nodeIPs.setFont(resourceMap.getFont("nodeIPs.font")); // NOI18N
-        nodeIPs.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        nodeIPs.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
         nodeIPs.setName("nodeIPs"); // NOI18N
 
         nodeName.setFont(resourceMap.getFont("nodeName.font")); // NOI18N
         nodeName.setText(resourceMap.getString("nodeName.text")); // NOI18N
         nodeName.setName("nodeName"); // NOI18N
 
-        jLabel11.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        jLabel11.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
 
-        nodeLatLon.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        nodeLatLon.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         nodeLatLon.setText(resourceMap.getString("nodeLatLon.text")); // NOI18N
         nodeLatLon.setName("nodeLatLon"); // NOI18N
 
-        jComboBox2.setFont(resourceMap.getFont("jComboBox1.font")); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setFont(resourceMap.getFont("jComboBox2.font")); // NOI18N
         jComboBox2.setName("jComboBox2"); // NOI18N
 
-        jLabel16.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        jLabel16.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
 
-        nodegw.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        nodegw.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         nodegw.setText(resourceMap.getString("nodegw.text")); // NOI18N
         nodegw.setName("nodegw"); // NOI18N
 
@@ -415,11 +414,9 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
                             .addComponent(upTimeLab)
                             .addComponent(nodegw)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(nodeIPs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(35, 35, 35))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(nodeIPs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(35, 35, 35)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -454,7 +451,9 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
 
         info.setColumns(20);
         info.setEditable(false);
+        info.setFont(resourceMap.getFont("info.font")); // NOI18N
         info.setRows(5);
+        info.setText(resourceMap.getString("info.text")); // NOI18N
         info.setName("info"); // NOI18N
         jScrollPane3.setViewportView(info);
 
@@ -486,8 +485,8 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -519,23 +518,24 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119)
+                .addGap(285, 285, 285)
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addGap(194, 194, 194))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -544,10 +544,10 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
-                    .addComponent(jPanel1, 0, 671, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, 0, 679, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -556,7 +556,7 @@ public class ServiceDiscoveryUnicast extends javax.swing.JFrame implements Servi
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addContainerGap())
