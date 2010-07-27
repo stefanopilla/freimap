@@ -35,25 +35,47 @@ public class Start extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        olsrdButton = new javax.swing.JButton();
-        mySQLButton = new javax.swing.JButton();
-        openFileButton = new javax.swing.JButton();
         secondLabel = new javax.swing.JLabel();
-        openExampleFile = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        openFileButton = new javax.swing.JButton();
+        openExampleFile = new javax.swing.JButton();
+        mySQLButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        olsrdButton = new javax.swing.JButton();
+        batmanButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(Start.class);
-        olsrdButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
-        olsrdButton.setText(resourceMap.getString("olsrdButton.text")); // NOI18N
-        olsrdButton.setName("olsrdButton"); // NOI18N
-        olsrdButton.addActionListener(new java.awt.event.ActionListener() {
+        secondLabel.setFont(resourceMap.getFont("secondLabel.font")); // NOI18N
+        secondLabel.setText(resourceMap.getString("secondLabel.text")); // NOI18N
+        secondLabel.setName("secondLabel"); // NOI18N
+
+        jLabel1.setIcon(resourceMap.getIcon("jLabel1.icon")); // NOI18N
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel1.border.titleFont"))); // NOI18N
+        jPanel1.setFont(resourceMap.getFont("jPanel1.font")); // NOI18N
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        openFileButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
+        openFileButton.setText(resourceMap.getString("openFileButton.text")); // NOI18N
+        openFileButton.setName("openFileButton"); // NOI18N
+        openFileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                olsrdButtonActionPerformed(evt);
+                openFileButtonActionPerformed(evt);
+            }
+        });
+
+        openExampleFile.setFont(resourceMap.getFont("openExampleFile.font")); // NOI18N
+        openExampleFile.setText(resourceMap.getString("openExampleFile.text")); // NOI18N
+        openExampleFile.setName("openExampleFile"); // NOI18N
+        openExampleFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openExampleFileActionPerformed(evt);
             }
         });
 
@@ -66,88 +88,100 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
-        openFileButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
-        openFileButton.setText(resourceMap.getString("openFileButton.text")); // NOI18N
-        openFileButton.setName("openFileButton"); // NOI18N
-        openFileButton.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(openFileButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(openExampleFile, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(mySQLButton, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(7, Short.MAX_VALUE)
+                .addComponent(mySQLButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(openFileButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(openExampleFile)
+                .addGap(43, 43, 43))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel2.border.titleFont"))); // NOI18N
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        olsrdButton.setFont(resourceMap.getFont("nameServiceButton.font")); // NOI18N
+        olsrdButton.setText(resourceMap.getString("olsrdButton.text")); // NOI18N
+        olsrdButton.setName("olsrdButton"); // NOI18N
+        olsrdButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openFileButtonActionPerformed(evt);
+                olsrdButtonActionPerformed(evt);
             }
         });
 
-        secondLabel.setFont(resourceMap.getFont("secondLabel.font")); // NOI18N
-        secondLabel.setText(resourceMap.getString("secondLabel.text")); // NOI18N
-        secondLabel.setName("secondLabel"); // NOI18N
-
-        openExampleFile.setFont(resourceMap.getFont("openExampleFile.font")); // NOI18N
-        openExampleFile.setText(resourceMap.getString("openExampleFile.text")); // NOI18N
-        openExampleFile.setName("openExampleFile"); // NOI18N
-        openExampleFile.addActionListener(new java.awt.event.ActionListener() {
+        batmanButton.setFont(resourceMap.getFont("batmanButton.font")); // NOI18N
+        batmanButton.setText(resourceMap.getString("batmanButton.text")); // NOI18N
+        batmanButton.setName("batmanButton"); // NOI18N
+        batmanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openExampleFileActionPerformed(evt);
+                batmanButtonActionPerformed(evt);
             }
         });
 
-        jLabel1.setIcon(resourceMap.getIcon("jLabel1.icon")); // NOI18N
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-
-        jButton1.setFont(resourceMap.getFont("jButton1.font")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(batmanButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(olsrdButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(olsrdButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(batmanButton)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(olsrdButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(mySQLButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(openExampleFile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(openFileButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(secondLabel))
-                    .addComponent(jLabel2))
-                .addGap(8, 8, 8))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(jButton1)
-                .addContainerGap(134, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(secondLabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(secondLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(olsrdButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mySQLButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(openFileButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(openExampleFile)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -156,7 +190,7 @@ public class Start extends javax.swing.JFrame {
     private void olsrdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_olsrdButtonActionPerformed
         //new Layer(new OlsrdDataSource().init());
         CheckActiveDataSource check = new CheckActiveDataSource();
-        MySQLCredential mysqlcr=new MySQLCredential();
+        MySQLCredential mysqlcr=new MySQLCredential(new OlsrdDataSource());
         mysqlcr.setVisible(true);
     }//GEN-LAST:event_olsrdButtonActionPerformed
 
@@ -185,7 +219,7 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_openFileButtonActionPerformed
 
     private void openExampleFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openExampleFileActionPerformed
-        new LatLonJsDataSource().init("file:///Users/Stefano/Desktop/FreimapSte/Freimap/hg/src/data/latlon.js");
+        new LatLonJsDataSource().init("http://www.stefanopilla.it/freimap/Datasource/latlon.js");
         this.dispose();
 
     }//GEN-LAST:event_openExampleFileActionPerformed
@@ -194,6 +228,10 @@ public class Start extends javax.swing.JFrame {
         new CredentialRequired().setVisible(true);
             this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_mySQLButtonActionPerformed
+
+    private void batmanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batmanButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_batmanButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,9 +245,10 @@ public class Start extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton batmanButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton mySQLButton;
     private javax.swing.JButton olsrdButton;
     private javax.swing.JButton openExampleFile;

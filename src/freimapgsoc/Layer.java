@@ -5,6 +5,7 @@
 package freimapgsoc;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -14,23 +15,38 @@ import java.util.Vector;
  */
 public class Layer {
 
-    public Layer(HashMap<Vector<MapNode>, Vector<Link>> config,DataSource datasource) {
-        this.currentDS=datasource;
+    public Layer(HashMap<Vector<MapNode>, Vector<Link>> config, DataSource datasource) {
+        this.currentDS = datasource;
         this.data = config;
-        this.id=generateNewID();
-        createLayer(data,id);
+        this.id = generateNewID();
+        System.out.println("Creating new Layer with id: " + id);
+        createLayer(data, datasource, id);
     }
+    /*
+    public Layer(HashMap<Object, Vector<Link>> config, DataSource datasource) {
+        this.currentDS = datasource;
+        this.dataOlsrd = config;
+        this.id = generateNewID();
+        System.out.println("Creating new Layer with id: " + id);
+        createLayer(data, datasource, id);
+    }
+     *
+     */
 
-    public int getCurrentLayer() {
+    public int getCurrentLayerId() {
         return this.id;
     }
 
-    public HashMap<Vector<MapNode>, Vector<Link>> getData(){
+    public HashMap<Vector<MapNode>, Vector<Link>> getData() {
         return this.data;
     }
 
     public HashMap<Integer, HashMap<Vector<MapNode>, Vector<Link>>> getLayers() {
         return this.layers;
+    }
+
+    public DataSource getCurrentDataSource(){
+        return currentDS;
     }
 
     /**
@@ -43,12 +59,20 @@ public class Layer {
         return false;
     }
 
-    public void createLayer(HashMap<Vector<MapNode>, Vector<Link>> data, int id) {
+    public void createLayer(HashMap<Vector<MapNode>, Vector<Link>> data, DataSource ds, int id) {
         try {
             //Query to the MySql Server to store the data
-
             initLayout();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
+    }
 
+    public void createLayer() {
+        try {
+            //Query to the MySql Server to store the data
+            initLayout();
         } catch (Exception ex) {
             ex.printStackTrace();
             return;
@@ -67,43 +91,43 @@ public class Layer {
         }
     }
 
-    public Vector<MapNode> getCurrentNodes(){
-      return currentDS.getNodeList();
+    public Vector<MapNode> getCurrentNodes() {
+        return currentDS.getNodeList();
     }
 
     public MapNode getNodeByName(String name) {
-        try{
-        for (int i = 0; i < currentDS.getNodeList().size(); i++) {
-            if (currentDS.getNodeList().elementAt(i).name.equals(name)) {
-                return currentDS.getNodeList().elementAt(i);
+        try {
+            for (int i = 0; i < currentDS.getNodeList().size(); i++) {
+                if (currentDS.getNodeList().elementAt(i).name.equals(name)) {
+                    return currentDS.getNodeList().elementAt(i);
+                }
             }
-        }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-                return null;
+        return null;
 
-        }
+    }
 
-
-    public Vector<Link> getCurrentLinks(){
+    public Vector<Link> getCurrentLinks() {
         return currentDS.getLinks();
     }
 
     public void initLayout() {
-            new MainLayer(this).setVisible(true);
+        new MainLayer(this).setVisible(true);
     }
 
-    public int generateNewID(){
+    public int generateNewID() {
         return id++;
     }
-
     public int id;
     public Vector<MapNode> nodes = new Vector<MapNode>();
     public Vector<Link> links = new Vector<Link>();
-    public HashMap<Vector<MapNode>, Vector<Link>> data=null;
-    public DataSource currentDS=null;
-    public HashMap<Integer, HashMap<Vector<MapNode>, Vector<Link>>> layers=null;
+    public HashMap<Object, Vector<Link>> dataOlsrd = null;
+    public HashMap<Vector<MapNode>, Vector<Link>> data = null;
+    public DataSource currentDS = null;
+    public HashMap<Integer, HashMap<Vector<MapNode>, Vector<Link>>> layers = null;
+
 }
 
 

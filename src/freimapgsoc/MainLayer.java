@@ -88,7 +88,6 @@ public class MainLayer extends javax.swing.JFrame {
         this.l = l;
         //public TileFactoryInfo(int minimumZoomLevel,int maximumZoomLevel,int totalMapZoom,int tileSize,boolean xr2l,boolean yt2b,String baseURL,String xparam,String yparam,String zparam)(
         TileFactoryInfo info = new TileFactoryInfo(0, maxzoomlevel, totalmapzoom, 256, false, false, "http://tile.openstreetmap.org", "x", "y", "z") {
-
             public String getTileUrl(int x, int y, int zoom) {
                 zoom = maxzoomlevel - zoom;
                 return this.baseURL + "/" + zoom + "/" + x + "/" + y + ".png";
@@ -106,7 +105,7 @@ public class MainLayer extends javax.swing.JFrame {
         initComponents();
         initMapComponents();
         printDateTime();
-        initData();
+        initData(l.currentDS);
         drawAll(l.getCurrentLinks(), l.getCurrentNodes());
         System.out.println("NodeList:" + l.getCurrentNodes());
         System.out.println("LinksList:" + l.getCurrentLinks());
@@ -114,7 +113,8 @@ public class MainLayer extends javax.swing.JFrame {
         writefirstAvailableTime();
     }
 
-    public void initData() {
+    public void initData(DataSource ds) {
+
         try {
             for (int i = 0; i < l.getCurrentNodes().size(); i++) {
                 System.out.println(l.getCurrentNodes().elementAt(i).toString());

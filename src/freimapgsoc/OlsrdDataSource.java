@@ -44,29 +44,40 @@ public class OlsrdDataSource implements DataSource {
     String nodefile;
     MysqlDataSource mysqlSource;
     xmlDataSource ffmdSource;
-    DataSource nodeSource;
     String sNodeSource;
-    String username, password, host, port;
+    String username, password, mysqlhost, mysqlport;
     Connection c = null;
     ResultSet rss;
     Statement stmt;
+    Layer l=null;
+
+    /*
+     * ****************************************
+    ****************************************
+    If I know some nodes I've to add these nodes in the knownodes with a method in the constructor!!!
+     * After I can check the presence of the node with the method getNodeByName in the DotListener Class...!!
+     * ****************************************
+     * ****************************************
+     */
 
     public OlsrdDataSource() {
     }
 
+
     public OlsrdDataSource(String host, String port, String username, String password) {
-        this.host = host;
-        this.port = port;
+        this.mysqlhost = host;
+        this.mysqlport = port;
         this.username = username;
         this.password = password;
+        init();
     }
 
     public boolean setConnection() {
         try {
-            System.out.println("Getting connection...");
+            System.out.println("Getting connection to MySql Database at " + mysqlhost + " " + ":" + mysqlport + "");
             Thread.sleep(1000);
             Class.forName("com.mysql.jdbc.Driver");
-            c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port, username, password);
+            c = (Connection) DriverManager.getConnection("jdbc:mysql://" + mysqlhost + ":" + mysqlport, username, password);
             if (!c.isClosed()) {
                 return true;
             } else {
@@ -82,51 +93,16 @@ public class OlsrdDataSource implements DataSource {
         return false;
     }
 
-    public void init(HashMap<String, Object> conf) {
-        String host = "localhost";
-        int port = 2004;
-
-        // nodefile = Configurator.getS("nodefile", conf);
-        //System.out.println("nodefile = "+nodefile);
-
-        //sNodeSource = Configurator.getS("nodesource", conf);
-
-        if (port == -1) {
-            System.err.println("invalid port parameter " + port);
-            System.exit(1);
-        }
-        dot = new DotPluginListener(host, port, this);
-    }
-
-    /**
-     * public void init(HashMap<String, Object> conf) {
-     * String host = Configurator.getS("host", conf);
-     * int port = Configurator.getI("port", conf);
-     *
-     * nodefile = Configurator.getS("nodefile", conf);
-     * //System.out.println("nodefile = "+nodefile);
-     *
-     * sNodeSource = Configurator.getS("nodesource", conf);
-     *
-     * if (port==-1) {
-     * System.err.println("invalid port parameter "+port);
-     * System.exit(1);
-     * }
-     * dot = new DotPluginListener(host, port, this);
-     * }
-     * @return
-     */
-    @SuppressWarnings("unchecked")
+    @Override
     public Vector<MapNode> getNodeList() {
         if (setConnection()) {
-            if ((nodeSource == null) && (sNodeSource != null)) {
-                System.out.println("nodeSource in OlsrdDataSource.java:" + nodeSource);
-                //nodeSource=.get(sNodeSource);
+            if ((this == null)) {
+                System.out.println("nodeSource in OlsrdDataSource.java:" + l.getCurrentDataSource().getNodeList());
                 sNodeSource = null;
             }
 
-            if (nodeSource != null) {
-                Vector<MapNode> nodes = nodeSource.getNodeList();
+            if (this != null) {
+                Vector<MapNode> nodes = this.getNodeList();
                 for (Enumeration<String> enu = generatedNodes.keys(); enu.hasMoreElements();) {
                     nodes.add(generatedNodes.get(enu.nextElement()));
                 }
@@ -152,9 +128,10 @@ public class OlsrdDataSource implements DataSource {
         return null;
     }
 
+    @Override
     public MapNode getNodeByName(String id) {
-        if (nodeSource != null) {
-            MapNode x = nodeSource.getNodeByName(id);
+        if (this != null) {
+            MapNode x = this.getNodeByIp(id);
             if (x != null) {
                 return x;
             }
@@ -168,8 +145,8 @@ public class OlsrdDataSource implements DataSource {
     }
 
     public HashMap<String, Float> getNodeAvailability(long time) {
-        if (nodeSource != null) {
-            return nodeSource.getNodeAvailability(time);
+        if (this.getNodeList() != null) {
+            return this.getNodeAvailability(time);
         } else {
             return new HashMap<String, Float>(); //empty
         }
@@ -271,10 +248,6 @@ public class OlsrdDataSource implements DataSource {
         }
     }
 
-    public void init(String path) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public MapNode getNodeById(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -302,16 +275,33 @@ public class OlsrdDataSource implements DataSource {
      */
     @Override
     public MapNode getNodeByIp(String ip) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if()
+        try{
+            return getNodeByIp(ip);
+        }catch (Exception e){
+            return null;
+        }
+        
     }
 
     /**
      *
      * @return
      */
-    @Override
     public void init() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String host = "localhost";
+        int port = 2004;
+
+        // nodefile = Configurator.getS("nodefile", conf);
+        //System.out.println("nodefile = "+nodefile);
+
+        //sNodeSource = Configurator.getS("nodesource", conf);
+
+        if (port == -1) {
+            System.err.println("invalid port parameter " + port);
+            System.exit(1);
+        }
+        dot = new DotPluginListener(host, port, this);
     }
 
     /**
@@ -347,11 +337,14 @@ public class OlsrdDataSource implements DataSource {
             this.host = host;
             this.port = port;
             System.setProperty("java.net.IPv4Stack", "true"); //not necessary, but works around a bug in older java versions.
+            System.out.println("DotPluginListener correctly started on socket: " + host + ":" + port);
+            this.run();
         }
 
         //DotDraw Methods that open a Socket on the port 2004 and listen the traffic
         public void run() {
             Vector<Link> linkData = null;
+            Vector<MapNode> nodeData = null;
             try {
                 InetSocketAddress destination = new InetSocketAddress(host, port);
                 while (true) { //reconnect upon disconnection
@@ -373,11 +366,11 @@ public class OlsrdDataSource implements DataSource {
                             } else if ((linkData != null) && (line.length() > 0) && (line.charAt(0) == '"')) {
                                 StringTokenizer st = new StringTokenizer(line, "\"", false);
                                 String from = st.nextToken();
-                                //if (from.indexOf("/")>-1) { from = from.substring(0, from.indexOf("/")); }
+                                if (from.indexOf("/")>-1) { from = from.substring(0, from.indexOf("/")); }
                                 st.nextToken();
                                 if (st.hasMoreTokens()) { //otherwise it's a gateway node!
                                     String to = st.nextToken();
-                                    //if (to.indexOf("/")>-1) { to = to.substring(0, to.indexOf("/")); }
+                                    if (to.indexOf("/")>-1) { to = to.substring(0, to.indexOf("/")); }
                                     st.nextToken();
                                     String setx = st.nextToken();
                                     if (setx.equals("INFINITE")) {
@@ -385,23 +378,30 @@ public class OlsrdDataSource implements DataSource {
                                     }
                                     boolean hna = setx.equals("HNA");
                                     float etx = hna ? 0 : Float.parseFloat(setx);
-                                    MapNode nfrom = getNodeByName(from),
+                                    System.out.println("Node From:"+from);
+                                    System.out.println("Node To:"+to);
+                                   MapNode nfrom = getNodeByName(from),
                                             nto = getNodeByName(to);
+                                   //here the code that try to get MapNode name from NameServicePlugin
                                     if (nfrom == null) {
                                         nfrom = new MapNode(from);
-                                        generatedNodes.put(from, nfrom);
+                                        nodeData.add(nfrom);
                                         if (listener != null) {
                                             listener.nodeListUpdate(nfrom);
                                         }
                                     }
                                     if (nto == null) {
                                         nto = new MapNode(to);
-                                        generatedNodes.put(to, nto);
+                                        nodeData.add(nto);
                                         if (listener != null) {
                                             listener.nodeListUpdate(nto);
                                         }
                                     }
                                     linkData.add(new Link(nfrom, nto, etx, hna));
+                                    HashMap<Vector<MapNode>, Vector<Link>> hm = new HashMap<Vector<MapNode>, Vector<Link>>();
+                                    hm.put(nodeData,linkData);
+                                    System.out.println("Creating new Layer...");
+                                    l = new Layer(hm, this.parent);
                                 }
                             }
                         }

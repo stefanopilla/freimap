@@ -48,7 +48,8 @@ import javax.swing.JOptionPane;
 public class MySQLCredential extends javax.swing.JFrame {
 
     /** Creates new form LatLonJsToMySQL */
-    public MySQLCredential() {
+    public MySQLCredential(DataSource datas) {
+        this.datas=datas;
         initComponents();
     }
 
@@ -127,18 +128,19 @@ public class MySQLCredential extends javax.swing.JFrame {
         jLabel3.setText("UserName:");
         jLabel3.setName("jLabel3"); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 10));
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel5.setText("Host:");
         jLabel5.setName("jLabel5"); // NOI18N
 
-        hostText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        hostText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         hostText.setName("hostText"); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         jLabel4.setText("Avaible Database:");
         jLabel4.setName("jLabel4"); // NOI18N
 
-        cancelButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        cancelButton.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/Error.png"))); // NOI18N
         cancelButton.setText("Cancel");
         cancelButton.setName("cancelButton"); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,8 +149,9 @@ public class MySQLCredential extends javax.swing.JFrame {
             }
         });
 
-        startButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        startButton.setText("Copy All");
+        startButton.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        startButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/statuok.png"))); // NOI18N
+        startButton.setText("Start");
         startButton.setName("startButton"); // NOI18N
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,11 +159,12 @@ public class MySQLCredential extends javax.swing.JFrame {
             }
         });
 
-        logLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10));
+        logLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         logLabel.setText(" ");
         logLabel.setName("logLabel"); // NOI18N
 
-        checkconnButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        checkconnButton.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        checkconnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/zoom.png"))); // NOI18N
         checkconnButton.setText("Load Avaible Database");
         checkconnButton.setName("checkconnButton"); // NOI18N
         checkconnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -169,10 +173,13 @@ public class MySQLCredential extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/download.png"))); // NOI18N
         jLabel7.setText("Insert MySQL credential to store the data of the Mesh Network:");
         jLabel7.setName("jLabel7"); // NOI18N
 
-        showLog.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        showLog.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        showLog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/txtdocs.png"))); // NOI18N
         showLog.setText("Show Log");
         showLog.setName("showLog"); // NOI18N
         showLog.addActionListener(new java.awt.event.ActionListener() {
@@ -184,11 +191,12 @@ public class MySQLCredential extends javax.swing.JFrame {
         jLabel6.setText(":");
         jLabel6.setName("jLabel6"); // NOI18N
 
-        portText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        portText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         portText.setText("3306");
         portText.setName("portText"); // NOI18N
 
-        exampleButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        exampleButton.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        exampleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/clone.png"))); // NOI18N
         exampleButton.setText("Example");
         exampleButton.setName("exampleButton"); // NOI18N
         exampleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -214,6 +222,7 @@ public class MySQLCredential extends javax.swing.JFrame {
         newDbText.setName("newDbText"); // NOI18N
 
         continueButton.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        continueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/statuok.png"))); // NOI18N
         continueButton.setText("Continue without store data");
         continueButton.setName("continueButton"); // NOI18N
         continueButton.addActionListener(new java.awt.event.ActionListener() {
@@ -226,97 +235,104 @@ public class MySQLCredential extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(78, 78, 78)
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(16, 16, 16)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(layout.createSequentialGroup()
-                                        .add(81, 81, 81)
-                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                            .add(org.jdesktop.layout.GroupLayout.LEADING, exampleButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .add(org.jdesktop.layout.GroupLayout.LEADING, checkconnButton)
-                                            .add(continueButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 177, Short.MAX_VALUE)))
-                                    .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 315, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(layout.createSequentialGroup()
-                                        .add(newDb)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(newDbText)))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                                .add(24, 24, 24)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(dbText, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, userText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, passwordText)
-                                    .add(hostText))
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel7)
                                     .add(layout.createSequentialGroup()
-                                        .add(5, 5, 5)
-                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                            .add(startButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .add(showLog, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                            .add(cancelButton)))
-                                    .add(layout.createSequentialGroup()
-                                        .add(jLabel6)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(portText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                                .add(11, 11, 11))))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel7))
-                .add(71, 71, 71))
+                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(layout.createSequentialGroup()
+                                                .add(newDb)
+                                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                                .add(newDbText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED))
+                                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                                    .add(dbText, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, userText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, passwordText)
+                                                    .add(hostText))
+                                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                                    .add(layout.createSequentialGroup()
+                                                        .add(jLabel6)
+                                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                                        .add(portText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                                    .add(layout.createSequentialGroup()
+                                                        .add(7, 7, 7)
+                                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                                            .add(cancelButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                                                            .add(startButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))))))
+                                        .add(16, 16, 16))))
+                            .add(layout.createSequentialGroup()
+                                .add(33, 33, 33)
+                                .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 320, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 56, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(26, 26, 26))
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(layout.createSequentialGroup()
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 112, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(continueButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 213, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(layout.createSequentialGroup()
+                                .add(checkconnButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(exampleButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(showLog, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .add(110, 110, 110))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(24, 24, 24)
+                .add(30, 30, 30)
                 .add(jLabel7)
-                .add(26, 26, 26)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(hostText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel5)
+                    .add(jLabel6)
+                    .add(portText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(hostText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jLabel5)
-                            .add(jLabel6)
-                            .add(portText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel3)
                             .add(userText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel2)
-                            .add(passwordText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(passwordText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(cancelButton))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel4)
                             .add(dbText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(layout.createSequentialGroup()
-                        .add(startButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(showLog)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(cancelButton)))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, startButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(newDb)
                     .add(newDbText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(24, 24, 24)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(checkconnButton)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(exampleButton)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(checkconnButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 35, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(exampleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 35, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(showLog))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(continueButton)
-                .add(13, 13, 13))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -332,18 +348,22 @@ public class MySQLCredential extends javax.swing.JFrame {
         port = portText.getText();
         username = userText.getText();
         password = passwordText.getText();
+         try{
         if (newDb.isSelected()) {
             database = newDbText.getText();
-        } else {
+        } else {   
             database = dbText.getSelectedItem().toString();
-        }
+            }
+            }catch(Exception e){
+                logLabel.setText("Please choose a least one database or insert a new one!!");
+            }
+            
         Component source = (Component) evt.getSource();
-        int i = confirmPane.showConfirmDialog(source, "Are you sure?", "Database Replace", JOptionPane.YES_NO_OPTION);
+        int i = confirmPane.showConfirmDialog(source, "Are you sure?", "Database Replacement", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
             try {
                 createTables();
-                Thread.sleep(3000);
-                new OlsrdDataSource(host,port,username,password).init();
+                new OlsrdDataSource(host,port,username,password);
             } catch (ClassNotFoundException ex) {
                 logLabel.setText(ex.getMessage());
                 Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -491,7 +511,6 @@ public class MySQLCredential extends javax.swing.JFrame {
             System.out.println(query4);
             System.out.println(query5);
 
-
             stmt2.executeUpdate(queryDel);
             errors.put("DATABASE_QUERY:", queryDel + "\n");
 
@@ -524,7 +543,6 @@ public class MySQLCredential extends javax.swing.JFrame {
 
             errors.put("DATABASE:", "Now Adding nodes and Links....! This will take a while...\n");
             logLabel.setText("Now Adding nodes and Links....! This will take a while..");
-            Thread.sleep(1500);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -554,7 +572,7 @@ public class MySQLCredential extends javax.swing.JFrame {
 
     private void exampleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exampleButtonActionPerformed
         userText.setText("root");
-        passwordText.setText("CiscoSte5785");
+        passwordText.setText("");
         hostText.setText("127.0.0.1");
     }//GEN-LAST:event_exampleButtonActionPerformed
 
@@ -652,6 +670,7 @@ public class MySQLCredential extends javax.swing.JFrame {
     String port;
     JOptionPane optionPane = null;
     String path;
+    private DataSource datas;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton checkconnButton;
