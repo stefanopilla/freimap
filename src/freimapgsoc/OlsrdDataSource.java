@@ -45,36 +45,35 @@ public class OlsrdDataSource implements DataSource {
     MysqlDataSource mysqlSource;
     xmlDataSource ffmdSource;
     String sNodeSource;
-    String username, password, mysqlhost, mysqlport;
+    String username, password, mysqlhost, mysqlport, database;
     Connection c = null;
-    ResultSet rss;
-    Statement stmt;
-    Layer l=null;
+    ResultSet rss, rss2;
+    Statement stmt, stmt2;
+    Layer l = null;
 
     /*
      * ****************************************
-    ****************************************
+     ****************************************
     If I know some nodes I've to add these nodes in the knownodes with a method in the constructor!!!
      * After I can check the presence of the node with the method getNodeByName in the DotListener Class...!!
      * ****************************************
      * ****************************************
      */
-
     public OlsrdDataSource() {
     }
 
-
-    public OlsrdDataSource(String host, String port, String username, String password) {
+    public OlsrdDataSource(String host, String port, String username, String password, String database) {
         this.mysqlhost = host;
         this.mysqlport = port;
         this.username = username;
         this.password = password;
+        this.database = database;
         init();
     }
 
     public boolean setConnection() {
         try {
-            System.out.println("Getting connection to MySql Database at " + mysqlhost + " " + ":" + mysqlport + "");
+            System.out.println("SetConnection Getting connection to MySql Database at " + mysqlhost + " " + ":" + mysqlport + "");
             Thread.sleep(1000);
             Class.forName("com.mysql.jdbc.Driver");
             c = (Connection) DriverManager.getConnection("jdbc:mysql://" + mysqlhost + ":" + mysqlport, username, password);
@@ -129,19 +128,20 @@ public class OlsrdDataSource implements DataSource {
     }
 
     @Override
-    public MapNode getNodeByName(String id) {
-        if (this != null) {
-            MapNode x = this.getNodeByIp(id);
+    public MapNode getNodeByName(String name) {
+        System.out.println("knownNodes:"+knownNodes);
+        if (knownNodes != null) {
+            System.out.println("getNodeByName --> KnowsNodes != null");
+            MapNode x = knownNodes.get(name);
             if (x != null) {
                 return x;
             }
-        }
-        MapNode node = knownNodes.get(id);
-        if (node != null) {
-            return node;
         } else {
-            return generatedNodes.get(id);
+          System.out.println("getNodeByName --> KnowsNodes == null");
+
+            return null;
         }
+        return null;
     }
 
     public HashMap<String, Float> getNodeAvailability(long time) {
@@ -275,13 +275,12 @@ public class OlsrdDataSource implements DataSource {
      */
     @Override
     public MapNode getNodeByIp(String ip) {
-        if()
-        try{
+        try {
             return getNodeByIp(ip);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
-        
+
     }
 
     /**
@@ -292,16 +291,52 @@ public class OlsrdDataSource implements DataSource {
         String host = "localhost";
         int port = 2004;
 
-        // nodefile = Configurator.getS("nodefile", conf);
-        //System.out.println("nodefile = "+nodefile);
-
-        //sNodeSource = Configurator.getS("nodesource", conf);
+        knownNodes = getNodesfromDB(); //QUERY TO THE DATABASE TO RETRIVE THE KNOW NODES FROM THE MAPNODE TABLE
 
         if (port == -1) {
             System.err.println("invalid port parameter " + port);
             System.exit(1);
         }
         dot = new DotPluginListener(host, port, this);
+    }
+
+    public Hashtable<String, MapNode> getNodesfromDB() {
+        try {
+            System.out.println("Getting connection to MySql Database " + database + " at " + mysqlhost + " " + ":" + mysqlport + "");
+            Class.forName("com.mysql.jdbc.Driver");
+            c = (Connection) DriverManager.getConnection("jdbc:mysql://" + mysqlhost + ":" + mysqlport + "/" + database, username, password);
+            if (!c.isClosed()) {
+                System.out.println("Connected!");
+                stmt = (Statement) c.createStatement();
+                stmt2 = (Statement) c.createStatement();
+                String query="SELECT * FROM NODES";
+                rss = stmt.executeQuery(query);
+                String query2;
+                while (rss.next()) {
+                    query2 = "SELECT intIp FROM Interfaces WHERE mainIp = \"" + rss.getString("ip") + "\"";
+                    System.out.println(query2);
+                    rss2 = stmt2.executeQuery(query2);
+                    Vector<String> ifaces = new Vector<String>();
+                    while (rss2.next()) {
+                        ifaces.add(rss2.getString("IntIp"));
+                    }
+                    MapNode node = new MapNode(rss.getString("ip"), rss.getString("name"), rss.getDouble("lat"), rss.getDouble("lon"), ifaces, rss.getString("uptime"));
+                    System.out.println(node.ip);
+                    System.out.println(node.lat);
+                    System.out.println(node.lon);
+                    System.out.println(node.name);
+                   System.out.println(node.inter);
+                    knownNodes.put(node.name, node);
+                }
+            } else {
+                return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     /**
@@ -366,11 +401,15 @@ public class OlsrdDataSource implements DataSource {
                             } else if ((linkData != null) && (line.length() > 0) && (line.charAt(0) == '"')) {
                                 StringTokenizer st = new StringTokenizer(line, "\"", false);
                                 String from = st.nextToken();
-                                if (from.indexOf("/")>-1) { from = from.substring(0, from.indexOf("/")); }
+                                if (from.indexOf("/") > -1) {
+                                    from = from.substring(0, from.indexOf("/"));
+                                }
                                 st.nextToken();
                                 if (st.hasMoreTokens()) { //otherwise it's a gateway node!
                                     String to = st.nextToken();
-                                    if (to.indexOf("/")>-1) { to = to.substring(0, to.indexOf("/")); }
+                                    if (to.indexOf("/") > -1) {
+                                        to = to.substring(0, to.indexOf("/"));
+                                    }
                                     st.nextToken();
                                     String setx = st.nextToken();
                                     if (setx.equals("INFINITE")) {
@@ -378,14 +417,14 @@ public class OlsrdDataSource implements DataSource {
                                     }
                                     boolean hna = setx.equals("HNA");
                                     float etx = hna ? 0 : Float.parseFloat(setx);
-                                    System.out.println("Node From:"+from);
-                                    System.out.println("Node To:"+to);
-                                   MapNode nfrom = getNodeByName(from),
-                                            nto = getNodeByName(to);
-                                   //here the code that try to get MapNode name from NameServicePlugin
+                                    System.out.println("Node From:" + from);
+                                    System.out.println("Node To:" + to);
+                                    MapNode nfrom = getNodeByName(from);
+                                    MapNode nto = getNodeByName(to);
                                     if (nfrom == null) {
-                                        nfrom = new MapNode(from);
-                                        nodeData.add(nfrom);
+                                        nodeData.add(new MapNode(from));
+                                        System.out.println(nfrom.ip);
+                                        System.out.println(nfrom.name);
                                         if (listener != null) {
                                             listener.nodeListUpdate(nfrom);
                                         }
@@ -399,7 +438,7 @@ public class OlsrdDataSource implements DataSource {
                                     }
                                     linkData.add(new Link(nfrom, nto, etx, hna));
                                     HashMap<Vector<MapNode>, Vector<Link>> hm = new HashMap<Vector<MapNode>, Vector<Link>>();
-                                    hm.put(nodeData,linkData);
+                                    hm.put(nodeData, linkData);
                                     System.out.println("Creating new Layer...");
                                     l = new Layer(hm, this.parent);
                                 }

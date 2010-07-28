@@ -362,6 +362,7 @@ public class LatLonJsToMySQL extends javax.swing.JFrame {
         if (i == 0) {
             try {
                 createTables();
+                parseFile(path);
             } catch (ClassNotFoundException ex) {
                 logLabel.setText(ex.getMessage());
                 Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);

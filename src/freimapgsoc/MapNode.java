@@ -20,20 +20,23 @@ public class MapNode implements Comparable, Serializable {
 
     public MapNode(String ip) {
         this(ip, "noname"); //use "noname" as a name
+        System.out.println("New MapNode Created from this(ip, noname)");
     }
 
     public MapNode(String ip, String name) {
         this.name = name;
         this.ip = ip;
-        this.lat=DEFAULT_LAT;
-        this.lon=DEFAULT_LON;
-        this.uptime="00:00:00";
+        this.lat = DEFAULT_LAT;
+        this.lon = DEFAULT_LON;
+        this.uptime = "00:00:00";
+        System.out.println("New MapNode Created from MapNode(ip, name)");
+
     }
 
     public MapNode(String id, double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
-                this.uptime="00:00:00";
+        this.uptime = "00:00:00";
 
     }
 
@@ -41,7 +44,7 @@ public class MapNode implements Comparable, Serializable {
         this.name = name;
         this.lat = lat;
         this.lon = lon;
-        this.uptime="00:00:00";
+        this.uptime = "00:00:00";
     }
 
     public MapNode(String ip, String name, String uptime) {
@@ -50,15 +53,23 @@ public class MapNode implements Comparable, Serializable {
         this.uptime = uptime;
     }
 
-    public MapNode(String ip, String name, double lat, double lon, Vector<String> ifaces){
-        this.name=name;
-                this.ip=ip;
-                this.lat=lat;
-                this.lon=lon;
-                this.inter=ifaces;
-                this.uptime="00:00:00";
+     public MapNode(String ip, String name, double lat, double lon, Vector<String> ifaces, String uptime) {
+        this.name = name;
+        this.ip = ip;
+        this.lat = lat;
+        this.lon = lon;
+        this.inter = ifaces;
+        this.uptime = uptime;
     }
 
+    public MapNode(String ip, String name, double lat, double lon, Vector<String> ifaces) {
+        this.name = name;
+        this.ip = ip;
+        this.lat = lat;
+        this.lon = lon;
+        this.inter = ifaces;
+        this.uptime = "00:00:00";
+    }
 
     public MapNode(String ip, String name, String uptime, Connections conn) {
         this.name = name;
