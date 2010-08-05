@@ -15,6 +15,11 @@ import java.util.Vector;
  */
 public class Layer {
 
+    public Layer() {
+        System.out.println("Creating one unique Layer with no id");
+        createLayer();
+    }
+
     public Layer(HashMap<Vector<MapNode>, Vector<Link>> config, DataSource datasource) {
         this.currentDS = datasource;
         this.data = config;

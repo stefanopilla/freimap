@@ -79,6 +79,8 @@ public class CheckActiveDataSource {
             String s = (String) JOptionPane.showInputDialog(null, "Please elect interface connected to OLSR Network: ", "Interface Selection", JOptionPane.PLAIN_MESSAGE, null, poss, poss[0]);
             if ((s != null) && (s.length() > 0)) {
                 return s;
+            }else if (s== null){
+
             }
         } catch (IOException ex) {
             Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);

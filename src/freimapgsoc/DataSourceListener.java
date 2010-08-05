@@ -22,7 +22,6 @@
 
 package freimapgsoc;
 
-import java.util.*;
 
 public interface DataSourceListener {
   public void timeRangeAvailable(long from, long until);

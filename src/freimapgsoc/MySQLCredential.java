@@ -676,7 +676,7 @@ public class MySQLCredential extends javax.swing.JFrame {
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
         OlsrdDataSource noStore = new OlsrdDataSource();
-        noStore.init();
+        noStore.init_nostore();
     }//GEN-LAST:event_continueButtonActionPerformed
 
     private void resumeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeButtonActionPerformed

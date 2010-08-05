@@ -19,93 +19,56 @@ public class MapNode implements Comparable, Serializable {
     }
 
     public MapNode(String ip) {
-        this(ip, "noname"); //use "noname" as a name
+        this(ip,  "noname",  "00:00:00", null, null,  41.86378, 12.55347, null);
         System.out.println("New MapNode Created from this(ip, noname)");
     }
 
     public MapNode(String ip, String name) {
-        this.name = name;
-        this.ip = ip;
-        this.lat = DEFAULT_LAT;
-        this.lon = DEFAULT_LON;
-        this.uptime = "00:00:00";
+        this(ip,  name,  "00:00:00", null, null, 41.86378, 12.55347,null);
         System.out.println("New MapNode Created from MapNode(ip, name)");
 
     }
 
-    public MapNode(String id, double lat, double lon) {
-        this.lat = lat;
-        this.lon = lon;
-        this.uptime = "00:00:00";
+    public MapNode(String ip, double lat, double lon) {
+        this(ip,  "noname",  "00:00:00", null, null, lat, lon,null);
+
 
     }
 
     public MapNode(String ip, String name, double lat, double lon) {
-        this.name = name;
-        this.lat = lat;
-        this.lon = lon;
-        this.uptime = "00:00:00";
+        this(ip,  name,  "00:00:00", null, null, lat, lon,null);
+
     }
 
     public MapNode(String ip, String name, String uptime) {
-        this.name = name;
-        this.ip = ip;
-        this.uptime = uptime;
+        this(ip,  name,  uptime, null, null, 41.86378, 12.55347,null);
+
     }
 
-     public MapNode(String ip, String name, double lat, double lon, Vector<String> ifaces, String uptime) {
-        this.name = name;
-        this.ip = ip;
-        this.lat = lat;
-        this.lon = lon;
-        this.inter = ifaces;
-        this.uptime = uptime;
+     public MapNode(String ip, String name, String uptime, Vector<String> ifaces, double lat, double lon) {
+         this(ip,  name,  uptime, null, ifaces, lat, lon, null);
+
     }
 
-    public MapNode(String ip, String name, double lat, double lon, Vector<String> ifaces) {
-        this.name = name;
-        this.ip = ip;
-        this.lat = lat;
-        this.lon = lon;
-        this.inter = ifaces;
-        this.uptime = "00:00:00";
+    public MapNode(String ip, String name,  Vector<String> ifaces, double lat, double lon) {
+        this(ip,  name,  "00:00:00", null, ifaces, lat, lon, null);
     }
 
     public MapNode(String ip, String name, String uptime, Connections conn) {
-        this.name = name;
-        this.ip = ip;
-        this.uptime = uptime;
-        this.conn = conn;
+        this(ip,  name,  uptime, conn, null, 41.86378, 12.55347, null);
+
     }
 
     public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces) {
-        this.name = name;
-        this.ip = ip;
-        this.uptime = uptime;
-        this.conn = conn;
-        this.inter = ifaces;
+        this(ip,  name,  uptime, conn, ifaces, 41.86378, 12.55347, null);
     }
 
     public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces, double lat, double lon) {
-        this.name = name;
-        this.ip = ip;
-        this.uptime = uptime;
-        this.conn = conn;
-        this.inter = ifaces;
-        this.lat = lat;
-        this.lon = lon;
-
+        this(ip,  name,  uptime, conn, ifaces, lat, lon, null);
     }
 
-    public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces, double lon) {
-        this.name = name;
-        this.ip = ip;
-        this.uptime = uptime;
-        this.conn = conn;
-        this.inter = ifaces;
-        this.lat = DEFAULT_LAT;
-        this.lon = DEFAULT_LON;
-
+    public MapNode(String ip, String name, String uptime, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
+        this(ip,  name,  uptime, null, ifaces, lat, lon, attributes);
     }
 
     public MapNode(String ip, String name, String uptime, Connections conn, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
@@ -119,15 +82,6 @@ public class MapNode implements Comparable, Serializable {
         this.attributes = attributes;
     }
 
-    public MapNode(String ip, String name, String uptime, Vector<String> ifaces, double lat, double lon, HashMap<String, Object> attributes) {
-        this.name = name;
-        this.ip = ip;
-        this.uptime = uptime;
-        this.inter = ifaces;
-        this.lat = lat;
-        this.lon = lon;
-        this.attributes = attributes;
-    }
     MapNode eqo;
 
     public boolean equals(Object o) {
@@ -166,8 +120,9 @@ public class MapNode implements Comparable, Serializable {
     public Vector<String> inter = new Vector<String>();
     public Services services;
     public InetAddress addr;
-    public double DEFAULT_LAT = Double.NaN;
-    public double DEFAULT_LON = Double.NaN;
+    //Now in ROME
+    public double DEFAULT_LAT=41.86378;
+    public double DEFAULT_LON=12.55347;
     public double lat;
     public double lon;
     public HashMap<String, Object> attributes = new HashMap<String, Object>();

@@ -25,20 +25,27 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import java.io.*;
 import java.net.*;
+import java.security.Timestamp;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OlsrdDataSource implements DataSource {
 
     DotPluginListener dot;
     DataSourceListener listener;
-    TreeMap<Long, Vector<Link>> data = new TreeMap<Long, Vector<Link>>();
-    Hashtable<String, MapNode> knownNodes = new Hashtable<String, MapNode>();
+    TreeMap<Long, Vector<Link>> LinkTimes = new TreeMap<Long, Vector<Link>>();
     Hashtable<String, MapNode> generatedNodes = new Hashtable<String, MapNode>();
+    Hashtable<String, MapNode> knownNodes = new Hashtable<String, MapNode>();
+    Hashtable<String, MapNode> knownNodesByIP = new Hashtable<String, MapNode>();
+    Hashtable<Long, Link> generatedLinks = new Hashtable<Long, Link>();
+    Hashtable<Long, Link> knownLinks = new Hashtable<Long, Link>();
     long lastUpdateTime = 1,
             firstUpdateTime = 1;
     String nodefile;
@@ -50,6 +57,8 @@ public class OlsrdDataSource implements DataSource {
     ResultSet rss, rss2;
     Statement stmt, stmt2;
     Layer l = null;
+    Vector<Link> linkData = null;
+    Vector<MapNode> nodeData = null;
 
     /*
      * ****************************************
@@ -127,23 +136,6 @@ public class OlsrdDataSource implements DataSource {
         return null;
     }
 
-    @Override
-    public MapNode getNodeByName(String name) {
-        System.out.println("knownNodes:"+knownNodes);
-        if (knownNodes != null) {
-            System.out.println("getNodeByName --> KnowsNodes != null");
-            MapNode x = knownNodes.get(name);
-            if (x != null) {
-                return x;
-            }
-        } else {
-          System.out.println("getNodeByName --> KnowsNodes == null");
-
-            return null;
-        }
-        return null;
-    }
-
     public HashMap<String, Float> getNodeAvailability(long time) {
         if (this.getNodeList() != null) {
             return this.getNodeAvailability(time);
@@ -170,7 +162,7 @@ public class OlsrdDataSource implements DataSource {
 
     public long getClosestUpdateTime(long time) {
         long cur = -1, closest = Long.MAX_VALUE;
-        Set<Long> keys = data.keySet();
+        Set<Long> keys = LinkTimes.keySet();
         Iterator<Long> ki = keys.iterator();
         while (ki.hasNext()) {
             cur = ki.next().longValue();
@@ -185,7 +177,7 @@ public class OlsrdDataSource implements DataSource {
     }
 
     public Vector<Link> getLinks(long time) {
-        Vector<Link> linkdata = data.get(new Long(time));
+        Vector<Link> linkdata = LinkTimes.get(new Long(time));
         return linkdata;
     }
     //threaded information fetching
@@ -201,10 +193,10 @@ public class OlsrdDataSource implements DataSource {
     public void getLinkCountProfile(MapNode node, NodeInfo info) {
         LinkedList<LinkCount> lcp = new LinkedList<LinkCount>();
         //select HIGH_PRIORITY unix_timestamp(clock) as time, count(*) as num_links from "+TABLE_LINKS+" where dest='"+node.id+"' group by clock"
-        Iterator<Long> times = data.keySet().iterator();
+        Iterator<Long> times = LinkTimes.keySet().iterator();
         while (times.hasNext()) {
             Long time = times.next();
-            Vector<Link> links = data.get(time);
+            Vector<Link> links = LinkTimes.get(time);
             int lc = 0;
             for (int i = 0; i < links.size(); i++) {
                 Link link = links.elementAt(i);
@@ -220,10 +212,10 @@ public class OlsrdDataSource implements DataSource {
     public void getLinkProfile(Link mylink, LinkInfo info) {
         LinkedList<LinkData> lp = new LinkedList<LinkData>();
         //select HIGH_PRIORITY unix_timestamp(clock) as time, quality from "+TABLE_LINKS+" where src='"+link.from.id+"' and dest='"+link.to.id+"'");
-        Iterator<Long> times = data.keySet().iterator();
+        Iterator<Long> times = LinkTimes.keySet().iterator();
         while (times.hasNext()) {
             Long time = times.next();
-            Vector<Link> links = data.get(time);
+            Vector<Link> links = LinkTimes.get(time);
             float quality = 0;
             for (int i = 0; i < links.size(); i++) {
                 Link link = links.elementAt(i);
@@ -237,8 +229,8 @@ public class OlsrdDataSource implements DataSource {
     }
 
     //private methods
-    private void addLinkData(long time, Vector<Link> linkData) {
-        data.put(new Long(time), linkData);
+    private void addLinkTimes(long time, Vector<Link> linkData) {
+        LinkTimes.put(new Long(time), linkData);
         if (firstUpdateTime == 1) {
             firstUpdateTime = time;
         }
@@ -275,12 +267,42 @@ public class OlsrdDataSource implements DataSource {
      */
     @Override
     public MapNode getNodeByIp(String ip) {
-        try {
-            return getNodeByIp(ip);
-        } catch (Exception e) {
+        System.out.println("knownNodes:" + knownNodes);
+        if (knownNodes != null) {
+            System.out.println("getNodeByIP --> knownNodesByIP != null");
+            MapNode x = knownNodes.get(ip);
+            System.out.println("IL NOME DEL NODO RESTITUITO DA GETNODEBYNAME E': "+x);
+            if (x != null) {
+                return x;
+            }
+        } else {
+            System.out.println("getNodeByIp --> knownNodesByIP == null");
             return null;
         }
+        return null;
 
+    }
+
+    @Override
+    public MapNode getNodeByName(String name) {
+        System.out.println("knownNodes:" + knownNodesByIP);
+        if (knownNodesByIP != null) {
+            System.out.println("getNodeByName --> knownNodesByIP != null");
+            MapNode x = knownNodesByIP.get(name);
+            System.out.println("L'IP DEL NODO RESTITUITO DA GETNODEBYNAME E': "+x);
+            if (x != null) {
+                return x;
+            }
+        } else {
+            System.out.println("getNodeByName --> knownNodesByIP == null");
+
+            return null;
+        }
+        return null;
+    }
+
+    public void init_nostore() {
+        new Layer().initLayout();
     }
 
     /**
@@ -290,9 +312,19 @@ public class OlsrdDataSource implements DataSource {
     public void init() {
         String host = "localhost";
         int port = 2004;
+        try {
 
-        knownNodes = getNodesfromDB(); //QUERY TO THE DATABASE TO RETRIVE THE KNOW NODES FROM THE MAPNODE TABLE
+            getNodesfromDB(); //QUERY TO THE DATABASE TO RETRIVE THE KNOW NODES FROM THE MAPNODE TABLE
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            getLinksfromDB(); //QUERY TO THE DATABASE TO RETRIVE THE KNOW LINKS FROM THE LINKS TABLE
 
+        } catch (ParseException ex) {
+            Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (port == -1) {
             System.err.println("invalid port parameter " + port);
             System.exit(1);
@@ -300,7 +332,7 @@ public class OlsrdDataSource implements DataSource {
         dot = new DotPluginListener(host, port, this);
     }
 
-    public Hashtable<String, MapNode> getNodesfromDB() {
+    public void getNodesfromDB() {
         try {
             System.out.println("Getting connection to MySql Database " + database + " at " + mysqlhost + " " + ":" + mysqlport + "");
             Class.forName("com.mysql.jdbc.Driver");
@@ -309,7 +341,7 @@ public class OlsrdDataSource implements DataSource {
                 System.out.println("Connected!");
                 stmt = (Statement) c.createStatement();
                 stmt2 = (Statement) c.createStatement();
-                String query="SELECT * FROM NODES";
+                String query = "SELECT * FROM NODES";
                 rss = stmt.executeQuery(query);
                 String query2;
                 while (rss.next()) {
@@ -320,23 +352,69 @@ public class OlsrdDataSource implements DataSource {
                     while (rss2.next()) {
                         ifaces.add(rss2.getString("IntIp"));
                     }
-                    MapNode node = new MapNode(rss.getString("ip"), rss.getString("name"), rss.getDouble("lat"), rss.getDouble("lon"), ifaces, rss.getString("uptime"));
+                    MapNode node = new MapNode(rss.getString("ip"), rss.getString("name"), rss.getString("uptime"), ifaces, rss.getDouble("lat"), rss.getDouble("lon"));
                     System.out.println(node.ip);
                     System.out.println(node.lat);
                     System.out.println(node.lon);
                     System.out.println(node.name);
-                   System.out.println(node.inter);
-                    knownNodes.put(node.name, node);
+                    System.out.println(node.inter);
+                    knownNodes.put(node.ip, node);
+                    System.out.println(knownNodes.values());
+                    System.out.println(knownNodes.toString());
+                    knownNodesByIP.put(node.name, node);
+                     System.out.println(knownNodesByIP.values());
+                    System.out.println(knownNodesByIP.toString());
                 }
-            } else {
-                return null;
             }
         } catch (SQLException ex) {
             Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+    }
+
+    public void getLinksfromDB() throws ParseException {
+        try {
+            System.out.println("Getting connection to MySql Database " + database + " at " + mysqlhost + " " + ":" + mysqlport + "");
+            Class.forName("com.mysql.jdbc.Driver");
+            c = (Connection) DriverManager.getConnection("jdbc:mysql://" + mysqlhost + ":" + mysqlport + "/" + database, username, password);
+            if (!c.isClosed()) {
+                System.out.println("Connected!");
+                stmt = (Statement) c.createStatement();
+                stmt2 = (Statement) c.createStatement();
+                String query = "SELECT * FROM LINKS ORDER BY CAST(CLOCK AS SIGNED)";
+                rss = stmt.executeQuery(query);
+                String query2;
+                Vector<String> timeStamps = new Vector<String>();
+                String tmp, tmp2 = null;
+                Date time = null;
+                while (rss.next()) {
+                    query2 = "SELECT * FROM LINKS WHERE CLOCK = \"" + rss.getString("clock") + "\"";
+                    System.out.println(query2);
+                    rss2 = stmt2.executeQuery(query2);
+                    MapNode src=knownNodes.get(rss.getString("src"));
+                    MapNode dest=knownNodes.get(rss.getString("dest"));
+                    Link link = new Link( src,  dest, rss.getFloat("lq"), rss.getFloat("nlq"), rss.getFloat("etx"), rss.getString("clock"));
+                    time = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(rss.getString("clock"));
+                    System.out.println("time: " + time.getTime());
+                    knownLinks.put(time.getTime(), link);
+                    tmp = rss.getString("clock");
+                    System.out.println("Primo tmp: " + tmp);
+                    if (tmp2 == null || !tmp.equals(tmp2)) {
+                        tmp2 = rss.getString("clock");
+                        timeStamps.add(tmp);
+                        time = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(rss.getString("clock"));
+                        System.out.println("time: " + time.getTime());
+                    }
+                }
+                LinkTimes.put(time.getTime(), linkData);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OlsrdDataSource.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -358,13 +436,27 @@ public class OlsrdDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public double getLanFromNode(String ip) {
+        return 0;
+    }
+
     //Listener Of DotDraw Plugin
     class DotPluginListener extends Thread {
 
         BufferedReader in;
         String host;
         int port;
+        String url;
         OlsrdDataSource parent;
+        MapNode nFrom = null;
+        MapNode nTo = null;
+        String from, to;
+        double DEFAULT_LAT = 41.86378;
+        double DEFAULT_LON = 12.55347;
+        Hashtable<String, MapNode> genNodes = new Hashtable<String, MapNode>();
+        Pattern reNode = Pattern.compile("^(\\d+) \\[label=\"(.*?)\",");
+        Pattern reLink = Pattern.compile("^(\\d+) -> (\\d+) \\[");
+        Pattern reETX = Pattern.compile("^label=\"(.*?)\"");
 
         //DotDraw Constructor
         public DotPluginListener(String host, int port, OlsrdDataSource parent) {
@@ -376,42 +468,105 @@ public class OlsrdDataSource implements DataSource {
             this.run();
         }
 
+        public DotPluginListener(String url, OlsrdDataSource parent) {
+            this.parent = parent;
+            this.url = url;
+            System.setProperty("java.net.IPv4Stack", "true"); //not necessary, but works around a bug in older java versions.
+        }
+
         //DotDraw Methods that open a Socket on the port 2004 and listen the traffic
         public void run() {
-            Vector<Link> linkData = null;
-            Vector<MapNode> nodeData = null;
+            boolean usingWebServiceFormat = false;
             try {
                 InetSocketAddress destination = new InetSocketAddress(host, port);
                 while (true) { //reconnect upon disconnection
+                    if (url != null) {
+                        System.out.println("Fetching topology from url " + url);
+                        usingWebServiceFormat = true;
+                    }
                     Socket s = new Socket();
                     //s.setSoTimeout(10000);
                     s.connect(destination, 25000);
                     in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                    System.out.println("in: " + in);
                     while (in != null) {
                         String line = in.readLine();
+                        System.out.println("line is: " + line);
                         { //this used to be a try-catch statement
                             if (line == null) {
+                                System.out.println(nodeData);
+                                System.out.println(linkData);
+                                System.out.println(LinkTimes);
+                                HashMap<Vector<MapNode>, Vector<Link>> hm = new HashMap<Vector<MapNode>, Vector<Link>>();
+                                hm.put(nodeData, linkData);
+                                System.out.println("DotDraw Parsed. Creating new Layer...");
+                                l = new Layer(hm, this.parent);
                                 break;
                             }
                             if (line.equals("digraph topology")) {
-                                if (linkData != null) {
-                                    parent.addLinkData(System.currentTimeMillis() / 1000, linkData);
+                                System.out.println("First Line!");
+                                if (LinkTimes != null) {
+                                    System.out.println("LinkTimes first: " + LinkTimes.values());
+                                    System.out.println("LinkTimes first: " + linkData);
+                                    addLinkTimes(System.currentTimeMillis() / 1000, linkData);
+                                    System.out.println("LinkTimes After: " + LinkTimes.values());
+                                    System.out.println("LinkTimes After: " + linkData);
+                                } else {
+                                    addLinkTimes(System.currentTimeMillis() / 1000, linkData);
                                 }
-                                linkData = new Vector<Link>();
+                            } else if (!(usingWebServiceFormat) && (linkData != null)) {  //yeah, some regexp parsing might be more adequate here
+                                Matcher m = reNode.matcher(line);
+                                if (m.matches()) {
+                                    String id = m.group(1);
+                                    String snode = m.group(2);
+                                    MapNode node = getNodeByName(snode);
+                                    if (node == null) {
+                                        node = new MapNode(snode);
+                                        generatedNodes.put(snode, node);
+                                        if (listener != null) {
+                                            listener.nodeListUpdate(node);
+                                        }
+                                    }
+                                    genNodes.put(id, node);
+                                } else {
+                                    m = reLink.matcher(line);
+                                    if (m.matches()) {
+                                        from = m.group(1);
+                                        to = m.group(2);
+                                    } else {
+                                        m = reETX.matcher(line);
+                                        if (m.matches()) {
+                                            String setx = m.group(1);
+                                            MapNode nfrom = genNodes.get(from);
+                                            MapNode nto = genNodes.get(to);
+                                            float etx = setx.equals("INFINITE") ? 0.0f : Float.parseFloat(setx);
+                                            if (nfrom == null) {
+                                                System.err.println("ERROR: MISSING " + from);
+                                            }
+                                            if (nto == null) {
+                                                System.err.println("ERROR: MISSING TO " + to);
+                                            }
+                                            linkData.add(new Link(nfrom, nto, etx, false));
+                                        }
+                                    }
+                                }
                             } else if ((linkData != null) && (line.length() > 0) && (line.charAt(0) == '"')) {
                                 StringTokenizer st = new StringTokenizer(line, "\"", false);
                                 String from = st.nextToken();
+                                System.out.println("nextToken() From: " + from);
                                 if (from.indexOf("/") > -1) {
                                     from = from.substring(0, from.indexOf("/"));
                                 }
                                 st.nextToken();
                                 if (st.hasMoreTokens()) { //otherwise it's a gateway node!
                                     String to = st.nextToken();
+                                    System.out.println("nextToken() To: " + to);
                                     if (to.indexOf("/") > -1) {
                                         to = to.substring(0, to.indexOf("/"));
                                     }
                                     st.nextToken();
                                     String setx = st.nextToken();
+                                    System.out.println("setx: " + setx);
                                     if (setx.equals("INFINITE")) {
                                         setx = "0";
                                     }
@@ -419,33 +574,50 @@ public class OlsrdDataSource implements DataSource {
                                     float etx = hna ? 0 : Float.parseFloat(setx);
                                     System.out.println("Node From:" + from);
                                     System.out.println("Node To:" + to);
-                                    MapNode nfrom = getNodeByName(from);
-                                    MapNode nto = getNodeByName(to);
-                                    if (nfrom == null) {
-                                        nodeData.add(new MapNode(from));
-                                        System.out.println(nfrom.ip);
-                                        System.out.println(nfrom.name);
-                                        if (listener != null) {
-                                            listener.nodeListUpdate(nfrom);
+                                    if (getNodeByName(from) == null) {
+                                        nFrom = new MapNode(from, from, DEFAULT_LAT, DEFAULT_LON);
+                                        System.out.println(nFrom.DEFAULT_LAT);
+                                        System.out.println(nFrom.DEFAULT_LON);
+                                        System.out.println(nFrom.ip);
+                                        System.out.println(nFrom.name);
+                                        //*************read LatLon for LatLon*************
+                                        //*************double lat=getLatFromNode(from);*************
+                                        //*************double lon=getLonFromNode(from);*************
+                                        if (!(genNodes.containsKey(from))) {
+                                            genNodes.put(from, nFrom);
                                         }
                                     }
-                                    if (nto == null) {
-                                        nto = new MapNode(to);
-                                        nodeData.add(nto);
-                                        if (listener != null) {
-                                            listener.nodeListUpdate(nto);
+                                    if (getNodeByName(to) == null) {
+                                        nTo = new MapNode(to, to, DEFAULT_LAT, DEFAULT_LON);
+                                        if (!(genNodes.containsKey(to))) {
+                                            genNodes.put(to, nTo);
                                         }
                                     }
-                                    linkData.add(new Link(nfrom, nto, etx, hna));
-                                    HashMap<Vector<MapNode>, Vector<Link>> hm = new HashMap<Vector<MapNode>, Vector<Link>>();
-                                    hm.put(nodeData, linkData);
-                                    System.out.println("Creating new Layer...");
-                                    l = new Layer(hm, this.parent);
+                                    /*
+                                    if (new MapNode(from) == null) {
+                                    Thread.sleep(1000);
+                                    System.out.println("NFrom is null:" + nFrom);
+                                    System.out.println(from);
+                                    if (listener != null) {
+                                    //Updates node list adding nfrom node
+                                    listener.nodeListUpdate(nFrom);
+                                    }
+                                    }
+                                    if (nTo == null) {
+                                    //nto = new MapNode(to);
+                                    System.out.println("NTo is null: " + nTo);
+                                    //nodeData.add(nto);
+                                    if (listener != null) {
+                                    listener.nodeListUpdate(nTo);
+                                    }
+                                    }*/
+                                    linkData.add(new Link(nFrom, nTo, etx, hna));
+
                                 }
                             }
                         }
                     }
-                    Thread.sleep(1000);
+                    Thread.sleep(10000);
                 }
             } catch (SocketTimeoutException ex) {
                 System.err.println("[OlsrdDataSource] timeout while trying to connect. " + ex.getMessage());

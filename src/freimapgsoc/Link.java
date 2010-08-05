@@ -4,53 +4,55 @@
  */
 package freimapgsoc;
 
+import java.io.Serializable;
+
 /**
  *
  * @author stefanopilla
  */
-public class Link {
+public class Link implements Comparable, Serializable {
 
     public Link() {
     }
 
-    public Link(String sourceIP, String destIP, float lq, float nlq) {
-        this.sourceIP = sourceIP;
-        this.destIP = destIP;
-        this.lq = lq;
-        this.nlq = nlq;
-    }
-
-    public Link(MapNode source, MapNode dest, float lq, float nlq, boolean HNA) {
-        this.source = source;
-        this.dest = dest;
-        this.lq = lq;
-        this.nlq = nlq;
-        this.HNA = HNA;
-    }
-
-    public Link(MapNode source, MapNode dest){
-        this(source,dest,1,false);
-    
-    }
-
-     public Link(MapNode source, MapNode dest, float lq, float nlq, float etx) {
-        this.source = source;
-        this.dest = dest;
-        this.lq = lq;
-        this.nlq = nlq;
-        this.etx = etx;
-
+    public Link(MapNode source, MapNode dest) {
+        this(source, dest, 1, 1, 1, false, "0000-00-00 00:00:00");
     }
 
     public Link(MapNode source, MapNode dest, float etx) {
-        this(source, dest, etx, false);
+        this(source, dest, 1, 1, etx, false, "0000-00-00 00:00:00");
     }
 
     public Link(MapNode source, MapNode dest, float etx, boolean HNA) {
+        this(source, dest, 1, 1, etx, HNA, "0000-00-00 00:00:00");
+
+    }
+
+    public Link(MapNode source, MapNode dest, float lq, float nlq) {
+        this(source, dest, lq, nlq, 0, false, "0000-00-00 00:00:00");
+    }
+
+    public Link(MapNode source, MapNode dest, float lq, float nlq, boolean HNA) {
+        this(source, dest, lq, nlq, 0, false, "0000-00-00 00:00:00");
+    }
+
+    public Link(MapNode source, MapNode dest, float lq, float nlq, float etx, String timeStamp) {
+        this(source, dest, lq, nlq, etx, false, timeStamp);
+    }
+
+    public Link(MapNode source, MapNode dest, float lq, float nlq, float etx) {
+        this(source, dest, lq, nlq, etx, false, "0000-00-00 00:00:00");
+    }
+
+    public Link(MapNode source, MapNode dest, float lq, float nlq, float etx, boolean HNA, String timeStamp) {
         this.source = source;
         this.dest = dest;
+        this.lq = lq;
+        this.nlq = nlq;
         this.etx = etx;
+        this.timeStamp = timeStamp;
         this.HNA = HNA;
+
     }
 
     public void setPacketCounts(long packets, long bytes, long icmp, long tcp, long udp, long other) {
@@ -76,13 +78,17 @@ public class Link {
     public String toString() {
         return source + " -> " + dest;
     }
-
-    public String sourceIP;
-    public String destIP;
+    
     public MapNode source;
     public MapNode dest;
     public boolean HNA;
+    public String timeStamp;
     public float etx = -1, lq = -1, nlq = -1;
     public long bytes = 0, packets = 0, udp = 0, tcp = 0, icmp = 0, other = 0;
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
 
