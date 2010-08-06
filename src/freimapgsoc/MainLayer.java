@@ -114,13 +114,11 @@ public class MainLayer extends javax.swing.JFrame {
     }
 
     public void initData(DataSource ds) {
-
         try {
             for (int i = 0; i < l.getCurrentNodes().size(); i++) {
                 System.out.println(l.getCurrentNodes().elementAt(i).toString());
                 listOfNodes.add(i, l.getCurrentNodes().elementAt(i).toString());
                 MouseListener mouseListener = new MouseAdapter() {
-
                     public void mouseClicked(MouseEvent mouseEvent) {
                         JList nodeList = (JList) mouseEvent.getSource();
                         if (mouseEvent.getClickCount() == 2) {

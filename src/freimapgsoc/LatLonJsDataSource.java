@@ -1,5 +1,6 @@
 package freimapgsoc;
 
+import java.awt.Point;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,6 +28,49 @@ public class LatLonJsDataSource implements DataSource {
     public LatLonJsDataSource(String path) {
         this.init(path);
     }
+
+    public LatLonJsDataSource(String ip, String path){
+        this.initFromIp(ip,path);
+    }
+
+
+    public void initFromIp(String ip, String path){
+         HashMap<Vector<MapNode>, Vector<Link>> config = new HashMap<Vector<MapNode>, Vector<Link>>();
+        String sServerURL = null;
+        try {
+            sServerURL = path;
+            System.out.println("Fetching data from URL: " + sServerURL);
+            System.out.println("This may take a while ... ");
+            BufferedReader in = new BufferedReader(new InputStreamReader(new URL(sServerURL).openStream()));
+            try {
+                Thread.sleep(500); // do nothing for 1000 miliseconds (1 second)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //at the end add others interfaces
+            addInterfaces(path);
+            try {
+                Thread.sleep(500); // do nothing for 1000 miliseconds (1 second)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            parseLink(sServerURL);
+            try {
+                Thread.sleep(500); // do nothing for 1000 miliseconds (1 second)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //  parsePLink(sServerURL); I nedd to know what Plink is!
+        } catch (MalformedURLException mue) {
+            System.out.println("failed! Invalid server URL: " + sServerURL);
+            mue.printStackTrace();
+        } catch (IOException ioe) {
+            System.out.println("failed! IOException in LatLonJSDataSource");
+            ioe.printStackTrace();
+        }
+        config.put(nodes, links);
+    }
+
 
     public void init(String path) {
         HashMap<Vector<MapNode>, Vector<Link>> config = new HashMap<Vector<MapNode>, Vector<Link>>();
@@ -87,12 +131,7 @@ public class LatLonJsDataSource implements DataSource {
                     String gatewayip = st.nextToken();
                     String name = st.nextToken();
 
-                    System.out.println("IP Address: " + stripQuotes(ip));
-                    System.out.println("lat:" + lat);
-                    System.out.println("lon:" + lon);
-                    System.out.println("isgateway:" + isgateway);
-                    System.out.println("gatewayip:" + gatewayip);
-                    System.out.println("name:" + name);
+                    
 
                     ip = stripQuotes(ip); //strip single quotes
                     name = stripQuotes(name);
@@ -215,17 +254,7 @@ public class LatLonJsDataSource implements DataSource {
             //System.out.println("nodes SIZE:" + nodes.size());
             //System.out.println("Links SIZE:" + links.size());
             System.out.println("finished.");
-            for (int i = 0; i < nodes.size(); i++) {
-                System.out.println("\n");
-                System.out.println("Nodes " + nodes.get(i).name + " has: ");
-                System.out.println("ip:" + nodes.get(i).ip);
-                System.out.println("lat:" + nodes.get(i).lat);
-                System.out.println("lon:" + nodes.get(i).lon);
-                System.out.println("attributes:" + nodes.get(i).attributes);
-                System.out.println("uptime:" + nodes.get(i).uptime);
-                System.out.println("interfaces:" + nodes.get(i).inter.toString());
-
-            }
+            
         } catch (Exception e) {
             e.getMessage();
         }
@@ -283,7 +312,7 @@ public class LatLonJsDataSource implements DataSource {
     }
 
     public void addInterfaces(String path) {
-        System.out.println("Now take a control if nodes has more than one interface...");
+        System.out.println("Now check if nodes has more than one interface...");
         String sServerURL = path;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new URL(sServerURL).openStream()));
@@ -308,15 +337,15 @@ public class LatLonJsDataSource implements DataSource {
                     //System.out.println("NodesSize: " + nodes.size());
 
                     int index = getIndex(nodes, nodeip);
+                    System.out.println(index);
                     if (index == -1) {
                         System.out.println("Node is not present in Nodes structure! I create it...");
-                        MapNode nnode;
-                        nnode = new MapNode(nodeip, nodeip); //create a node with name=ip and Default Pos
+                        MapNode nnode=new MapNode(nodeip, nodeip); //create a node with name=ip and Default Pos
                         nodes.add(nnode);
                         System.out.println("Node Added now Nodes structure Size is: " + nodes.size());
                     } else {
-                        System.out.println("The node is present in Nodes structure");
-                        System.out.println("Nodes name/interfaces:" + nodes.get(index).ip + "/" + nodes.get(index).inter.toString());
+  //                      System.out.println("The node is present in Nodes structure");
+//                        System.out.println("Nodes name/interfaces:" + nodes.get(index).ip + "/" + nodes.get(index).inter.toString());
                         if (!nodes.get(index).inter.contains(nodeip2)) {
                             nodes.get(index).inter.add(nodeip2);
                         }
@@ -332,7 +361,7 @@ public class LatLonJsDataSource implements DataSource {
     }
 
     int getIndex(Vector<MapNode> nodes, String nodeip) {
-        for (int i = 0; i < nodes.size(); i++) {
+        for (int i = 1; i < nodes.size(); i++) {
             if (nodeip.equals(nodes.get(i).ip)) {
                 return i;
             }
@@ -473,9 +502,9 @@ public class LatLonJsDataSource implements DataSource {
     public Vector<Link> getLinks(long time) {
         return links;
     }
-    // public static void main(String[] args) {
-    //    new LatLonJsDataSource("file:///var/run/latlon.js");
-    // }
+    public static void main(String[] args) {
+       new LatLonJsDataSource("file:///var/run/latlon.js");
+     }
     private String line;
     public Vector<MapNode> nodes = new Vector<MapNode>();
     public Vector<Link> links = new Vector<Link>();

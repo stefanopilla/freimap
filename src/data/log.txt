@@ -1,1 +1,1 @@
-PopUp Message: There aren't DataSource file to draw! Open a file from File -> Open menu  
+PopUp Message: There aren't DataSource file to draw Open a file from File -> Open menu  
