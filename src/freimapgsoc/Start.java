@@ -12,6 +12,7 @@ package freimapgsoc;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,7 +22,17 @@ public class Start extends javax.swing.JFrame {
 
     /** Creates new form Start */
     public Start() {
-        initComponents();      
+        initComponents();
+        CheckActiveDataSource check=new CheckActiveDataSource();
+        if(check.check_olsr()){ //check DotDrawPlugin
+            if(check.check_nameservice()){
+             olsrdButton.setEnabled(true);
+            }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Nameservice Plugin Must be enabled in the olsr.conf file for live data!\nOlsrd button will be enabled but the lat/lon position in the Map\nwill be DEFAULT_LAT/DEFAULT_LON (now in Rome)!");
+              }
+        }else{
+            olsrdButton.setEnabled(false);
+        }
     }
 
     /**
@@ -44,6 +55,7 @@ public class Start extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         olsrdButton = new javax.swing.JButton();
         batmanButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -125,6 +137,7 @@ public class Start extends javax.swing.JFrame {
 
         batmanButton.setFont(resourceMap.getFont("batmanButton.font")); // NOI18N
         batmanButton.setText(resourceMap.getString("batmanButton.text")); // NOI18N
+        batmanButton.setEnabled(false);
         batmanButton.setName("batmanButton"); // NOI18N
         batmanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +164,15 @@ public class Start extends javax.swing.JFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
+        exitButton.setIcon(resourceMap.getIcon("exitButton.icon")); // NOI18N
+        exitButton.setText(resourceMap.getString("exitButton.text")); // NOI18N
+        exitButton.setName("exitButton"); // NOI18N
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,13 +183,16 @@ public class Start extends javax.swing.JFrame {
                         .addGap(8, 8, 8)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
+                        .addGap(95, 95, 95)
+                        .addComponent(secondLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(secondLabel)))
+                        .addGap(106, 106, 106)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -177,19 +202,19 @@ public class Start extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(secondLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exitButton)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void olsrdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_olsrdButtonActionPerformed
-        //new Layer(new OlsrdDataSource().init());
-        CheckActiveDataSource check = new CheckActiveDataSource();
         MySQLCredential mysqlcr=new MySQLCredential(new OlsrdDataSource());
         mysqlcr.setVisible(true);
     }//GEN-LAST:event_olsrdButtonActionPerformed
@@ -233,6 +258,10 @@ public class Start extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_batmanButtonActionPerformed
 
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -246,6 +275,7 @@ public class Start extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batmanButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

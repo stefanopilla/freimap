@@ -71,7 +71,7 @@ public class MySQLCredential extends javax.swing.JFrame {
         errorsLog = new javax.swing.JTextArea();
         cancelButton = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
-        logLabel2 = new javax.swing.JLabel();
+        logLabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         showLog = new javax.swing.JButton();
         newDb = new javax.swing.JCheckBox();
@@ -91,7 +91,6 @@ public class MySQLCredential extends javax.swing.JFrame {
         exampleButton = new javax.swing.JButton();
         dbText = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        logLabel = new javax.swing.JLabel();
 
         confirmPane.setMessage("If you continue your current data in the Database will be destroyed. \n Are you sure that you want to continue?.\n");
         confirmPane.setFont(new java.awt.Font("Lucida Grande", 1, 10));
@@ -115,7 +114,7 @@ public class MySQLCredential extends javax.swing.JFrame {
         errorsLog.setSize(new java.awt.Dimension(300, 400));
         scrollPane.setViewportView(errorsLog);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MySQL Credentials");
 
         cancelButton.setFont(new java.awt.Font("Lucida Grande", 0, 10));
@@ -139,9 +138,9 @@ public class MySQLCredential extends javax.swing.JFrame {
             }
         });
 
-        logLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 10));
-        logLabel2.setText(" ");
-        logLabel2.setName("logLabel2"); // NOI18N
+        logLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        logLabel.setText(" ");
+        logLabel.setName("logLabel"); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/freimapgsoc/resources/download.png"))); // NOI18N
@@ -168,7 +167,7 @@ public class MySQLCredential extends javax.swing.JFrame {
             }
         });
 
-        newDbText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        newDbText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         newDbText.setEnabled(false);
         newDbText.setName("newDbText"); // NOI18N
 
@@ -304,10 +303,6 @@ public class MySQLCredential extends javax.swing.JFrame {
         jLabel4.setText("Avaible Database:");
         jLabel4.setName("jLabel4"); // NOI18N
 
-        logLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10));
-        logLabel.setText(" ");
-        logLabel.setName("logLabel"); // NOI18N
-
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -334,17 +329,15 @@ public class MySQLCredential extends javax.swing.JFrame {
                         .add(newDbText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(layout.createSequentialGroup()
                         .add(19, 19, 19)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(logLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 253, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 253, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 253, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(resumeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                             .add(continueButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                                 .add(cancelButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(startButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 127, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, resumeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))))
+                                .add(startButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 127, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -371,14 +364,13 @@ public class MySQLCredential extends javax.swing.JFrame {
                         .add(2, 2, 2)
                         .add(newDb)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(continueButton)
-                    .add(logLabel2))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(resumeButton)
-                    .add(logLabel))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .add(logLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 77, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createSequentialGroup()
+                        .add(continueButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(resumeButton)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -393,49 +385,45 @@ public class MySQLCredential extends javax.swing.JFrame {
 }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-       try{
-        if (!newDbText.isEnabled()) {
-                    database = dbText.getSelectedItem().toString();
-        } else {
-            if (newDbText.getText().equals("")) {
-                logLabel2.setForeground(Color.red);
-                logLabel.setForeground(Color.red);
-                logLabel2.setText("Please select or specify a name ");
-                logLabel.setText("for the Database!!!");
-                return;
+        try {
+            if (!newDbText.isEnabled()) {
+                database = dbText.getSelectedItem().toString();
             } else {
-                database=newDbText.getText();
+                if (newDbText.getText().equals("")) {
+                    logLabel.setForeground(Color.red);
+                    logLabel.setText("Please select or specify a name \nfor the Database.");
+                    return;
+                } else {
+                    database = newDbText.getText();
+                }
             }
-            }
-        
+
             host = hostText.getText();
             port = portText.getText();
             username = userText.getText();
             password = passwordText.getText();
-            }catch (Exception e) {
-                logLabel2.setForeground(Color.red);
-                logLabel.setForeground(Color.red);
-                logLabel2.setText("Please choose a least one database");
-                logLabel.setText("or insert a new one!!");
+        } catch (Exception e) {
+            logLabel.setForeground(Color.red);
+            logLabel.setText("Please choose a least one database or insert a new one.");
+        }
+        Component source = (Component) evt.getSource();
+        int i = confirmPane.showConfirmDialog(source, "This operation will destory all data in the selected database. Are you sure?", "Database Replacement", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            try {
+                createTables();
+                new OlsrdDataSource(host, port, username, password, database);
+            } catch (ClassNotFoundException ex) {
+                logLabel.setText(ex.getMessage());
+                Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                logLabel.setText(ex.getMessage());
+                Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                ex.getMessage();
             }
-            Component source = (Component) evt.getSource();
-            int i = confirmPane.showConfirmDialog(source, "This operation will destory all data in the selected database. Are you sure?", "Database Replacement", JOptionPane.YES_NO_OPTION);
-            if (i == 0) {
-                try {
-                    createTables();
-                    new OlsrdDataSource(host, port, username, password, database);
-                } catch (ClassNotFoundException ex) {
-                    logLabel2.setText(ex.getMessage());
-                    Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    logLabel2.setText(ex.getMessage());
-                    Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    ex.getMessage();
-                }
-            } else {
-                confirmPane.setVisible(false);
-            }
+        } else {
+            confirmPane.setVisible(false);
+        }
 }//GEN-LAST:event_startButtonActionPerformed
 
     private void checkconnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkconnButtonActionPerformed
@@ -448,10 +436,10 @@ public class MySQLCredential extends javax.swing.JFrame {
                 if (port.length() == 0) {
                     port = "3306";
                 }
-                logLabel2.setForeground(Color.red);
-                logLabel2.setText("Add host address and port number!");
+                logLabel.setForeground(Color.red);
+                logLabel.setText("Add host address and port number!");
             } else {
-                logLabel2.setText("Getting connection...");
+                logLabel.setText("Getting connection...");
                 Class.forName("com.mysql.jdbc.Driver");
                 c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port, username, password);
                 if (!c.isClosed()) {
@@ -464,8 +452,8 @@ public class MySQLCredential extends javax.swing.JFrame {
                     while (rss.next()) {
                         dbText.insertItemAt(rss.getString("Database"), i);
                         i++;
-                        logLabel2.setForeground(Color.green);
-                        logLabel2.setText("Connected!");
+                        logLabel.setForeground(Color.green);
+                        logLabel.setText("Connected!");
                         dbText.setSelectedIndex(0);
                         dbText.addItemListener(new java.awt.event.ItemListener() {
 
@@ -473,24 +461,24 @@ public class MySQLCredential extends javax.swing.JFrame {
                                 dbTextItemStateChanged(evt);
                             }
                         });
-                        logLabel2.setText("Now choose a database or create a new one.");
+                        logLabel.setText("Now choose a database or create a new one.");
                     }
                 }
             }
         } catch (Exception ex) {
-            logLabel2.setForeground(Color.red);
-            logLabel2.setText(ex.getMessage());
+            logLabel.setForeground(Color.red);
+            logLabel.setText(ex.getMessage());
         }
 
     }//GEN-LAST:event_checkconnButtonActionPerformed
 
     private void createTables() throws ClassNotFoundException, SQLException {
         try {
-            logLabel2.setForeground(Color.black);
-            logLabel2.setText("Creating Table in " + database + " database...");
+            logLabel.setForeground(Color.black);
+            logLabel.setText("Creating Table in " + database + " database...");
             Class.forName("com.mysql.jdbc.Driver");
             errors.put("DATABASE:", "Getting Connection for CreateTables...\n");
-            logLabel2.setText("Getting Connection for CreateTables...");
+            logLabel.setText("Getting Connection for CreateTables...");
 
             String queryDel = "DROP SCHEMA IF EXISTS " + database + ";";
 
@@ -567,7 +555,7 @@ public class MySQLCredential extends javax.swing.JFrame {
             Connection c2 = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port, username, password);
             Statement stmt2 = (Statement) c2.createStatement();
             errors.put("DATABASE:", "Connected to the database...\n");
-            logLabel2.setText("Execute Queries...");
+            logLabel.setText("Execute Queries...");
 
             Thread.sleep(3000);
             System.out.println(queryDel);
@@ -610,7 +598,7 @@ public class MySQLCredential extends javax.swing.JFrame {
             Thread.sleep(1000);
 
             errors.put("DATABASE:", "Now Adding nodes and Links....! This will take a while...\n");
-            logLabel2.setText("Now Adding nodes and Links....! This will take a while..");
+            logLabel.setText("Now Adding nodes and Links....! This will take a while..");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -647,21 +635,18 @@ public class MySQLCredential extends javax.swing.JFrame {
         String prop = evt.getPropertyName();
         if (evt.getSource().equals(confirmPane) && prop.equals(JOptionPane.YES_OPTION)) {
             try {
-                logLabel.setText("");
-                logLabel2.setText("Getting connection...");
+                logLabel.setText("Getting connection...");
                 Thread.sleep(1000);
                 Class.forName("com.mysql.jdbc.Driver");
                 c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
                 if (!c.isClosed()) {
-                    logLabel.setText("");
-                    logLabel2.setForeground(Color.green);
-                    logLabel2.setText("Connected!");
+                    logLabel.setForeground(Color.green);
+                    logLabel.setText("Connected!");
                     createTables();
                     Thread.sleep(3000);
                 }
             } catch (Exception ex) {
-                logLabel.setText("");
-                logLabel2.setText(ex.getMessage());
+                logLabel.setText(ex.getMessage());
                 Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -708,9 +693,9 @@ public class MySQLCredential extends javax.swing.JFrame {
         host = hostText.getText();
         username = userText.getText();
         password = passwordText.getText();
-        logLabel2.setForeground(Color.green);
+        logLabel.setForeground(Color.green);
 
-        logLabel2.setText("Checking Database...please wait...");
+        logLabel.setText("Checking Database...please wait...");
         try {
             Class.forName("com.mysql.jdbc.Driver");
             c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + selectedDatabase, username, password);
@@ -730,27 +715,27 @@ public class MySQLCredential extends javax.swing.JFrame {
                 }
                 // System.out.println(tables);
                 //System.out.println(oktables);
-                if (tables.containsAll(oktables)) {
-                    resumeButton.setEnabled(true);
-                    continueButton.setEnabled(true);
-                    logLabel2.setForeground(Color.green);
-                    logLabel.setForeground(Color.green);
-                    logLabel2.setText("This database contains Freimap data yet.");
-                    logLabel.setText("You can resume it by pressing resume button...");
-                    // System.out.println("jdbc:mysql://" + host + ":" + port + "/" + selectedDatabase+" "+username+" "+password);
-                } else {
-                    if (resumeButton.isEnabled()) {
-                        resumeButton.setEnabled(false);
-                    }
-                    startButton.setEnabled(true);
-                    logLabel2.setForeground(Color.RED);
+                if (selectedDB.equals("information_schema")) {
                     logLabel.setForeground(Color.RED);
-                    logLabel2.setText("ATTENTION!!! This database must be initialized for Freimap...");
-                    logLabel.setText("All data must be destroyed!!");
+                logLabel.setText("ATTENTION! Selected Database cannot be used!");
+                } else {
+                    if (tables.containsAll(oktables)) {
+                        resumeButton.setEnabled(true);
+                        continueButton.setEnabled(true);
+                        logLabel.setForeground(Color.green);
+                        logLabel.setText("This database already contains Freimap data.\n\nYou can resume storing by pressing\nresume button...");
+                    } else {
+                        if (resumeButton.isEnabled()) {
+                            resumeButton.setEnabled(false);
+                        }
+                        startButton.setEnabled(true);
+                        logLabel.setForeground(Color.RED);
+                        logLabel.setText("ATTENTION!!! This database must be initialized for Freimap...\n\nALL DATA WILL BE DESTROYED!!");
+                    }
                 }
             }
         } catch (Exception ex) {
-            logLabel2.setText(ex.getMessage());
+            logLabel.setText(ex.getMessage());
             Logger.getLogger(LatLonJsToMySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -761,49 +746,78 @@ public class MySQLCredential extends javax.swing.JFrame {
             port = portText.getText();
             username = userText.getText();
             password = passwordText.getText();
+
+
             if (host.length() < 2) {
                 if (port.length() == 0) {
                     port = "3306";
+
+
                 }
-                logLabel2.setForeground(Color.red);
-                logLabel2.setText("Add host address and port number!");
+                logLabel.setForeground(Color.red);
+                logLabel.setText("Add host address and port number!");
+
+
                 return false;
+
+
             } else {
-                logLabel2.setText("Check connection...");
+                logLabel.setText("Check connection...");
                 Thread.sleep(1000);
                 Class.forName("com.mysql.jdbc.Driver");
                 c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port, username, password);
+
+
                 if (!c.isClosed()) { //check the connection again....
                     stmt = (Statement) c.createStatement();
                     rss = stmt.executeQuery("SHOW DATABASES");
                     dbText.setEnabled(true);
                     newDb.setEnabled(true);
+
+
                     int i = 0;
+
+
                     while (rss.next()) {
                         dbText.insertItemAt(rss.getString("Database"), i);
                         i++;
+
                     }
-                    logLabel2.setForeground(Color.green);
-                    logLabel2.setText("Connected!");
+
+
+                    logLabel.setForeground(Color.green);
+                    logLabel.setText("Connected!");
                     Thread.sleep(1000);
-                    logLabel2.setText("Now choose a Database");
+                    logLabel.setText("Now choose a Database");
+
+
                     return true;
+
+
                 }
 
             }
         } catch (Exception ex) {
-            logLabel2.setForeground(Color.red);
-            logLabel2.setText(ex.getMessage());
+            logLabel.setForeground(Color.red);
+            logLabel.setText(ex.getMessage());
+
+
         }
         return false;
+
+
     }
 
     private String stripQuotes(String str) {
         if (str.length() <= 2) {
             return null;
 
+
+
         }
         return str.substring(1, str.length() - 1);
+
+
 
     }
 
@@ -818,8 +832,12 @@ public class MySQLCredential extends javax.swing.JFrame {
 
 
 
+
+
             }
         });
+
+
 
 
 
@@ -858,7 +876,6 @@ public class MySQLCredential extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel logLabel;
-    private javax.swing.JLabel logLabel2;
     private javax.swing.JCheckBox newDb;
     private javax.swing.JTextField newDbText;
     private javax.swing.JPasswordField passwordText;

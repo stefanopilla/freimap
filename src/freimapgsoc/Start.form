@@ -30,15 +30,19 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="secondLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="1"/>
                           <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="1"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
-                      <Component id="secondLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                      <Component id="exitButton" min="-2" pref="101" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -52,11 +56,13 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="secondLabel" min="-2" pref="13" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" pref="144" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="exitButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -201,6 +207,7 @@
           <Properties>
             <Property name="font" type="java.awt.Font" resourceKey="batmanButton.font"/>
             <Property name="text" type="java.lang.String" resourceKey="batmanButton.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="batmanButton" noResource="true"/>
           </Properties>
           <Events>
@@ -209,5 +216,15 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="exitButton">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" resourceKey="exitButton.icon"/>
+        <Property name="text" type="java.lang.String" resourceKey="exitButton.text"/>
+        <Property name="name" type="java.lang.String" value="exitButton" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitButtonActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

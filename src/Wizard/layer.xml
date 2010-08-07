@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="File">
+            <file name="Freimap-wizard-FreimapWizardAction.instance">
+                <attr name="delegate" newvalue="Freimap.wizard.FreimapWizardAction"/>
+                <attr name="iconBase" stringvalue="Freimap/wizard/icon.png"/>
+                <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="noIconInMenu" stringvalue="false"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Toolbars">
+        <folder name="File">
+            <file name="Freimap-wizard-FreimapWizardAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/Freimap-wizard-FreimapWizardAction.instance"/>
+                <attr name="position" intvalue="0"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>
+

@@ -76,7 +76,7 @@ public class CheckActiveDataSource {
                 String tmp = v.elementAt(i).toString().substring(1);
                 poss[i] = tmp;
             }
-            String s = (String) JOptionPane.showInputDialog(null, "Please elect interface connected to OLSR Network: ", "Interface Selection", JOptionPane.PLAIN_MESSAGE, null, poss, poss[0]);
+            String s = (String) JOptionPane.showInputDialog(null, "Please select interface connected to OLSR Network: ", "Interface Selection", JOptionPane.PLAIN_MESSAGE, null, poss, poss[0]);
             if ((s != null) && (s.length() > 0)) {
                 return s;
             }else if (s== null){
@@ -89,9 +89,9 @@ public class CheckActiveDataSource {
     }
 
     public boolean check_olsr() {
-       // Create a socket without a timeout
+       // Create a socket without a timeout with a dotDrawPlugin
     try {
-        InetAddress addr = InetAddress.getByName(selectIpAddress());
+        InetAddress addr = InetAddress.getByName("127.0.0.1");
         int port = 2004;
         // This constructor will block until the connection succeeds
         Socket socket = new Socket(addr, port);
