@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Wizard;
+package freimapgsoc;
 
 import java.awt.Color;
 import java.sql.Connection;
@@ -46,6 +46,10 @@ public final class FreimapVisualPanel2 extends JPanel {
         return passwordText.getText();
     }
 
+        public boolean getStore(){
+            return storeCheck.isSelected();
+        }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -70,6 +74,7 @@ public final class FreimapVisualPanel2 extends JPanel {
         logLabel = new javax.swing.JLabel();
         passwordText = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
+        storeCheck = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(connectButton, org.openide.util.NbBundle.getMessage(FreimapVisualPanel2.class, "FreimapVisualPanel2.connectButton.text")); // NOI18N
         connectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +91,7 @@ public final class FreimapVisualPanel2 extends JPanel {
         portText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         portText.setText(org.openide.util.NbBundle.getMessage(FreimapVisualPanel2.class, "FreimapVisualPanel2.portText.text")); // NOI18N
 
-        dbText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        dbText.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 10));
         org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(FreimapVisualPanel2.class, "FreimapVisualPanel2.jLabel7.text")); // NOI18N
@@ -124,7 +129,11 @@ public final class FreimapVisualPanel2 extends JPanel {
 
         passwordText.setFont(new java.awt.Font("Lucida Grande", 0, 12));
 
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(FreimapVisualPanel2.class, "FreimapVisualPanel2.jLabel3.text")); // NOI18N
+
+        storeCheck.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(storeCheck, org.openide.util.NbBundle.getMessage(FreimapVisualPanel2.class, "FreimapVisualPanel2.storeCheck.text")); // NOI18N
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -132,9 +141,6 @@ public final class FreimapVisualPanel2 extends JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(56, 56, 56)
-                        .add(jLabel3))
                     .add(layout.createSequentialGroup()
                         .add(22, 22, 22)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -167,8 +173,14 @@ public final class FreimapVisualPanel2 extends JPanel {
                         .addContainerGap()
                         .add(loadDb, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 166, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(connectButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(connectButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(storeCheck)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .add(jLabel3)
+                .add(62, 62, 62))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -201,7 +213,8 @@ public final class FreimapVisualPanel2 extends JPanel {
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(loadDb, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(connectButton))
+                    .add(connectButton)
+                    .add(storeCheck))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -211,11 +224,10 @@ public final class FreimapVisualPanel2 extends JPanel {
             logLabel.setText("Getting connection...");
             Thread.sleep(1000);
             Class.forName("com.mysql.jdbc.Driver");
-            c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+            c = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
             if (!c.isClosed()) {
                 logLabel.setForeground(Color.green);
                 logLabel.setText("Connected!");
-                Thread.sleep(3000);
             }
         } catch (Exception ex) {
             logLabel.setForeground(Color.red);
@@ -230,7 +242,7 @@ public final class FreimapVisualPanel2 extends JPanel {
         port = portText.getText();
         username = userText.getText();
         password = passwordText.getText();
-        if (dbText.getSelectedItem().equals(null)) {
+        if (dbText.getSelectedItem().equals("")) {
             logLabel.setForeground(Color.red);
             logLabel.setText("Select a valid Database!");
         } else {
@@ -252,7 +264,6 @@ public final class FreimapVisualPanel2 extends JPanel {
     }//GEN-LAST:event_connectButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         userText.setText("root");
         passwordText.setText("CiscoSte5785");
         hostText.setText("127.0.0.1");
@@ -272,9 +283,9 @@ public final class FreimapVisualPanel2 extends JPanel {
                 logLabel.setText("Add host address and port number!");
             } else {
                 Class.forName("com.mysql.jdbc.Driver");
-                c = (Connection) DriverManager.getConnection("jdbc:mysql://" + host + ":" + port, username, password);
+                c = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port, username, password);
                 if (!c.isClosed()) {
-                    stmt = (Statement) c.createStatement();
+                    stmt = c.createStatement();
                     rss = stmt.executeQuery("SHOW DATABASES");
                     int i = 0;
                     while (rss.next()) {
@@ -289,7 +300,6 @@ public final class FreimapVisualPanel2 extends JPanel {
             logLabel.setForeground(Color.red);
             logLabel.setText(ex.getMessage());
         }
-        // TODO add your handling code here:
 }//GEN-LAST:event_loadDbActionPerformed
     private String host,port,username,password,database;
     private Statement stmt;
@@ -312,6 +322,7 @@ public final class FreimapVisualPanel2 extends JPanel {
     private javax.swing.JLabel logLabel;
     private javax.swing.JPasswordField passwordText;
     private javax.swing.JTextField portText;
+    private javax.swing.JCheckBox storeCheck;
     private javax.swing.JTextField userText;
     // End of variables declaration//GEN-END:variables
 }

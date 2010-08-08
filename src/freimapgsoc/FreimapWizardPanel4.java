@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Wizard;
+package freimapgsoc;
 
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -36,6 +36,10 @@ public class FreimapWizardPanel4 implements WizardDescriptor.Panel {
         // If you have context help:
         // return new HelpCtx(SampleWizardPanel1.class);
     }
+
+
+
+
 
     public boolean isValid() {
         // If it is always OK to press Next or Finish, then:
@@ -79,21 +83,32 @@ public class FreimapWizardPanel4 implements WizardDescriptor.Panel {
     // settings object will be the WizardDescriptor, so you can use
     // WizardDescriptor.getProperty & putProperty to store information entered
     // by the user.
-    JLabel hostNameLabel, mySQLLabel, mySQLPortLabel, usernameLabel, passwordLabel, olsrdLabel, NameServicePathLabel, dotDrawPortLabel;
 
-    @Override
+    /*
+    hostNameLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("host", "localhost"));
+    mySQLLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("dbText", "freimap"));
+    mySQLPortLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("port", "3306"));
+    usernameLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("username", "root"));
+    passwordLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("password", ""));
+    olsrdLabel.setText(NbPreferences.forModule(FreimapWizardPanel3.class).get("olsrdPath", "/etc/olsrd.conf"));
+    dotDrawPortLabel.setText(NbPreferences.forModule(FreimapWizardPanel3.class).get("dotDrawPort", "2004"));
+    NameServicePathLabel.setText(NbPreferences.forModule(FreimapWizardPanel3.class).get("nameServicePath", "/var/run/latlon.js"));
+     *
+     */
     public void readSettings(Object settings) {
-        hostNameLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("host", "localhost"));
-        mySQLLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("dbText", "freimap"));
-        mySQLPortLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("port", "3306"));
-        usernameLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("username", "root"));
-        passwordLabel.setText(NbPreferences.forModule(FreimapWizardPanel2.class).get("password", ""));
-        olsrdLabel.setText(NbPreferences.forModule(FreimapWizardPanel3.class).get("olsrdPath", "/etc/olsr.conf"));
-        dotDrawPortLabel.setText(NbPreferences.forModule(FreimapWizardPanel3.class).get("dotDrawPort", "2004"));
-        NameServicePathLabel.setText(NbPreferences.forModule(FreimapWizardPanel3.class).get("nameServicePath", "/var/run/latlon.js"));
     }
 
     public void storeSettings(Object settings) {
+        ((WizardDescriptor) settings).putProperty("host", ((FreimapVisualPanel2) getComponent()).getHost());
+        ((WizardDescriptor) settings).putProperty("username", ((FreimapVisualPanel2) getComponent()).getUserName());
+        ((WizardDescriptor) settings).putProperty("password", ((FreimapVisualPanel2) getComponent()).getPassword());
+        ((WizardDescriptor) settings).putProperty("dbText", ((FreimapVisualPanel2) getComponent()).getDatabase());
+        ((WizardDescriptor) settings).putProperty("port", ((FreimapVisualPanel2) getComponent()).getPort());
+        ((WizardDescriptor) settings).putProperty("olsrdPath", ((FreimapVisualPanel3) getComponent()).getOlsrdPath());
+        ((WizardDescriptor) settings).putProperty("nameServicePath", ((FreimapVisualPanel3) getComponent()).getNameServicePath());
+        ((WizardDescriptor) settings).putProperty("dotDrawPort", ((FreimapVisualPanel3) getComponent()).getDotDrawPort());
+
+
     }
 }
 

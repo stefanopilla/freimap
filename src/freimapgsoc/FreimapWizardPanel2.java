@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Wizard;
+package freimapgsoc;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -85,11 +85,19 @@ public class FreimapWizardPanel2 implements WizardDescriptor.ValidatingPanel {
     }
 
     public void storeSettings(Object settings) {
-        ((WizardDescriptor) settings).putProperty("host", ((FreimapVisualPanel2) getComponent()).getHost());
-        ((WizardDescriptor) settings).putProperty("username", ((FreimapVisualPanel2) getComponent()).getUserName());
-        ((WizardDescriptor) settings).putProperty("password", ((FreimapVisualPanel2) getComponent()).getPassword());
-        ((WizardDescriptor) settings).putProperty("dbText", ((FreimapVisualPanel2) getComponent()).getDatabase());
-        ((WizardDescriptor) settings).putProperty("port", ((FreimapVisualPanel2) getComponent()).getPort());
+        if (!component.getStore()) {
+            ((WizardDescriptor) settings).putProperty("host", ((FreimapVisualPanel2) getComponent()).getHost());
+            ((WizardDescriptor) settings).putProperty("username", ((FreimapVisualPanel2) getComponent()).getUserName());
+            ((WizardDescriptor) settings).putProperty("password", ((FreimapVisualPanel2) getComponent()).getPassword());
+            ((WizardDescriptor) settings).putProperty("dbText", ((FreimapVisualPanel2) getComponent()).getDatabase());
+            ((WizardDescriptor) settings).putProperty("port", ((FreimapVisualPanel2) getComponent()).getPort());
+        } else {
+            int i=JOptionPane.showConfirmDialog(component, "You have selected \"No Store\" checkbox,\nthe wizard now will be closed.\nAre you sure?", "Freimap Wizard", JOptionPane.OK_CANCEL_OPTION);
+           if (i==0){
+               component.setVisible(false);
+           }
+
+                }
 
     }
 
@@ -99,7 +107,8 @@ public class FreimapWizardPanel2 implements WizardDescriptor.ValidatingPanel {
         String port = component.getPort();
         String username = component.getUserName();
 
-        if (host.equals("")) {
+
+        if (host.equals("") || host.length() < 2) {
             isValid = false;
             throw new WizardValidationException(null, "Invalid Host", null);
         }
@@ -117,7 +126,6 @@ public class FreimapWizardPanel2 implements WizardDescriptor.ValidatingPanel {
         }
         if (database.equals("")) {
             isValid = false;
-
             throw new WizardValidationException(null, "Please select a Database", null);
         }
 

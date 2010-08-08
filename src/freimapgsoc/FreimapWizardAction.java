@@ -1,4 +1,4 @@
-package Wizard;
+package freimapgsoc;
 
 import java.awt.Component;
 import java.awt.Dialog;
@@ -74,6 +74,6 @@ public final class FreimapWizardAction implements ActionListener {
     }
 
     public String getName() {
-        return "Start Sample Wizard";
+        return "Freimap Wizard Start";
     }
 }

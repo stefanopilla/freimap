@@ -2,10 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Wizard;
+package freimapgsoc;
 
+import java.awt.Component;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public final class FreimapVisualPanel3 extends JPanel {
@@ -20,14 +29,15 @@ public final class FreimapVisualPanel3 extends JPanel {
         return "OLSRd Configuration";
     }
 
-     public String getOlsrPath() {
+    public String getOlsrdPath() {
         return olsrdPath.getText();
     }
 
-      public String getNameServicePath() {
+    public String getNameServicePath() {
         return nameServicePath.getText();
     }
-       public String getDotDrawPort() {
+
+    public String getDotDrawPort() {
         return dotDrawPort.getText();
     }
 
@@ -39,6 +49,7 @@ public final class FreimapVisualPanel3 extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -46,7 +57,7 @@ public final class FreimapVisualPanel3 extends JPanel {
         nameServicePath = new javax.swing.JTextField();
         dotDrawPort = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        readConfigButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 12));
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(FreimapVisualPanel3.class, "FreimapVisualPanel3.jLabel1.text")); // NOI18N
@@ -79,8 +90,13 @@ public final class FreimapVisualPanel3 extends JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Lucida Grande", 0, 12));
-        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(FreimapVisualPanel3.class, "FreimapVisualPanel3.jButton2.text")); // NOI18N
+        readConfigButton.setFont(new java.awt.Font("Lucida Grande", 0, 12));
+        org.openide.awt.Mnemonics.setLocalizedText(readConfigButton, org.openide.util.NbBundle.getMessage(FreimapVisualPanel3.class, "FreimapVisualPanel3.readConfigButton.text")); // NOI18N
+        readConfigButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readConfigButtonActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -88,26 +104,24 @@ public final class FreimapVisualPanel3 extends JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(29, 29, 29)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, readConfigButton)
+                        .add(layout.createSequentialGroup()
+                            .add(jLabel2)
+                            .add(19, 19, 19)
+                            .add(olsrdPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jButton1)))
                     .add(layout.createSequentialGroup()
-                        .add(jLabel3)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(jLabel3)
+                            .add(jLabel1))
                         .add(18, 18, 18)
-                        .add(dotDrawPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel1)
-                        .add(18, 18, 18)
-                        .add(nameServicePath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel2)
-                        .add(19, 19, 19)
-                        .add(olsrdPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton1)
-                .addContainerGap(49, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(288, Short.MAX_VALUE)
-                .add(jButton2)
-                .addContainerGap())
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(dotDrawPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(nameServicePath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -118,16 +132,16 @@ public final class FreimapVisualPanel3 extends JPanel {
                     .add(jLabel2)
                     .add(olsrdPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton2)
-                .add(20, 20, 20)
+                .add(readConfigButton)
+                .add(53, 53, 53)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(nameServicePath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel1))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(dotDrawPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel3))
-                .addContainerGap(109, Short.MAX_VALUE))
+                    .add(jLabel3)
+                    .add(dotDrawPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -145,19 +159,65 @@ public final class FreimapVisualPanel3 extends JPanel {
             olsrdPath.setText(file.getPath());
         } else if (returnVal == JFileChooser.CANCEL_OPTION) {
             System.out.println("Browse command cancelled by user." + "\n");
-        }        // TODO add your handling code here:
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+
+    private void addPath(){
+        try {
+                olsr = olsrdPath.getText();
+                BufferedReader in = new BufferedReader(new InputStreamReader(new URL("file://" + olsr).openStream()));
+                String line = in.readLine();
+                while (true) {
+                    line = in.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    if (line.contains("latlon-file")) {
+                        StringTokenizer st = new StringTokenizer(line.substring(31, line.length() - 1), "\"", false);
+                        nameServicePath.setText(st.nextToken());
+                    }
+                    if (line.contains("LoadPlugin \"olsrd_dot_draw.so.0.3\"")) {
+                        while (!in.readLine().equals("}")) {
+                            String line2 = in.readLine();
+                            if (line2.contains("port")) {
+                                StringTokenizer st = new StringTokenizer(line2.substring(15, line2.length() - 1), "\"", false);
+                                dotDrawPort.setText(st.nextToken());
+                            }
+                        }
+                    }
+                }
+            } catch (MalformedURLException mue) {
+                System.out.println("failed! Invalid server URL: " + olsr);
+                mue.printStackTrace();
+            } catch (IOException ioe) {
+                String s=JOptionPane.showInputDialog(this, "File Not Found!\n Please Insert a valid path: ", "/etc/olsrd.conf");
+                olsrdPath.setText(s);
+                ioe.printStackTrace();
+            }
+    }
+
+    private void readConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readConfigButtonActionPerformed
+        if (olsrdPath.getText().equals("")) {
+               JOptionPane.showMessageDialog(this, "Will be used the default position for the OLSRd config file!");
+                olsrdPath.setText("/etc/olsrd.conf");
+                addPath();
+        } else {
+            addPath();
+        }
+    }//GEN-LAST:event_readConfigButtonActionPerformed
+    private String olsr;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField dotDrawPort;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField nameServicePath;
     private javax.swing.JTextField olsrdPath;
+    private javax.swing.JButton readConfigButton;
     // End of variables declaration//GEN-END:variables
 }
 

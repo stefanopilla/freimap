@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Wizard;
+package freimapgsoc;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -80,29 +80,29 @@ public class FreimapWizardPanel3 implements WizardDescriptor.ValidatingPanel {
     // settings object will be the WizardDescriptor, so you can use
     // WizardDescriptor.getProperty & putProperty to store information entered
     // by the user.
+
     public void readSettings(Object settings) {
-
-
     }
 
     public void storeSettings(Object settings) {
-       ((WizardDescriptor) settings).putProperty("olsrdPath", ((FreimapVisualPanel3)getComponent()).getOlsrPath());
+   ((WizardDescriptor) settings).putProperty("olsrdPath", ((FreimapVisualPanel3)getComponent()).getOlsrdPath());
     ((WizardDescriptor) settings).putProperty("nameServicePath", ((FreimapVisualPanel3)getComponent()).getNameServicePath());
     ((WizardDescriptor) settings).putProperty("dotDrawPort", ((FreimapVisualPanel3)getComponent()).getDotDrawPort());
 
     }
 
     public void validate() throws WizardValidationException {
-       String olsrdPath=component.getOlsrPath();
+       String olsrdPath=component.getOlsrdPath();
        String nameServicePath=component.getNameServicePath();
        String dotDrawPort=component.getDotDrawPort();
 
        if(olsrdPath.equals("") && nameServicePath.equals("") && dotDrawPort.equals("")){
-           olsrdPath="/etc/olsr.conf"; 
+           olsrdPath="/etc/olsrd.conf";
            nameServicePath="/var/run/latlon.js";
            dotDrawPort="2004";
+           JOptionPane.showMessageDialog(component, "Will be used the OLSRd default value");
            throw new WizardValidationException(null, "Will be used default value for the following values:\nOLSRd Config File: /etc/olsr.conf\nNameService LatLon.js file: /var/run/latlon.js\ndotDrawPort: 2004 ", null);
-       }else if(olsrdPath.equals("") && nameServicePath.equals("")){
+       /*}else if(olsrdPath.equals("") && nameServicePath.equals("")){
            olsrdPath="/etc/olsr.conf"; 
            nameServicePath="/var/run/latlon.js";
            throw new WizardValidationException(null, "Will be used default value for the following values:\nOLSRd Config File: /etc/olsr.conf\nNameService LatLon.js file: /var/run/latlon.js\n", null);
@@ -123,7 +123,10 @@ public class FreimapWizardPanel3 implements WizardDescriptor.ValidatingPanel {
        }else if(dotDrawPort.equals("")){
            dotDrawPort="2004";
                 throw new WizardValidationException(null, "Will be used default position: \"/etc/olsr.conf\"", null);
-       }
+       }*/
+
+
+    }
     }
     }
 
