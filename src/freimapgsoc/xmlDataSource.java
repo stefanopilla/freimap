@@ -273,5 +273,35 @@ public class xmlDataSource implements DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public String getDatabase() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPort() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getHost() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getUsername() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPassword() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPath() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 }

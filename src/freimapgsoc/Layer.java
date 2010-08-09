@@ -4,10 +4,17 @@
  */
 package freimapgsoc;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.Statement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -20,9 +27,10 @@ public class Layer {
         createLayer();
     }
 
-    public Layer(HashMap<Vector<MapNode>, Vector<Link>> config, DataSource datasource) {
+    public Layer(Vector<MapNode> nodes, Vector<Link> links, DataSource datasource) {
         this.currentDS = datasource;
-        this.data = config;
+        this.nodes = nodes;
+        this.links =links;
         this.id = generateNewID();
         System.out.println("Creating new Layer with id: " + id);
         createLayer(data, datasource, id);
@@ -64,9 +72,68 @@ public class Layer {
         return false;
     }
 
+    public void storeDB() throws ClassNotFoundException{
+        int isGateway=0;
+        String gwIp="0.0.0.0";
+        try {
+            System.out.println("Getting connection to MySql Database " + currentDS.getDatabase() + " at " + currentDS.getHost() + " " + ":" + currentDS.getPort() + "");
+            Class.forName("com.mysql.jdbc.Driver");
+            c = (Connection) DriverManager.getConnection("jdbc:mysql://" + currentDS.getHost() + ":" + currentDS.getPort() + "/" + currentDS.getDatabase(), currentDS.getUsername(), currentDS.getPassword());
+            if (!c.isClosed()) {
+                System.out.println("Connected!");
+                for(int i=0; i<nodes.size(); i++){
+                    stmt= (Statement) c.createStatement();
+                    if(nodes.get(i).attributes.containsValue("0.0.0.0")){
+                              isGateway=0;
+                          }else{
+                            isGateway=1;
+                            gwIp=nodes.get(i).attributes.get("GATEWAY").toString();
+                          }
+                    String query = "INSERT INTO `nodes` (`lon`,`lat`,`ip`,`name`,`isGateway`,`gatewayIp`,`uptime`,`interfaces`) VALUES ("+
+                            nodes.get(i).lat +
+                           ", " + nodes.get(i).lon +
+                           "," + nodes.get(i).ip +
+                           "," + nodes.get(i).name+
+                           "," + isGateway +
+                           "," + gwIp +
+                           "," + nodes.get(i).uptime +
+                           "," + nodes.get(i).inter +
+                           ");";
+                    rss =(ResultSet) stmt.executeQuery(query);
+                }
+                
+                for(int i=0; i<links.size(); i++){
+                    stmt= (Statement) c.createStatement();
+                    String query = "INSERT INTO `links` (`clock`,`src`,`dest`,`lq`,`nlq`,`etx`) VALUES ("+
+                            links.get(i).timeStamp +
+                           ", " + links.get(i).source.toString() +
+                           "," + links.get(i).dest.toString() +
+                           "," + links.get(i).lq+
+                           "," + links.get(i).nlq +
+                           "," + links.get(i).etx +
+                           ");";
+                    rss =(ResultSet) stmt.executeQuery(query);
+                }
+
+
+                String query2;
+                while (rss.next()) {
+                    query2 = "SELECT intIp FROM Interfaces WHERE mainIp = \"" + rss.getString("ip") + "\"";
+                    //System.out.println(query2);
+                    Vector<String> ifaces = new Vector<String>();
+                    while (rss2.next()) {
+                        ifaces.add(rss2.getString("IntIp"));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+            }
+
     public void createLayer(HashMap<Vector<MapNode>, Vector<Link>> data, DataSource ds, int id) {
         try {
-            //Query to the MySql Server to store the data
+            storeDB();//Query to the MySql Server to store the data
             initLayout();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -125,6 +192,12 @@ public class Layer {
     public int generateNewID() {
         return id++;
     }
+
+    Connection c = null;
+    ResultSet rss, rss2;
+    Statement stmt, stmt2;
+
+
     public int id;
     public Vector<MapNode> nodes = new Vector<MapNode>();
     public Vector<Link> links = new Vector<Link>();

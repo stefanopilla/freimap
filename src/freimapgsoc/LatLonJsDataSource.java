@@ -107,8 +107,7 @@ public class LatLonJsDataSource implements DataSource {
             System.out.println("failed! IOException in LatLonJSDataSource");
             ioe.printStackTrace();
         }
-        config.put(nodes, links);
-        Layer l = new Layer(config, this);
+        Layer l = new Layer(nodes,links, this);
     }
 
     public void parseNode(String path) {
@@ -512,5 +511,35 @@ public class LatLonJsDataSource implements DataSource {
     public HashMap<String, MapNode> nodeByIP= new HashMap<String, MapNode>();
     public long initTime = System.currentTimeMillis() / 1000;
     public int dsId = 0;
+
+    @Override
+    public String getDatabase() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPort() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getHost() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getUsername() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPassword() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPath() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
 

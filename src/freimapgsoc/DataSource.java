@@ -115,6 +115,14 @@ public interface DataSource {
      */
     public void getLinkCountProfile(MapNode node, NodeInfo info);
 
+     public String getDatabase();
+     
+    public String getPort();
+    public String getHost();
+      
+    public String getUsername();
+    public String getPassword();
+    public String getPath();
 
 }
 

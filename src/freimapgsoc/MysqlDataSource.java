@@ -167,8 +167,7 @@ public class MysqlDataSource implements DataSource {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        config.put(nodeList, linkList);
-        Layer l = new Layer(config, this);
+        Layer l = new Layer(nodeList,linkList, this);
     }
 
     private void updateNodeList() throws SQLException {
@@ -470,6 +469,36 @@ public class MysqlDataSource implements DataSource {
 	@Override
     public Vector<Link> getLinks() {
         return linkList;
+    }
+
+    @Override
+    public String getDatabase() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPort() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getHost() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getUsername() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPassword() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getPath() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     class LCPFetcher extends Thread {

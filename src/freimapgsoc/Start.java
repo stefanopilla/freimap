@@ -215,8 +215,11 @@ public class Start extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void olsrdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_olsrdButtonActionPerformed
+       // FreimapWizardPanel1 wizard=new FreimapWizardPanel1();
+       // wizard.getComponent().setVisible(true);
+
         MySQLCredential mysqlcr=new MySQLCredential(new OlsrdDataSource());
-        mysqlcr.setVisible(true);
+       mysqlcr.setVisible(true);
     }//GEN-LAST:event_olsrdButtonActionPerformed
 
     private void openFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileButtonActionPerformed
